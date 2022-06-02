@@ -1,0 +1,11 @@
+{
+    "name": "imba-base-template",
+    "scripts": {
+        "start": "imba -w server.imba",
+        "build": "imba build server.imba"
+    },
+    "dependencies": {
+        "element-plus": "^2.2.2",
+        "imba": "^2.0.0-alpha.208"
+    }
+}
