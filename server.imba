@@ -1,9 +1,10 @@
 import express from 'express'
 import index from './app/index.html'
-
+import cors from 'cors'
 
 const app = express!
 
+app.use(cors!)
 
 # catch-all route that returns our index.html
 app.get(/.*/) do(req,res)

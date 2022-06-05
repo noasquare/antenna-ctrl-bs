@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css' # 使用
 import './tianxian'
 import './ctrsider'
 import './antcard'
+import './devall'
 global css html
 	ff:sans
 # global css body bg:yellow1
@@ -66,13 +67,9 @@ let devdata = {
 		}
 	}
 }
-
-
 tag app
-
 	# 有关main的部分都放在以下 
 	css .main m:0 p:5px of:hidden d:hflex h:95% bdt:solid rgb(12,100,100)
-		
 		.menu mr:5px w:15% ta:center bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
 		.menudroplink bgc:transparent @hover:gray8 @focus:gray6 m:0 p:4 d:hflex outline:none bd:none w:100%	
 		.body bg:rgba(11,41,49,.6) w:65% shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
@@ -81,8 +78,6 @@ tag app
 		.triangle-right w:0 h:0 bdt:5px solid transparent bdl:10px solid gray3 bdb:5px solid transparent
 		.triangle-down w:0 h:0 bdt:10px solid gray3 bdl:5px solid transparent bdr:5px solid transparent
 	css .antall bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
-
-
 	# 有关header 的都放在以下
 	css .header bg:rgba(11,41,49,.6) h:8% d:hflex ta:right shadow:inset 0px 0px 10px 5px rgb(12,100,100)
 		.logo w:40% d:flex ja:center
@@ -141,18 +136,11 @@ tag app
 						<div.accordion-collapse.collapse.show id='cols01' aria-labelledby='menu01' data-bs-parent='#menu'> for item in txs
 							<button.accordion-body.menudroplink route-to="/txst/{item}">
 								<div[fs:14px c:gray3 ml:5]> item
-							# <button.accordion-body.menudroplink>
-							# 	<div[fs:14px c:gray3 ml:5]> '天线2'
-							# <button.accordion-body.menudroplink>
-							# 	<div[fs:14px c:gray3 ml:5]> '天线3'
-							# <button.accordion-body.menudroplink>
-							# 	<div[fs:14px c:gray3 ml:5]> '天线4'
-							# <button.accordion-body.menudroplink>
-							# 	<div[fs:14px c:gray3 ml:5]> '天线5'
+
 
 					<div.accordion-item>
 						<h6.accordion-header id='menu02'>
-							<button[d:hflex p:5 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#cols02' aria-expanded='true' aria-control='cols02'>
+							<button[d:hflex p:5 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#cols02' aria-expanded='true' aria-control='cols02' route-to='/devall'>
 								<div[w:90%]> '阵地设备总览'
 								<div[w:10% ml:auto].triangle-right>
 						<div.accordion-collapse.collapse.show id='cols02' aria-labelledby='menu02' data-bs-parent='#ctl'>
@@ -165,10 +153,7 @@ tag app
 			<ctrsider.sider route='/txst/:id' data=devdata>
 			<div[p:5 w:100% d:grid gtc:1fr 1fr 1fr g:5 a:baseline].antall route='/antall'> for item in txs
 				<antcard route='/antall' rdata=item>
-				# <antcard route='/antall'>
-				# <antcard route='/antall'>
-				# <antcard route='/antall'>
-				# <antcard route='/antall'>
-		<div.devall route='/devall'> '设备总览'
+			<div[w:100%].antall route='/devall'> '设备总览'
+				<devall>
 
 imba.mount <app>
