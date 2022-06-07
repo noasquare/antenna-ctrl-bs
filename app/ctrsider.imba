@@ -7,24 +7,18 @@ tag ctrsider
 	css	.accordion --bs-accordion-bg:transparent bd:none --bs-accordion-border-width:0px
 		.triangle-right w:0 h:0 bdt:5px solid transparent bdl:10px solid gray3 bdb:5px solid transparent
 		.triangle-down w:0 h:0 bdt:10px solid gray3 bdl:5px solid transparent bdr:5px solid transparent
-
 	def mount
-		console.log data[route.params.id]
-
+		console.log data
 	<self> 
-		<div.sider>
+		<div>
 			<div.sdtitle> "设备控制"
 			<div.sdstatus>
 				<div.status-title-left> '实时参数'
 				<div.status-title-right> '设备名称：'
 					<div[d:inline]> 'ACU11A' # 变量 设备名称
-			<div[p:5px m:10px h:10% c:gray3 bgc:gray8 bd:solid 1px gray4 rd:5px ofy:scroll].status-box>
-				<span.status-content> '俯仰: '
-				<span.status-value> data[route.params.id]['server'].az
-				<span.status-content> '方位: '
-				<span.status-value> data[route.params.id]['server'].el
-				<span.status-content> 'AGC: '
-				<span.status-value> data[route.params.id]['server'].agc
+			<div[p:5px m:10px h:10% c:gray3 bgc:gray8 bd:solid 1px gray4 rd:5px ofy:scroll].status-box> for item in data.statuslist
+				<span.status-content> item.stname
+					<span.status-value> item.value
 			<div.accordion id='ctl'>
 				<div.accordion-item>
 					<h6.accordion-header id='headingOne'>
@@ -72,7 +66,7 @@ tag ctrsider
 					<div.accordion-collapse.collapse.show id='collapseStatus' aria-labelledby='headingStatus' data-bs-parent='#ctl-status'>
 						<div[m:0 p:5px d:hflex ja:center].accordion-body>
 							<div[fs:14px c:gray3 ml:3]> 'ACU电平:'
-							<div[fs:14px w:10% ml:auto c:rgb(31,219,220)]> data[route.params.id]['server'].agc
+							<div[fs:14px w:10% ml:auto c:rgb(31,219,220)]> '123'
 						<div[m:0 p:5px d:hflex ja:center].accordion-body>
 							<div[fs:14px c:gray3 ml:3]> '方位:'
 							<div[fs:14px w:10% ml:auto c:rgb(31,219,220)]> '0'
@@ -82,5 +76,3 @@ tag ctrsider
 						<div[m:0 p:5px d:hflex ja:center].accordion-body>
 							<div[fs:14px c:gray3 ml:3]> '电机状态:'
 							<div[fs:14px ml:auto c:rgb(31,219,220) pr:5]> '正常'
-			
-

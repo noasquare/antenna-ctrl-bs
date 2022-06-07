@@ -4,82 +4,305 @@ import './tianxian'
 import './ctrsider'
 import './antcard'
 import './devall'
+import './devlog'
 global css html
 	ff:sans
 # global css body bg:yellow1
 global css body bg:center url('./imgs/bg-antenna.jpg') m:0 p:0 c:gray3
 
+let globaldata = 0
 let txs = ['tx1','tx2','tx3','tx4','tx5']
-let devdata = {
-	tx1:{
-		server:{
-			el:180
-			az:90
-			agc:8.5
-		}
-		temp:{
-			tempreture:38
-			hum:76
-		}
+let devdata = [
+	{
+		title: '天线1'
+		antid:txs[0]
+		devlist:[
+			{
+				devname:'伺服'
+				devid:'test'
+				devst:0
+				statuslist:[
+					{
+						stname:'俯仰'
+						value:90
+					}
+					{
+						stname:'方位'
+						value:89
+					}
+					{
+						stname:'AGC'
+						value:8.6
+					}
+				]
+			}
+			{
+				devname:'光电传输'
+				devid:'test01'
+				devst:0
+				statuslist:[
+					{
+						stname:'gain'
+						value:90
+					}
+					{
+						stname:'power'
+						value:1800
+					}
+				]
+			}
+			{
+				devname:'温湿度'
+				devid:'test02'
+				devst:1
+				statuslist:[
+					{
+						stname:'温度'
+						value:50
+					}
+					{
+						stname:'湿度'
+						value:35
+					}
+				]
+			}
+		]
 	}
-	tx2:{
-		server:{
-			el:189
-			az:45
-			agc:4.5
-		}
-		temp:{
-			tempreture:39
-			hum:75
-		}
+	{
+		title: '天线2'
+		antid:txs[1]
+		devlist:[
+			{
+				devname:'伺服'
+				devid:'test'
+				devst:0
+				statuslist:[
+					{
+						stname:'俯仰'
+						value:90
+					}
+					{
+						stname:'方位'
+						value:89
+					}
+					{
+						stname:'AGC'
+						value:8.6
+					}
+				]
+			}
+			{
+				devname:'光电传输'
+				devid:'test01'
+				devst:1
+				statuslist:[
+					{
+						stname:'gain'
+						value:90
+					}
+					{
+						stname:'power'
+						value:1800
+					}
+				]
+			}
+			{
+				devname:'温湿度'
+				devid:'test02'
+				devst:0
+				statuslist:[
+					{
+						stname:'温度'
+						value:50
+					}
+					{
+						stname:'湿度'
+						value:35
+					}
+				]
+			}
+		]
 	}
-	tx3:{
-		server:{
-			el:170
-			az:09
-			agc:2.5
-		}
-		temp:{
-			tempreture:39
-			hum:75
-		}
+	{
+		title: '天线3'
+		antid:txs[2]
+		devlist:[
+			{
+				devname:'伺服'
+				devid:'test'
+				devst:0
+				statuslist:[
+					{
+						stname:'俯仰'
+						value:90
+					}
+					{
+						stname:'方位'
+						value:89
+					}
+					{
+						stname:'AGC'
+						value:8.6
+					}
+				]
+			}
+			{
+				devname:'光电传输'
+				devid:'test01'
+				devst:0
+				statuslist:[
+					{
+						stname:'gain'
+						value:90
+					}
+					{
+						stname:'power'
+						value:1800
+					}
+				]
+			}
+			{
+				devname:'温湿度'
+				devid:'test02'
+				devst:1
+				statuslist:[
+					{
+						stname:'温度'
+						value:50
+					}
+					{
+						stname:'湿度'
+						value:35
+					}
+				]
+			}
+		]
 	}
-	tx4:{
-		server:{
-			el:167
-			az:8
-			agc:2.5
-		}
-		temp:{
-			tempreture:39
-			hum:75
-		}
+	{
+		title: '天线4'
+		antid:txs[3]
+		devlist:[
+			{
+				devname:'伺服'
+				devid:'test'
+				devst:0
+				statuslist:[
+					{
+						stname:'俯仰'
+						value:90
+					}
+					{
+						stname:'方位'
+						value:89
+					}
+					{
+						stname:'AGC'
+						value:8.6
+					}
+				]
+			}
+			{
+				devname:'光电传输'
+				devid:'test01'
+				devst:0
+				statuslist:[
+					{
+						stname:'gain'
+						value:90
+					}
+					{
+						stname:'power'
+						value:1800
+					}
+				]
+			}
+			{
+				devname:'温湿度'
+				devid:'test02'
+				devst:0
+				statuslist:[
+					{
+						stname:'温度'
+						value:50
+					}
+					{
+						stname:'湿度'
+						value:35
+					}
+				]
+			}
+		]
 	}
-	tx5:{
-		server:{
-			el:154
-			az:8
-			agc:9.5
-		}
-		temp:{
-			tempreture:39
-			hum:75
-		}
+	{
+		title: '天线5'
+		antid:txs[4]
+		devlist:[
+			{
+				devname:'伺服'
+				devid:'test'
+				devst: 0
+				statuslist:[
+					{
+						stname:'俯仰'
+						value:90
+					}
+					{
+						stname:'方位'
+						value:89
+					}
+					{
+						stname:'AGC'
+						value:8.6
+					}
+				]
+			}
+			{
+				devname:'光电传输'
+				devid:'test01'
+				devst: 0
+				statuslist:[
+					{
+						stname:'gain'
+						value:90
+					}
+					{
+						stname:'power'
+						value:1800
+					}
+				]
+			}
+			{
+				devname:'温湿度'
+				devid:'test02'
+				devst: 1
+				statuslist:[
+					{
+						stname:'温度'
+						value:50
+					}
+					{
+						stname:'湿度'
+						value:35
+					}
+				]
+			}
+		]
 	}
-}
+
+]
 tag app
 	# 有关main的部分都放在以下 
 	css .main m:0 p:5px of:hidden d:hflex h:95% bdt:solid rgb(12,100,100)
 		.menu mr:5px w:15% ta:center bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
 		.menudroplink bgc:transparent @hover:gray8 @focus:gray6 m:0 p:4 d:hflex outline:none bd:none w:100%	
-		.body bg:rgba(11,41,49,.6) w:65% shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
-		.sider ml:5px bg:yellow4 w:22% bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
+		# .body bg:rgba(11,41,49,.6) w:100% shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
+		# .sider ml:5px bg:yellow4 w:22% bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
 		.accordion --bs-accordion-bg:transparent bd:none --bs-accordion-border-width:0px
 		.triangle-right w:0 h:0 bdt:5px solid transparent bdl:10px solid gray3 bdb:5px solid transparent
 		.triangle-down w:0 h:0 bdt:10px solid gray3 bdl:5px solid transparent bdr:5px solid transparent
 	css .antall bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
 	# 有关header 的都放在以下
-	css .header bg:rgba(11,41,49,.6) h:8% d:hflex ta:right shadow:inset 0px 0px 10px 5px rgb(12,100,100)
+	css .header bg:rgba(11,41,49,.6) h:5% @!500:10% d:hflex ta:right shadow:inset 0px 0px 10px 5px rgb(12,100,100)
 		.logo w:40% d:flex ja:center
 		.setting w:30% ta:left
 		.notify w:30%
@@ -88,14 +311,22 @@ tag app
 	css .mcontent p:0 m:0 d:none of:hidden list-style-type:none 
 		.mbtn p:10px 12px d:block of:hidden bgc:transparent @hover:rgb(54,73,91) outline:none fs:14px ta:left bd:none w:100% c:#fff
 	def menuclickarrow
-		console.log '跳转阵地总览界面'
+		console.log devdata.length
+		for item in devdata
+			console.log item.tx1.title
+
+		# console.log '跳转阵地总览界面'
+	def antdata data
+		# console.log data
+		devlist = data
 
 	def mount
 		# 引入tooltip第三方组件----
 		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 		# console.log tooltipTriggerList.length
-		const tooltipList = [...tooltipTriggerList].map do(item)
+		tooltipList = [...tooltipTriggerList].map do(item) # 这里有个小技巧 不能再这里指定const,否则就变成局部变量了。
 			new bootstrap.Tooltip(item)
+
 	<self>
 		<div.header>
 			<button[d:hflex ai:center pl:5 bgc:transparent bd:none c:gray3].setting>
@@ -133,9 +364,9 @@ tag app
 								<div[w:90%]> '阵地天线总览'
 								<div[w:10% ml:auto].triangle-right>
 
-						<div.accordion-collapse.collapse.show id='cols01' aria-labelledby='menu01' data-bs-parent='#menu'> for item in txs
-							<button.accordion-body.menudroplink route-to="/txst/{item}">
-								<div[fs:14px c:gray3 ml:5]> item
+						<div.accordion-collapse.collapse.show id='cols01' aria-labelledby='menu01' data-bs-parent='#menu'> for item in devdata
+							<button.accordion-body.menudroplink route-to="/txst/{item.antid}" @click=antdata(item)>
+								<div[fs:14px c:gray3 ml:5]> item.title
 
 
 					<div.accordion-item>
@@ -146,14 +377,19 @@ tag app
 						<div.accordion-collapse.collapse.show id='cols02' aria-labelledby='menu02' data-bs-parent='#ctl'>
 							<div[m:0 p:4 d:hflex].accordion-body>
 								<div[fs:14px c:gray3 ml:3]> '暂定留空'
-				<button.menunodrop> "系统状态"
-				<button.menunodrop> "日志"
+				# <button.menunodrop> "系统状态"
+				<button.menunodrop route-to='/devlog'> "日志"
 				<button.menunodrop> "设置"
-			<tianxian.body route='/txst/:id' data=devdata>
-			<ctrsider.sider route='/txst/:id' data=devdata>
+			<tianxian[w:100%] route='/txst/:id' data=devlist>
+			# <ctrsider.sider route='/txst/:id' data=devdata>
 			<div[p:5 w:100% d:grid gtc:1fr 1fr 1fr g:5 a:baseline].antall route='/antall'> for item in txs
 				<antcard route='/antall' rdata=item>
-			<div[w:100%].antall route='/devall'> '设备总览'
+			<div[w:100% ta:center].antall route='/devall'>
+				<div[mt:3]> '阵地设备总览'
 				<devall>
+			<div[w:100% ta:center].antall route='/devlog'>
+				<devlog[mt:4]>
+
+
 
 imba.mount <app>

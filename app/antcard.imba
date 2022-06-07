@@ -2,7 +2,7 @@ tag antcard
 	prop rdata
 	<self> 
 		<button[w:100% c:gray3 d:vflex bd:solid 1px gray4 bg:linear-gradient(0.25turn,rgb(94,94,122),rgb(5,21,44)) rd:10px].ant route-to="/txst/{rdata}">
-			<div[w:100% h:20% ta:center p:2 2].anttitle> '天线1'
+			<div[w:100% h:20% ta:center p:2 2].anttitle> '天线4'
 			<div[w:100% h:80% d:vflex].antbody>
 				<div[w:100% h:80% d:hflex].antstatus1>
 					<img[p:5 w:24%] src='./imgs/antcardimg.png'>
