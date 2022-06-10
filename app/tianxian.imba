@@ -3,7 +3,7 @@ const devcolor = ['teal7','red7','sky7'] # 设置设备状态的一个颜色数�
 # let devlistdata # 单个电线数据
 tag tianxian
 
-	css	.btitle h:5% w:100% c:#fff fs:15px lh:30px text-align:center
+	css	.btitle h:5% w:100% c:#fff fs:15px lh:30px text-align:center mt:3
 	css	.tuop h:70% w:100% pos:relative
 		.tpimg pos:absolute bottom:0 left:0
 	css	.mlog h:25% w:100% p:5px 15px
@@ -45,6 +45,8 @@ tag tianxian
 	def render()
 		# 默认是第一个伺服，如果有点击按钮，就用被点击的设备的序号。
 		ctrindex ??= 0
+		if ctrindex >= (data[antindex].Devices.length - 1) # 当通过路由参数进来的index大于所有列表的长度，就重新赋值0
+			ctrindex = 0
 		# console.log "天线视图刷新"
 		<self>
 			<div[d:hflex w:100% h:100% g:5px]>
@@ -131,6 +133,6 @@ tag tianxian
 										<td> '发发射'
 										<td.log-code> '255>GAIN_15.00'
 				<div[w:30% bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)]>
-					<ctrsider data=data[antindex].Devices[ctrindex] ws=ws>
+					<ctrsider data=data[antindex].Devices[ctrindex] ws=ws ant=route.params.id>
 
 

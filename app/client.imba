@@ -8,22 +8,19 @@ import './devlog'
 import wsdata from './antenna.json'
 global css html
 	ff:sans
-# global css body bg:yellow1
 global css body bg:center url('./imgs/bg-antenna.jpg') m:0 p:0 c:gray3
 
-const socket = new WebSocket('ws://192.168.0.64:9999/')
-
+let socket
 let globaldata = 0
 let txs = ['tx1','tx2','tx3','tx4','tx5']
 let devdata
-
+let wsAdds
+let wsrefresh
 tag app
 	# 有关main的部分都放在以下 
 	css .main m:0 p:5px of:hidden d:hflex h:95% bdt:solid rgb(12,100,100)
 		.menu mr:5px w:15% ta:center bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
 		.menudroplink bgc:transparent @hover:gray8 @focus:gray6 m:0 p:4 d:hflex outline:none bd:none w:100%	
-		# .body bg:rgba(11,41,49,.6) w:100% shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
-		# .sider ml:5px bg:yellow4 w:22% bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
 		.accordion --bs-accordion-bg:transparent bd:none --bs-accordion-border-width:0px
 		.triangle-right w:0 h:0 bdt:5px solid transparent bdl:10px solid gray3 bdb:5px solid transparent
 		.triangle-down w:0 h:0 bdt:10px solid gray3 bdl:5px solid transparent bdr:5px solid transparent
@@ -39,7 +36,9 @@ tag app
 		.mbtn p:10px 12px d:block of:hidden bgc:transparent @hover:rgb(54,73,91) outline:none fs:14px ta:left bd:none w:100% c:#fff
 	def menuclickarrow
 		console.log '跳转阵地总览界面'
-	
+	def changewsadd ip
+		wsopen(ip)
+		console.log wsAdds
 
 	prop antindex = 0
 	def antdata data
@@ -47,17 +46,24 @@ tag app
 		antindex = data
 	set wscheck dev
 		dev ??= '--本地数据'
-	def mount
-		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-		# console.log tooltipTriggerList.length
-		tooltipList = [...tooltipTriggerList].map do(item) # 这里有个小技巧 不能再这里指定const,否则就变成局部变量了。
-			new bootstrap.Tooltip(item)
-		# devdata = wsdata
+	def wsopen url
+		if socket
+			socket.close()
+		socket = new WebSocket(url)
 		socket.addEventListener 'message' do(e)
 		# 进行进来的信号做初始值设定
 			devdata = JSON.parse(e.data)
 			console.log devdata
 			imba.commit!
+
+	def mount
+		wsopen(wsAdds ??= "ws://192.168.0.64:9999")
+		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+		# console.log tooltipTriggerList.length
+		tooltipList = [...tooltipTriggerList].map do(item) # 这里有个小技巧 不能再这里指定const,否则就变成局部变量了。
+			new bootstrap.Tooltip(item)
+		# devdata = wsdata
+		# console.log '来自mount' # mount里面的数据只加载一次。
 		
 
 			
@@ -65,7 +71,8 @@ tag app
 		devdata ??= wsdata # 当devdata 没有ws数据灌入时候，就赋值本地的jsondata
 		# 这里是一个初始值，确保devlist不管是否点击目录也可以有值
 		devlist ??= wsdata[0]
-		console.log 'render 开始'
+		# console.log 'render 开始' # 知道有事件发生就会render
+		# console.log socket
 
 
 		<self>
@@ -119,7 +126,7 @@ tag app
 								<div[m:0 p:4 d:hflex].accordion-body>
 									<div[fs:14px c:gray3 ml:3]> '暂定留空'
 					<button.menunodrop route-to='/devlog'> "日志"
-					<button.menunodrop> "设置"
+					<button.menunodrop route-to='/setting'> "设置"
 				
 				<tianxian$routeid[w:100%] route='/txst/:id' data=devdata ws=socket antindex=antindex> # 这里的index是为了区分是哪个天线的数据，但是如果这样，就会导致纯通过route不能获取最新的数据了。解决方案就是，点击要的index传进去，然后再component里面直接做，不转手。
 				<div[p:5 w:100% d:grid gtc:1fr 1fr 1fr g:5 a:baseline].antall route='/antall'> for item in devdata
@@ -129,6 +136,17 @@ tag app
 					<devall>
 				<div[w:100% ta:center].antall route='/devlog'>
 					<devlog[mt:4]>
+				<div[w:100% ta:center].antall route='/setting'>
+					<div[w:50% p:5 4 bdb:solid 1px teal4 ml:25%]> '参数设置'
+					<div[mt:5]>
+						<div> 'websocket地址设置：'
+							<input$wsadd type='text' placeholder='ws://....' bind=wsAdds>
+							<button[ml:5].btn.btn-success @click=changewsadd($wsadd.value)> "修改"
+					<div[mt:5]>
+						<div> '系统刷新率设置：'
+							<input$wsrefresh type='text' placeholder='刷新率' bind=wsrefresh>
+							<button[ml:5].btn.btn-success @click=changewsadd($wsrefresh.value)> "修改"
+
 
 
 

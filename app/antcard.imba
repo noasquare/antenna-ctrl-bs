@@ -19,7 +19,7 @@ tag antcard
 
 	def render()
 		countDev(rdata)
-		console.log 'card load'
+		# console.log 'card load'
 		
 		<self> 
 			<button[w:100% c:gray3 d:vflex bd:solid 1px gray4 bg:linear-gradient(0.25turn,rgb(94,94,122),rgb(5,21,44)) rd:10px].ant route-to="/txst/{rdata.AntNo}">
