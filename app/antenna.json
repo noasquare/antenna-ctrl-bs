@@ -1,0 +1,243 @@
+[
+	{
+	  "AntNo": "04H2SYS19070001",
+	  "AntName": "1号天线",
+	  "Devices": [
+		{
+		  "DevNo": "01",
+		  "DevName": "伺服器",
+		  "DriverClass": "SIS007",
+		  "StatusList": [
+			{
+			  "StName": "Az",
+			  "Value": "+513.600",
+			  "ReadOnly": false
+			},
+			{
+			  "StName": "El",
+			  "Value": "+12.300",
+			  "ReadOnly": false
+			},
+			{
+			  "StName": "AzSpeed",
+			  "Value": "8.01",
+			  "ReadOnly": false
+			},
+			{
+			  "StName": "ElSpeed",
+			  "Value": "0.01",
+			  "ReadOnly": false
+			},
+			{
+			  "StName": "SignalLevel",
+			  "Value": "5.6",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "AzTargetPosition",
+			  "Value": "0",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "ElTargetPosition",
+			  "Value": "0",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "AzTargetSpeed",
+			  "Value": "0",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "ElTargetSpeed",
+			  "Value": "0",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "SignalQuality",
+			  "Value": "未锁定",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "CtrlMode",
+			  "Value": "",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "WorkMode",
+			  "Value": "系统未就绪",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "IsNotReady",
+			  "Value": "True",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "IsOnTracing",
+			  "Value": "False",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "IsTracingPaused",
+			  "Value": "False",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "IsRemote",
+			  "Value": "False",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "ConnectStatus",
+			  "Value": "Normal",
+			  "ReadOnly": true
+			}
+		  ],
+		  "FaultList": []
+		},
+		{
+		  "DevNo": "03",
+		  "DevName": "跟踪接收机",
+		  "DriverClass": "SLDLC018",
+		  "StatusList": [
+			{
+			  "StName": "RemoteOn",
+			  "Value": "true",
+			  "ReadOnly": false
+			},
+			{
+			  "StName": "Freq",
+			  "Value": "0",
+			  "ReadOnly": false
+			},
+			{
+			  "StName": "Volt",
+			  "Value": "0",
+			  "ReadOnly": false
+			},
+			{
+			  "StName": "Gain",
+			  "Value": "0",
+			  "ReadOnly": false
+			},
+			{
+			  "StName": "Freq1Alarm",
+			  "Value": "False",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "Freq2Alarm",
+			  "Value": "False",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "ConnectStatus",
+			  "Value": "Disconnected",
+			  "ReadOnly": true
+			}
+		  ],
+		  "FaultList": []
+		}
+	  ]
+	},
+	{
+	  "AntNo": "04H2SYS19070002",
+	  "AntName": "2号天线",
+	  "Devices": [
+		{
+		  "DevNo": "01",
+		  "DevName": "伺服器",
+		  "DriverClass": "SIS007",
+		  "StatusList": [
+			{
+			  "StName": "Az",
+			  "Value": "+103.600",
+			  "ReadOnly": false
+			},
+			{
+			  "StName": "El",
+			  "Value": "+12.300",
+			  "ReadOnly": false
+			},
+			{
+			  "StName": "AzSpeed",
+			  "Value": "0.01",
+			  "ReadOnly": false
+			},
+			{
+			  "StName": "ElSpeed",
+			  "Value": "1.01",
+			  "ReadOnly": false
+			},
+			{
+			  "StName": "SignalLevel",
+			  "Value": "9.6",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "AzTargetPosition",
+			  "Value": "0",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "ElTargetPosition",
+			  "Value": "0",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "AzTargetSpeed",
+			  "Value": "0",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "ElTargetSpeed",
+			  "Value": "0",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "SignalQuality",
+			  "Value": "未锁定",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "CtrlMode",
+			  "Value": "",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "WorkMode",
+			  "Value": "系统未就绪",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "IsNotReady",
+			  "Value": "True",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "IsOnTracing",
+			  "Value": "False",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "IsTracingPaused",
+			  "Value": "False",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "IsRemote",
+			  "Value": "False",
+			  "ReadOnly": true
+			},
+			{
+			  "StName": "ConnectStatus",
+			  "Value": "Normal",
+			  "ReadOnly": true
+			}
+		  ],
+		  "FaultList": []
+		}
+	  ]
+	}
+  ]
