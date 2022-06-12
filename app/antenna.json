@@ -10,12 +10,12 @@
 		  "StatusList": [
 			{
 			  "StName": "Az",
-			  "Value": "+513.600",
+			  "Value": "513.60",
 			  "ReadOnly": false
 			},
 			{
 			  "StName": "El",
-			  "Value": "+12.300",
+			  "Value": "12.3",
 			  "ReadOnly": false
 			},
 			{
@@ -84,7 +84,7 @@
 			  "ReadOnly": true
 			},
 			{
-			  "StName": "IsRemote",
+			  "StName": "RemoteOn",
 			  "Value": "False",
 			  "ReadOnly": true
 			},
@@ -152,12 +152,12 @@
 		  "StatusList": [
 			{
 			  "StName": "Az",
-			  "Value": "+103.600",
+			  "Value": "103.60",
 			  "ReadOnly": false
 			},
 			{
 			  "StName": "El",
-			  "Value": "+12.300",
+			  "Value": "12.30",
 			  "ReadOnly": false
 			},
 			{
@@ -226,8 +226,8 @@
 			  "ReadOnly": true
 			},
 			{
-			  "StName": "IsRemote",
-			  "Value": "False",
+			  "StName": "IsRemoteOn",
+			  "Value": "true",
 			  "ReadOnly": true
 			},
 			{

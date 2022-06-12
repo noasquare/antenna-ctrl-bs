@@ -9,34 +9,49 @@ tag ctrsider
 		.triangle-down w:0 h:0 bdt:10px solid gray3 bdl:5px solid transparent bdr:5px solid transparent
 	prop ws
 	prop data
-	prop inputvalue
+	# prop inputvalue
 	prop ant
-	def sendpara item,index
-		let data =
+	def sendremote
+		let data = 
 			AntNo : ant
 			DevNo : data.DevNo
-			StName : item.StName
-			Value : inputvalue[index]
+			StName : "RemoteOn"
+			value : $remote.checked
 		console.log data
 		ws.send(JSON.stringify(data))
+	def sendpara item,itemvalue
+		if itemvalue
+			let data =
+				AntNo : ant
+				DevNo : data.DevNo
+				StName : item.StName
+				Value : itemvalue
+			console.log data
+			ws.send(JSON.stringify(data))
 	def remotestatus list
+		# console.log '检查远控状态'
 		for item in list
-			if item.StName == 'RemoteStatus'
+			if item.StName == 'RemoteOn'
 				if item.Value is 'False'
 					$remote.checked = no
 				else
 					$remote.checked = yes
+
+
 	def mount
-		inputvalue = [data.StatusList.length]
+
 	def render()
 		remotestatus(data.StatusList) # 显示远控的状态
-
 		<self> 
 			<div>
 				<div.sdtitle> "设备控制" 
 					<div[d:inline float:right].form-check.form-switch>
-						<input$remote.form-check-input type="checkbox" role="switch" id="flexSwitchCheckDefault">
-					<span[ml:40% ta:right c:gray3 fs:14px]> '开启远控'
+						<input$remote.form-check-input type="checkbox" role="switch" id="flexSwitchCheckDefault" @change=sendremote>
+					if $remote.checked == no
+						<div[c:gray3 fs:14px d:inline float:right mr:3]> '远控关闭'
+					else 
+						<div[c:gray3 fs:14px d:inline float:right mr:3]> '远控开启'
+
 
 				<div.accordion id='ctl'>
 					<div.accordion-item>
@@ -46,10 +61,10 @@ tag ctrsider
 								<div[w:10% ml:auto].triangle-right>
 						<div.accordion-collapse.collapse.show id='collapseOne' aria-labelledby='headingOne' data-bs-parent='#ctl'>
 							<div[m:0 p:5px d:vflex ai:left].accordion-body> for ctritem,stindex in data.StatusList
-								if ctritem.ReadOnly == no
+								if ctritem.ReadOnly == no && ctritem.StName !== 'RemoteOn'
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
-										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="{ctritem.Value}" @change=sendpara(ctritem,stindex) bind=inputvalue[stindex]>
+										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="{ctritem.Value}" @change=sendpara(ctritem,this.value) value="{ctritem.Value}" type='number' step='.01'>
 							# <div[p:5 d:hflex ja:center mt:3].ctlbtn>
 							# 	<button[mr:3].btn.btn-danger.btn-sm> '重置'
 							# 	<button.btn.btn-success.btn-sm @click=sendpara($ctrinput.Value)> '提交'

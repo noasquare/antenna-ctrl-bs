@@ -1,5 +1,15 @@
 import './ctrsider'
 const devcolor = ['teal7','red7','sky7'] # 设置设备状态的一个颜色数组
+let xydata = [
+	{
+		x:-50
+		y:100
+	}
+	{
+		x:20
+		y:34
+	}
+]
 # let devlistdata # 单个电线数据
 tag tianxian
 
@@ -24,11 +34,13 @@ tag tianxian
 	# prop routeid = route.params.id
 	prop tpname
 	prop ws
+	# prop xinx
+	# prop yinx
+
 	def devctr index # 查看点击拓扑视图中 设备之后的顺序。
 		ctrindex = index
 
 	def mount
-		
 	def tpcontent data
 		tpname = data.StatusList[0].StName
 		tpvalue = data.StatusList[0].Value
@@ -40,17 +52,18 @@ tag tianxian
 		for item,index in data
 			if item.AntNo == params.id
 				antindex = index
+				
 				# devctrdata ??= data[index].Devices[0] # 并把天线里面的第一台设备赋给devctrdata，这个的？？=意思是如果不存在就赋值。
 				# console.log "routed",devctrdata
 	def render()
 		# 默认是第一个伺服，如果有点击按钮，就用被点击的设备的序号。
 		ctrindex ??= 0
-		if ctrindex >= (data[antindex].Devices.length - 1) # 当通过路由参数进来的index大于所有列表的长度，就重新赋值0
+		if ctrindex > (data[antindex].Devices.length - 1) # 当通过路由参数进来的index大于所有列表的长度，就重新赋值0
 			ctrindex = 0
 		# console.log "天线视图刷新"
 		<self>
 			<div[d:hflex w:100% h:100% g:5px]>
-				<div[w:70% bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)]>
+				<div[w:70% bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid 1px rgb(12,100,100)]>
 					<div.txbody>
 						<div.btitle> "{data[antindex].AntName}:设备拓扑图"
 						<div.tuop>
@@ -61,14 +74,14 @@ tag tianxian
 											<div[d:inline fs:20px c:teal4 fw:bold ff:monospace]> item.Value
 							<div[h:auto d:hflex ja:center g:15px m:5 10]> for item,i in data[antindex].Devices
 								if item.StatusList[item.StatusList.length - 1].Value == 'Disconnected'
-									<button[x:{x} y:{y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
+									<button[x:{xydata[i].x} y:{xydata[i].y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
 										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 											if n < 4
 												<div[d:hflex ja:center]>
 													<div[fs:12px]> tpitem.StName+':'
 													<div[c:teal4 fs:16px fw:bold]> tpitem.Value
 								else if item.StatusList[item.StatusList.length - 1].Value == 'Normal'
-									<button[x:{x} y:{y} bgc:{devcolor[0]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
+									<button[x:{xydata[i].x} y:{xydata[i].y} bgc:{devcolor[0]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
 										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 											if n < 4
 												<div[d:hflex ja:center]>
@@ -132,7 +145,7 @@ tag tianxian
 										<td> '光端机'
 										<td> '发发射'
 										<td.log-code> '255>GAIN_15.00'
-				<div[w:30% bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)]>
+				<div[w:30% bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid 1px rgb(12,100,100)]>
 					<ctrsider data=data[antindex].Devices[ctrindex] ws=ws ant=route.params.id>
 
 

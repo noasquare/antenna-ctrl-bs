@@ -1,4 +1,5 @@
 import * as bootstrap from 'bootstrap' # 使用bootstrap作为前端ui组件
+# import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/css/bootstrap.min.css' # 使用
 import './tianxian'
 import './ctrsider'
@@ -9,7 +10,7 @@ import wsdata from './antenna.json'
 global css html
 	ff:sans
 global css body bg:center url('./imgs/bg-antenna.jpg') m:0 p:0 c:gray3
-
+let tooltipList
 let socket
 let globaldata = 0
 let txs = ['tx1','tx2','tx3','tx4','tx5']
@@ -18,13 +19,13 @@ let wsAdds
 let wsrefresh
 tag app
 	# 有关main的部分都放在以下 
-	css .main m:0 p:5px of:hidden d:hflex h:95% bdt:solid rgb(12,100,100)
-		.menu mr:5px w:15% ta:center bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
+	css .main m:0 p:5px of:hidden d:hflex h:95% bdt:solid 1px rgb(12,100,100)
+		.menu mr:5px w:15% ta:center bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid 1px rgb(12,100,100)
 		.menudroplink bgc:transparent @hover:gray8 @focus:gray6 m:0 p:4 d:hflex outline:none bd:none w:100%	
 		.accordion --bs-accordion-bg:transparent bd:none --bs-accordion-border-width:0px
 		.triangle-right w:0 h:0 bdt:5px solid transparent bdl:10px solid gray3 bdb:5px solid transparent
 		.triangle-down w:0 h:0 bdt:10px solid gray3 bdl:5px solid transparent bdr:5px solid transparent
-	css .antall bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid rgb(12,100,100)
+	css .antall bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid 1px rgb(12,100,100)
 	# 有关header 的都放在以下
 	css .header bg:rgba(11,41,49,.6) h:5% @!500:10% d:hflex ta:right shadow:inset 0px 0px 10px 5px rgb(12,100,100)
 		.logo w:40% d:flex ja:center
@@ -46,6 +47,12 @@ tag app
 		antindex = data
 	set wscheck dev
 		dev ??= '--本地数据'
+	def load url
+		console.log 'load 来了'
+		# window.fetch(url).then do(res)
+		# 	res.json
+		let res = await window.fetch(url)
+		return res.json!
 	def wsopen url
 		if socket
 			socket.close()
@@ -57,21 +64,24 @@ tag app
 			imba.commit!
 
 	def mount
+		console.log 'mount 开始'
 		wsopen(wsAdds ??= "ws://192.168.0.64:9999")
+		# console.log '来自mount' # mount里面的数据只加载一次。
 		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 		# console.log tooltipTriggerList.length
 		tooltipList = [...tooltipTriggerList].map do(item) # 这里有个小技巧 不能再这里指定const,否则就变成局部变量了。
 			new bootstrap.Tooltip(item)
-		# devdata = wsdata
-		# console.log '来自mount' # mount里面的数据只加载一次。
+		# console.log tooltipList
+		load('/testforu').then do(data)
+			console.log data
 		
-
-			
 	def render()
+		# devdata = wsdata
+		# console.log tooltipList
 		devdata ??= wsdata # 当devdata 没有ws数据灌入时候，就赋值本地的jsondata
 		# 这里是一个初始值，确保devlist不管是否点击目录也可以有值
 		devlist ??= wsdata[0]
-		# console.log 'render 开始' # 知道有事件发生就会render
+		console.log 'render 开始' # 知道有事件发生就会render
 		# console.log socket
 
 
@@ -80,9 +90,11 @@ tag app
 				<button[d:hflex ai:center pl:5 bgc:transparent bd:none c:gray3].setting>
 					<img[mr:2 scale:.7] src='./imgs/menu.png'>
 					<div> '菜单'
+					<span[fs:10px ml:3 c:gray4/70]> "上海盛磊2022{<sup> '©'}"
 				<button[bd:none outline:none shadow:none bgc:transparent].logo route-to='/home'>
 					<img[scale:0.5] src='./imgs/logo.png'>
-					<span[c:#fff fs:18px]> "天线精灵控制软件"+title
+					<span[c:#fff fs:18px]> "天线精灵控制软件" 
+						<sub> 'v1.0'
 				<div[d:hflex ja:center].notify>
 					<button[bgc:transparent bd:none ml:auto].pos-relative.notify-msg>
 						<img[scale:.8] src='./imgs/alert.png'>
@@ -127,6 +139,9 @@ tag app
 									<div[fs:14px c:gray3 ml:3]> '暂定留空'
 					<button.menunodrop route-to='/devlog'> "日志"
 					<button.menunodrop route-to='/setting'> "设置"
+					# <button.menunodrop route-to='/users'>
+					<i.bi.bi-alarm>
+
 				
 				<tianxian$routeid[w:100%] route='/txst/:id' data=devdata ws=socket antindex=antindex> # 这里的index是为了区分是哪个天线的数据，但是如果这样，就会导致纯通过route不能获取最新的数据了。解决方案就是，点击要的index传进去，然后再component里面直接做，不转手。
 				<div[p:5 w:100% d:grid gtc:1fr 1fr 1fr g:5 a:baseline].antall route='/antall'> for item in devdata
@@ -147,7 +162,8 @@ tag app
 							<input$wsrefresh type='text' placeholder='刷新率' bind=wsrefresh>
 							<button[ml:5].btn.btn-success @click=changewsadd($wsrefresh.value)> "修改"
 
-
+				# <div.antall route='/users'>
+				# 	<p> 'test!!'
 
 
 imba.mount <app>
