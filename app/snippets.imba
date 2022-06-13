@@ -1,3 +1,15 @@
+						# for item,inx in logdata
+						# 	<tr>
+						# 		<th scope='row'> item.antname
+						# 		<td> item.ctrlip
+						# 		<td> item.ctrlcmd
+						# 		<td> item.devname
+						# 		<td> item.cmdtime
+						# 		<td> item.ctrluser
+						# 		<td> item.driverclass
+
+
+
 			# <div.sdtitle> "设备控制"
 			# <div.sdstatus>
 			# 	<div.status-title-left> '实时参数'

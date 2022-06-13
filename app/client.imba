@@ -76,13 +76,10 @@ tag app
 			console.log data
 		
 	def render()
-		# devdata = wsdata
-		# console.log tooltipList
 		devdata ??= wsdata # 当devdata 没有ws数据灌入时候，就赋值本地的jsondata
 		# 这里是一个初始值，确保devlist不管是否点击目录也可以有值
 		devlist ??= wsdata[0]
 		console.log 'render 开始' # 知道有事件发生就会render
-		# console.log socket
 
 
 		<self>
