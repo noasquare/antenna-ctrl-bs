@@ -80,14 +80,15 @@ tag tianxian
 												<div[d:hflex ja:center]>
 													<div[fs:12px]> tpitem.StName+':'
 													<div[c:teal4 fs:16px fw:bold]> tpitem.Value
-								else if item.StatusList[item.StatusList.length - 1].Value == 'Normal'
+								if item.StatusList[item.StatusList.length - 1].Value == 'Normal' && item.FaultList.length === 0
 									<button[x:{xydata[i].x} y:{xydata[i].y} bgc:{devcolor[0]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
 										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 											if n < 4
 												<div[d:hflex ja:center]>
 													<div[fs:12px]> tpitem.StName+':'
 													<div[c:teal4 fs:16px fw:bold]> tpitem.Value
-								else
+								if item.StatusList[item.StatusList.length - 1].Value == 'Normal' && item.FaultList.length !== 0
+									console.log item.FaultList.length
 									<button[x:{x} y:{y} bgc:{devcolor[1]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
 										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 											if n < 4

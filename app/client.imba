@@ -145,7 +145,7 @@ tag app
 					<antcard rdata=item>
 				<div[w:100% ta:center].antall route='/devall'>
 					<div[mt:3]> '阵地设备总览'
-					<devall>
+					<devall data=devdata>
 				<div[w:100% ta:center].antall route='/devlog'>
 					<devlog[mt:4]>
 				<div[w:100% ta:center].antall route='/setting'>

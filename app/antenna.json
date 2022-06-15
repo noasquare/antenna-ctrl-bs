@@ -137,7 +137,8 @@
 			  "ReadOnly": true
 			}
 		  ],
-		  "FaultList": []
+		  "FaultList": [
+		  ]
 		}
 	  ]
 	},
@@ -236,7 +237,13 @@
 			  "ReadOnly": true
 			}
 		  ],
-		  "FaultList": []
+		  "FaultList": [
+			{
+				"name": "test",
+				"value": 123
+
+			}
+		  ]
 		}
 	  ]
 	}

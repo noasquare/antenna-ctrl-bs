@@ -1,16 +1,19 @@
 tag devcard
 	prop devstatus
 	prop devnum
+	prop data
 	def mount
 		console.log 
 		
-	<self[d:hflex h:10 ja:center fs:14px rd:10px bd:solid 1px gray4 w:50 bg:linear-gradient(0.25turn,{devstatus.bgcolor1},{devstatus.bgcolor2})]> 
+	<self[d:hflex h:10 ja:center fs:14px rd:10px bd:solid 1px gray4 w:auto bg:linear-gradient(0.25turn,{devstatus.bgcolor1},{devstatus.bgcolor2})]> 
 		# <img[mr:5] src=devstatus.imgpath>
 		<div> devstatus.title
 		<div[p:2 1 c:{devstatus.color} fs:13 fw:700 ff:mono]> devnum
 		<div> '个'
 
-let devnum = [76,72,3,0,7]
+# let devnum = [76,72,3,7]
+# let devnum = new Array(4)
+let devnum
 let devstatus = [
 	{
 		title : '总数'
@@ -31,12 +34,6 @@ let devstatus = [
 		bgcolor2:'purple9'
 	}
 	{
-		title:'维护'
-		color:'orange5'
-		bgcolor1:'orange7'
-		bgcolor2:'orange9'
-	}
-	{
 		title:'离线'
 		color:'blue5'
 		bgcolor1:'blue7'
@@ -44,70 +41,85 @@ let devstatus = [
 	}
 ]
 
+let pagesize = 10
 
 tag devall
+	css tbody
+		tr:pointer
+	def search
+		console.log '查询设备列表'
+	def prevPage
+	def nextPage
+	def devcount
+		devnum = [0,0,0,0]
+		console.log '开始计算'
+		for item in data
+			for devitem in item.Devices
+				devnum[0] += 1
+				for stitem in devitem.StatusList
+					if stitem.StName === 'ConnectStatus' && stitem.Value === 'Normal'
+						console.log '判断在线依据'
+						devnum[1] += 1
+					if stitem.StName === 'ConnectStatus' && stitem.Value === 'Disconnected'
+						console.log '判断掉线依据'
+						devnum[3] += 1
+				if devitem.FaultList.length !== 0 # 这里告警依据待定
+					console.log '判断告警依据'
+					devnum[2] += 1
 
-	<self> 
-		<div[d:hflex ja:center]> for item,index in devstatus
-			<devcard[p:10 m:4] devstatus=item devnum=devnum[index]>
-		<div[d:hflex ja:center].devsearch>
-			<div[bdl:solid 10px teal4 ml:3 pl:2 fs:18px mr:auto]> '阵地设备状态'
-			<div[d:hflex]>
-				<div> '设备类型'
-				<input[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px] type='text'> 
-			<div[d:hflex pl:5]>
-				<div> '设备状态'
-				<input[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px] type='text'> 
-			<button[bd:none shadow:none bgc:teal5 c:white rd:6px p:1 3 m:1 5 bg:linear-gradient(teal3,teal6)]> "查询"
+	def rowroute e
+		console.log e.target
+		route-to = "/123"	
+	def mount
 
+	def render
+		devcount!
+		document.querySelectorAll('#devtable tbody tr').forEach do(r)
+			console.log '增加行点击事件'
+			r.addEventListener('click',rowroute,no)
 
-		<div[p:3 5].devtable>
-			<table[w:100% ta:center ofy:scroll].table>
-				<thead[bgc:teal4 c:black]>
-					<tr>
-						<th scope="col"> '操作'
-						<th scope="col"> '所属天线'
-						<th scope="col"> '设备名称'
-						<th scope="col"> '状态'
-						<th scope="col"> '设备简称'
-						<th scope="col"> '设备类型'
-						<th scope="col"> '设备IP'
-						<th scope="col"> '设备端口'
-				<tbody[c:gray3 border-color:rgb(64,73,91)]>
-					<tr>
-						<th scope='row'> '01'
-						<td> '一号天线'
-						<td> 'otto'
-						<td[d:hflex ai:center p:0]>
-							<img[scale:.6] src='./imgs/alarm.png'>
-							<div> '离线'
-						<td> '伺服设备'
-						<td> '伺服'
-						<td> '192.168.2.1'
-						<td> '9000'
-					<tr>
-						<th scope='row'> '01'
-						<td> '一号天线'
-						<td> 'otto'
-						<td[d:hflex ai:center p:0 mt:1px]>
-							<img[scale:.6] src='./imgs/alarm.png'>
-							<div> '离线'
-						<td> '伺服设备'
-						<td> '伺服'
-						<td> '192.168.2.1'
-						<td> '9000'
-					<tr>
-						<th scope='row'> '01'
-						<td> '一号天线'
-						<td> 'otto'
-						<td[d:hflex ai:center p:0 mt:1px]>
-							<img[scale:.6] src='./imgs/alarm.png'>
-							<div> '离线'
-						<td> '伺服设备'
-						<td> '伺服'
-						<td> '192.168.2.1'
-						<td> '9000'
-		<div> '分页设置'
+		<self> 
+			<div[d:hflex ja:center mb:4]> for item,index in devstatus
+				<devcard[p:10 m:2] devstatus=item devnum=devnum[index]>
+			<div[d:hflex ja:center].devsearch>
+				<div[bdl:solid 10px teal4 ml:3 pl:2 fs:18px mr:auto]> '阵地设备状态'
+				<div[d:hflex]>
+					<div> '设备类型'
+					<input[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px] type='text'> 
+				<div[d:hflex pl:5]>
+					<div> '设备状态'
+					<input[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px] type='text'> 
+				<button[bd:none shadow:none bgc:teal5 c:white rd:6px p:1 3 m:1 5 bg:linear-gradient(teal3,teal6) @hover:linear-gradient(teal6,teal4)] @click=search> "查询"
+			<div[p:3 5].devtable>
+				<table[w:100% ta:center ofy:scroll].table#devtable>
+					<thead[bgc:teal4 c:black]>
+						<tr>
+							<th scope="col"> '所属天线'
+							<th scope="col"> '设备名称'
+							<th scope="col"> '状态'
+							<th scope="col"> '设备编号'
+					<tbody[c:gray3 border-color:rgb(64,73,91)]> for item in data
+						for devitem in item.Devices
+							<tr>
+								<td> item.AntName
+								<td> devitem.DevName
+								for stitem in devitem.StatusList
+									if stitem.StName === 'ConnectStatus' && stitem.Value === 'Normal' && devitem.FaultList.length == 0
+										<td[d:hflex ai:center p:0]>
+											<img[scale:.6] src='./imgs/alarm.png'>
+											<div> '在线'
+									if stitem.StName === 'ConnectStatus' && stitem.Value === 'Disconnected'
+										<td[d:hflex ai:center p:0]>
+											<img[scale:.6] src='./imgs/alarm.png'>
+											<div> '离线'
+								if devitem.FaultList.length !== 0
+									<td[d:hflex ai:center p:0]>
+										<img[scale:.6] src='./imgs/alarm.png'>
+										<div> '告警'
+								<td> devitem.DevNo
+			<button[mr:5].btn.btn-secondary @click=prevPage> "前一页"
+			<button.btn.btn-secondary @click=nextPage> "下一页"
+
 				
 
 

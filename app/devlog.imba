@@ -3,8 +3,10 @@ let table
 let tabledata
 let sortCol
 let sortAsc = no
-const pageSize = 10
+const pageSize = 15
 let curPage = 1
+let searchflag = no
+let searchdata
 
 tag devlog
 	css th cursor:pointer
@@ -42,10 +44,10 @@ tag devlog
 			`
 		table.innerHTML = result if result
 	
-	def renderTable
+	def renderTable tada
 		let result = ''
 		# console.log tabledata
-		tabledata.filter(do(row,index)
+		tada.filter(do(row,index)
 			let start = (curPage - 1)*pageSize
 			let end = curPage * pageSize
 			return yes if (index >= start && index < end)
@@ -68,22 +70,69 @@ tag devlog
 			res.json!
 			.then do(data)
 				tabledata = data
-				renderTable!
+				renderTable(tabledata)
 
 	def prevPage
 		curPage-- if curPage > 1
-		renderTable!
+		if searchflag
+			renderTable(searchdata)
+		else
+			renderTable(tabledata)
 	def nextPage
-		curPage++ if curPage*pageSize < tabledata.length
-		renderTable!
+		if !searchflag
+			curPage++ if curPage*pageSize < tabledata.length
+			renderTable(tabledata)
+		else
+			curPage++ if curPage*pageSize < searchdata.length
+			renderTable(searchdata)
 
+	def searchdate
+		console.log '开始日期查询'
+		let test = tabledata.filter do(row,index)
+			if row.cmdtime > $startdate.value && row.cmdtime < $enddate.value
+				return yes
+		if test.length > 0
+			console.log test.length
+			searchflag = yes
+			searchdata = test
+			renderTable(searchdata)
+		else
+			searchflag = no
+			renderTable(tabledata)
+
+
+	def searchdev
+		console.log '开始查询列表'
+		let test = tabledata.filter(do(row,index)
+			if (row.devname === $devname.value)
+				return yes
+			)
+		console.log test
+		if test.length > 0
+			searchflag = yes
+			console.log '查询找到了'
+			searchdata = test
+			console.log searchdata
+			renderTable(searchdata)
+		else
+			searchflag = no
+			console.log '啥都没找到'
+			renderTable(tabledata)
+		# console.log tabledata
+
+	
+
+	def reset
+		console.log '重置查询'
+		$startdate.value = ''
+		$enddate.value = ''
+		searchflag = no
+		renderTable(tabledata)
+		
 
 	def mount
 		document.querySelectorAll('#logtable thead tr th').forEach do(t)
-			# console.log t
 			t.addEventListener('click',sort,no)
-
-		
 		logload('/loglist')
 
 	# def render
@@ -94,18 +143,19 @@ tag devlog
 		<div[d:hflex ja:center fs:14px].devsearch>
 			<div[bdl:solid 10px teal4 ml:3 pl:2 fs:18px mr:auto]> '阵地设备日志'
 			<div[d:hflex]>
-				<div> '设备名称'
-				<input[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px] type='text'> 
+				<div> '输入查询'
+				<input$devname[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px] type='text' @change=searchdev placeholder="输入设备名称-回车查询"> 
 			<div[d:hflex pl:5]>
 				<div> '开始日期'
-				<input[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px c:gray3] type='date'> 
+				<input$startdate[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px c:gray3] type='date'> 
 			<div[d:hflex pl:5]>
 				<div> '结束日期'
-				<input[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px c:gray3] type='date'> 
-			<button[bd:none shadow:none bgc:teal5 c:white rd:6px p:1 3 m:1 5 bg:linear-gradient(teal3,teal6)]> "查询"
+				<input$enddate[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px c:gray3] type='date'> 
+			<button[bd:none shadow:none bgc:teal5 c:white rd:6px p:1 3 m:1 5 bg:linear-gradient(teal3,teal6) @hover:linear-gradient(teal6,teal4)] @click=searchdate> "查询"
+			<button[bd:none shadow:none bgc:teal5 c:white rd:6px p:1 3 m:1 mr:5 bg:linear-gradient(teal3,teal6) @hover:linear-gradient(teal6,teal4)] @click=reset> "重置"
 
-		<div[p:3 5 ofy:scroll].devtable>
-			<table[w:100% ta:center].table#logtable>
+		<div[p:3 5].devtable>
+			<table$logtable[w:100% ta:center].table#logtable>
 				<thead[bgc:teal5 c:black]>
 					<tr>
 						<th scope="col" data-sort='id'> '设备ID'
