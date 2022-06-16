@@ -3,6 +3,8 @@ tag antcard
 	prop online
 	prop alarm
 	prop offline
+	def opcamera
+		console.log '打开摄像头'
 	def mount
 	def countDev da
 		online=alarm=offline=0
@@ -22,25 +24,16 @@ tag antcard
 		# console.log 'card load'
 		
 		<self> 
-			<button[w:100% c:gray3 d:vflex bd:solid 1px gray4 bg:linear-gradient(0.25turn,rgb(94,94,122),rgb(5,21,44)) rd:10px].ant route-to="/txst/{rdata.AntNo}">
+			<div[w:100% c:gray3 d:vflex bd:solid 1px gray4 bg:linear-gradient(0.25turn,rgb(94,94,122),rgb(5,21,44)) rd:10px].ant>
 				<div[w:100% h:20% ta:center p:2 2].anttitle> rdata.AntName
 				<div[w:100% h:80% d:vflex].antbody>
-					<div[w:100% h:80% d:hflex ja:center].antstatus1>
+					<button[w:100% h:80% d:hflex ja:center shadow:none bd:none bgc:transparent c:gray2].antstatus1 route-to="/txst/{rdata.AntNo}">
 						<img[size:20% p:2] src='./imgs/antcardimg.png'>
 						<div[w:38% d:vflex]> for item,i in rdata.Devices[0].StatusList
 							if i < 4
 								<div[d:hflex w:100% h:25% ja:center]>
 									<div[]> item.StName + ':'
 									<div[c:teal4 fs:16px fw:bold ff:mono ml:2 o@off:0].antstatus> item.Value
-							# <div[d:hflex w:100% h:25% ja:center]>
-							# 	<div[]> '俯仰:'
-							# 	<div[c:rgb(23,168,62) ml:3].antstatus> '0.00'
-							# <div[d:hflex w:100% h:25% ja:center]>
-							# 	<div[]> '极化1:'
-							# 	<div[c:rgb(23,168,62) ml:3].antstatus> '0.00'
-							# <div[d:hflex w:100% h:25% ja:center]>
-							# 	<div[]> '极化2:'
-							# 	<div[c:rgb(23,168,62) ml:3].antstatus> '0.00'
 						<div[w:38% d:vflex g:10px]> 
 							<div[d:hflex w:100% ja:center]>
 								<div[p:1 2 bgc:teal7 rd:4px c:gray2 fs:12px mr:3]> online
@@ -55,14 +48,16 @@ tag antcard
 
 
 					<div[p:4 5 w:100% h:20% d:hflex].antstatus2>
-						<div[w:30% d:hflex].antagc> for agc in rdata.Devices[0].StatusList
+						<div[w:30% d:hflex].antagc> for agc in rdata.Devices[0].StatusList # 这里第0个就是伺服，每个天线第0个都是伺服
 							if agc.StName == "SignalLevel"
 								<div> 'AGC:'
 								<div[c:rgb(23,168,62) ml:3]> agc.Value
-						<div[w:30% d:hflex].antlock>
-							# <img src=''> 'lock pic'
-							<div[ml:5]> 'LOCK'
-						<div[w:40% ml:auto d:hflex ja:right].antcam>
+						<div[w:30% d:hflex].antlock> for agc in rdata.Devices[0].StatusList # 这里第0个就是伺服，每个天线第0个都是伺服
+							if agc.StName == "SignalQuality"
+
+								# <img src=''> 'lock pic'
+								<div[ml:5]> agc.Value
+						<button[shadow:none bd:none bgc:transparent c:gray2 zi:10 w:40% ml:auto d:hflex ja:right].antcam @click=opcamera>
 							<img src='./imgs/cam.png'>
 							<div[ml:3]> '监控'
 

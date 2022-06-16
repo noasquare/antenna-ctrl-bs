@@ -48,7 +48,7 @@ tag tianxian
 		# console.log tpname
 		# 通过路由id中的天线编号来载入每个天线的全部数据，并初始化设备数据
 	def routed params,state
-		# console.log params
+		console.log data
 		for item,index in data
 			if item.AntNo == params.id
 				antindex = index
@@ -88,7 +88,7 @@ tag tianxian
 													<div[fs:12px]> tpitem.StName+':'
 													<div[c:teal4 fs:16px fw:bold]> tpitem.Value
 								if item.StatusList[item.StatusList.length - 1].Value == 'Normal' && item.FaultList.length !== 0
-									console.log item.FaultList.length
+									# console.log item.FaultList.length
 									<button[x:{x} y:{y} bgc:{devcolor[1]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
 										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 											if n < 4

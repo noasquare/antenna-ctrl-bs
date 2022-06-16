@@ -102,9 +102,9 @@ tag devlog
 
 
 	def searchdev
-		console.log '开始查询列表'
+		# console.log '开始查询列表'
 		let test = tabledata.filter(do(row,index)
-			if (row.devname === $devname.value)
+			if (row.devname == $devname.value)
 				return yes
 			)
 		console.log test
