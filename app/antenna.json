@@ -94,7 +94,12 @@
 			  "ReadOnly": true
 			}
 		  ],
-		  "FaultList": []
+		  "FaultList": [
+			{
+				"name": "test",
+				"value": 123
+			}
+		  ]
 		},
 		{
 		  "DevNo": "03",
