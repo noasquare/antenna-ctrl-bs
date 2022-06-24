@@ -62,7 +62,8 @@ tag app
 			devdata = JSON.parse(e.data)
 			console.log devdata
 			imba.commit!
-
+	def alarmNo
+		
 	def mount
 		console.log 'mount 开始'
 		wsopen(wsAdds ??= "ws://192.168.0.64:9999")
@@ -72,7 +73,7 @@ tag app
 		tooltipList = [...tooltipTriggerList].map do(item) # 这里有个小技巧 不能再这里指定const,否则就变成局部变量了。
 			new bootstrap.Tooltip(item)
 		# console.log tooltipList
-		load('/testforu').then do(data)
+		load('/testforu').then do(data)  # 这里是查询数据库里面的 用户信息。
 			console.log data
 		
 	def render()
@@ -80,7 +81,7 @@ tag app
 		# 这里是一个初始值，确保devlist不管是否点击目录也可以有值
 		devlist ??= wsdata[0]
 		console.log 'render 开始' # 知道有事件发生就会render
-
+		# console.log $devall.alarmNo
 
 		<self>
 			<div.header>
@@ -93,9 +94,9 @@ tag app
 					<span[c:#fff fs:18px]> "天线精灵控制软件" 
 						<sub> 'v1.0'
 				<div[d:hflex ja:center].notify>
-					<button[bgc:transparent bd:none ml:auto].pos-relative.notify-msg>
+					<button[bgc:transparent bd:none ml:auto].pos-relative.notify-msg route-to='/devall'>
 						<img[scale:.8] src='./imgs/alert.png'>
-						<span[w:8 fs:12px pos:absolute top:1 right:21% c:gray2 bgc:red5 rd:9px bd:solid .5px gray2]> '9+'
+						<span[w:8 fs:12px pos:absolute top:1 right:21% c:gray2 bgc:red5 rd:9px bd:solid .5px gray2]> $devall.alarmNo
 					<div[d:hflex ja:center ml:auto].notify-user>
 						<img[mr:2] src='./imgs/user.png'>
 						<div> 'admin'
@@ -145,7 +146,7 @@ tag app
 					<antcard rdata=item>
 				<div[w:100% ta:center].antall route='/devall'>
 					<div[mt:3]> '阵地设备总览'
-					<devall data=devdata>
+					<devall$devall data=devdata>
 				<div[w:100% ta:center].antall route='/devlog'>
 					<devlog[mt:4]>
 				<div[w:100% ta:center].antall route='/setting'>

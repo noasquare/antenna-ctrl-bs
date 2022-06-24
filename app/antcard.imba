@@ -15,11 +15,11 @@ tag antcard
 	def countDev da
 		online=alarm=offline=0
 		for item in da.Devices
-			if item.StatusList[item.StatusList.length - 1].Value == 'Normal'
+			if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length === 0
 				online++
-			else if item.StatusList[item.StatusList.length - 1].Value == 'Disconnected'
+			if item.StatusList[item.StatusList.length - 1].Value === 'Disconnected'
 				offline++
-			else
+			if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length !== 0
 				alarm++
 
 

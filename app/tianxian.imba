@@ -48,7 +48,7 @@ tag tianxian
 		# console.log tpname
 		# 通过路由id中的天线编号来载入每个天线的全部数据，并初始化设备数据
 	def routed params,state
-		console.log data
+		# console.log data
 		for item,index in data
 			if item.AntNo == params.id
 				antindex = index
@@ -73,22 +73,21 @@ tag tianxian
 										<div[p:3]> item.StName+' : '
 											<div[d:inline fs:20px c:teal4 fw:bold ff:monospace]> item.Value
 							<div[h:auto d:hflex ja:center g:15px m:5 10]> for item,i in data[antindex].Devices
-								if item.StatusList[item.StatusList.length - 1].Value == 'Disconnected'
+								if item.StatusList[item.StatusList.length - 1].Value === 'Disconnected'
 									<button[x:{xydata[i].x} y:{xydata[i].y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
 										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 											if n < 4
 												<div[d:hflex ja:center]>
 													<div[fs:12px]> tpitem.StName+':'
 													<div[c:teal4 fs:16px fw:bold]> tpitem.Value
-								if item.StatusList[item.StatusList.length - 1].Value == 'Normal' && item.FaultList.length === 0
+								if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length === 0
 									<button[x:{xydata[i].x} y:{xydata[i].y} bgc:{devcolor[0]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
 										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 											if n < 4
 												<div[d:hflex ja:center]>
 													<div[fs:12px]> tpitem.StName+':'
 													<div[c:teal4 fs:16px fw:bold]> tpitem.Value
-								if item.StatusList[item.StatusList.length - 1].Value == 'Normal' && item.FaultList.length !== 0
-									# console.log item.FaultList.length
+								if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length !== 0
 									<button[x:{x} y:{y} bgc:{devcolor[1]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
 										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 											if n < 4
@@ -111,7 +110,7 @@ tag tianxian
 							<button[d:flex ja:center w:100px h:30px pos:absolute t:1rem r:1rem bgc:red6 @hover:red7 c:#fff outline:none rd:5px cursor:pointer bd:none box-shadow:0 0 15px 5px red5 @hover:0 0 10px 2px red5].tpbtn type='button' data-bs-toggle='tooltip' data-bs-placement='top' title='关闭伺服电源'>
 								<img[scale:.7] src='./imgs/btn-stop.png'>
 								<span[fs:12px]> '紧急停车'
-						<div[m:0 p:0 5 c:gray4]> '命令流日志'
+						<div[m:0 p:0 5 c:gray4]> '卫星列表数据'
 						<div[ofy:scroll].mlog>
 							<table[bd:solid 1px gray5].table>
 								<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91)]>

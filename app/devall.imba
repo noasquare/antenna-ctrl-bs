@@ -1,3 +1,4 @@
+import alarm from './imgs/alarm.png'
 tag devcard
 	prop devstatus
 	prop devnum
@@ -50,6 +51,7 @@ let pagesize = 10
 let antroute
 tag devall
 	prop data
+	prop alarmNo
 	css tbody tr cursor:pointer
 	def search
 		console.log '查询设备列表'
@@ -71,6 +73,7 @@ tag devall
 				if devitem.FaultList.length !== 0 # 这里告警依据待定
 					# console.log '判断告警依据'
 					devnum[2] += 1
+		alarmNo = devnum[2] # 把告警的数量传递给到首页来显示。
 
 	def rowroute e
 		console.log e.target.textContent
