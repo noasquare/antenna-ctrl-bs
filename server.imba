@@ -1,9 +1,7 @@
 import express from 'express'
 import index from './app/index.html'
-# import cors from 'cors'
 import test from './database'
 const cors = require('cors')
-
 const app = express!
 
 app.use(cors())
@@ -20,6 +18,9 @@ app.get('/loglist') do(req,res)
 	mysql.connection.query 'SELECT * FROM device_control;' do(er,rows)
 		console.log er if er
 		res.send(rows)
+
+app.get('/cam') do(req,res)
+
 
 # catch-all other route that returns our index.html
 app.get(/.*/) do(req,res)
