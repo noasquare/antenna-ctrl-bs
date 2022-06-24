@@ -1,9 +1,28 @@
+import axios from 'axios'
+
 tag antcard
 	prop rdata
 	prop online
 	prop alarm
 	prop offline
+
+	def getimg
+		try
+			let data = await axios.post('http://localhost:1880/getcam',{
+				title:'testfrom frontend'
+				status:true
+			})
+			console.log data
+
+		catch er
+			if er.response.status === 404
+				console.log 'you can not reach post method!' 
+			else 
+				console.log er.message 
+
+
 	def opcamera
+		getimg!
 		console.log '打开摄像头'
 		let res = await window.fetch("http://localhost:1880/cam")
 		imgurl = await res.json!

@@ -19,7 +19,7 @@ app.get('/loglist') do(req,res)
 		console.log er if er
 		res.send(rows)
 
-app.get('/cam') do(req,res)
+
 
 
 # catch-all other route that returns our index.html
