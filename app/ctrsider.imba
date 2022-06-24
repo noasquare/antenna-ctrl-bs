@@ -82,18 +82,24 @@ tag ctrsider
 							<div[p:5 d:hflex ja:center m:5].ctlbtn>
 								<button[mr:3].btn.btn-danger.btn-sm> '重置'
 								<button.btn.btn-success.btn-sm> '提交'
-				<div.sdtitle> '更多参数'
-				<button.collapsibale[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center] @click=colapse> '设备错误参数'
-				<div.content[d:none ofy:scroll]> '错误内容'
-
+				<div.sdtitle> '更多参数' 
 				<div.accordion id='ctl-status'>
 					<div.accordion-item>
 						<h6.accordion-header id='headingStatus'>
 							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseStatus' aria-expanded='true' aria-control='collapseStatus'>
 								<div[w:90%]> '设备参数'
 								<div[w:10% ml:auto].triangle-right>
-						<div.accordion-collapse.collapse.show id='collapseStatus' aria-labelledby='headingStatus' data-bs-parent='#ctl-status'> for item,index in data.StatusList
+						<div[max-height:40 ofy:auto].accordion-collapse.collapse.show id='collapseStatus' aria-labelledby='headingStatus' data-bs-parent='#ctl-status'> for item,index in data.StatusList
 							if index >= 4 
 								<div[m:0 p:5px d:hflex ai:left].accordion-body>
 									<div[fs:14px c:gray3 ml:3]> item.StName+':'
 									<div[fs:14px ml:auto mr:5 c:rgb(31,219,220)]> item.Value
+					<div.accordion-item>
+						<h6.accordion-header id='headingFault'>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseFault' aria-expanded='true' aria-control='collapseFault'>
+								<div[w:90%]> '错误参数'
+								<div[w:10% ml:auto].triangle-right>
+						<div[max-height:40 ofy:auto].accordion-collapse.collapse.show id='collapseFault' aria-labelledby='headingFault' data-bs-parent='#ctl-status'> for item,index in data.FaultList
+							<div[m:0 p:5px d:hflex ai:left].accordion-body>
+								<div[fs:14px c:gray3 ml:3]> item.name+':'
+								<div[fs:14px ml:auto mr:5 c:rgb(31,219,220)]> item.value
