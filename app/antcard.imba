@@ -1,10 +1,35 @@
+import axios from 'axios'
+
 tag antcard
 	prop rdata
 	prop online
 	prop alarm
 	prop offline
+
+	def getimg
+		try
+			let data = await axios.post('http://localhost:1880/getcam',{
+				title:'testfrom frontend'
+				status:true
+			})
+			console.log data
+
+		catch er
+			if er.response.status === 404
+				console.log 'you can not reach post method!' 
+			else 
+				console.log er.message 
+
+
 	def opcamera
+		getimg!
 		console.log '打开摄像头'
+		let res = await window.fetch("http://localhost:1880/cam")
+		imgurl = await res.json!
+		console.log imgurl.url
+
+			
+
 	def mount
 	def countDev da
 		online=alarm=offline=0
@@ -60,4 +85,9 @@ tag antcard
 						<button[shadow:none bd:none bgc:transparent c:gray2 zi:10 w:40% ml:auto d:hflex ja:right].antcam @click=opcamera>
 							<img src='./imgs/cam.png'>
 							<div[ml:3]> '监控'
+							
+					
+					<div>
+						if imgurl
+							<img[w:100% h:50] src=imgurl.url>
 
