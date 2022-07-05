@@ -34,8 +34,9 @@ tag tianxian
 	# prop routeid = route.params.id
 	prop tpname
 	prop ws
-	# prop xinx
-	# prop yinx
+	prop x
+	prop y
+	# prop route
 
 	def devctr index # 查看点击拓扑视图中 设备之后的顺序。
 		ctrindex = index
