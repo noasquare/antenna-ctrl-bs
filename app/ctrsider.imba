@@ -101,5 +101,5 @@ tag ctrsider
 								<div[w:10% ml:auto].triangle-right>
 						<div[max-height:40 ofy:auto].accordion-collapse.collapse.show id='collapseFault' aria-labelledby='headingFault' data-bs-parent='#ctl-status'> for item,index in data.FaultList
 							<div[m:0 p:5px d:hflex ai:left].accordion-body>
-								<div[fs:14px c:gray3 ml:3]> item.name+':'
-								<div[fs:14px ml:auto mr:5 c:rgb(31,219,220)]> item.value
+								<div[fs:14px c:gray3 ml:3]> item.Time+':'
+								<div[fs:14px ml:auto mr:5 c:rgb(31,219,220)]> item.Value
