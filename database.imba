@@ -8,8 +8,8 @@ export default class test
 	prop connection = mysql.createConnection
 		host : 'localhost'
 		user : 'root'
-		password : 'root123456'
-		database : 'antctrweb'
+		password : 'password'
+		database : 'txjl'
 
 	def connect
 		# console.log connection

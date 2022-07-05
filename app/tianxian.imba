@@ -12,7 +12,6 @@ let xydata = [
 ]
 # let devlistdata # 单个电线数据
 tag tianxian
-
 	css	.btitle h:5% w:100% c:#fff fs:15px lh:30px text-align:center mt:3
 	css	.tuop h:70% w:100% pos:relative
 		.tpimg pos:absolute bottom:0 left:0
@@ -34,9 +33,17 @@ tag tianxian
 	# prop routeid = route.params.id
 	prop tpname
 	prop ws
-	# prop xinx
-	# prop yinx
-
+	prop x
+	prop y
+	# prop route
+	def shutdowncmd
+		let data = 
+			AntennaNo : data[antindex].AntNo
+			DevNo : data[antindex].Devices[0].DevNo
+			Cmd : 'DisableDriver'
+			Params : null
+		console.log data
+		ws.send(JSON.stringify(data))
 	def devctr index # 查看点击拓扑视图中 设备之后的顺序。
 		ctrindex = index
 
@@ -69,7 +76,7 @@ tag tianxian
 						<div.tuop>
 							<div[d:flex ja:center h:25%]>
 								<div[p:5px m:10px w:50% c:gray3 bgc:teal8/40 bd:solid 1px teal4 rd:5px d:grid gtc:1fr 1fr]> for item,index in data[antindex].Devices[ctrindex].StatusList # 就tm多了一个操作，连通性就断掉了。
-									if index < 4
+									if index < 5 # 这里控制显示的参数数量，5个重要信息。
 										<div[p:3]> item.StName+' : '
 											<div[d:inline fs:20px c:teal4 fw:bold ff:monospace]> item.Value
 							<div[h:auto d:hflex ja:center g:15px m:5 10]> for item,i in data[antindex].Devices
@@ -107,7 +114,7 @@ tag tianxian
 								<div[d:hflex ai:center j:left]>
 									<div[w:5 h:5 bgc:{devcolor[2]} rd:3px]>
 									<div[fs:12px ml:auto]> '离线' 
-							<button[d:flex ja:center w:100px h:30px pos:absolute t:1rem r:1rem bgc:red6 @hover:red7 c:#fff outline:none rd:5px cursor:pointer bd:none box-shadow:0 0 15px 5px red5 @hover:0 0 10px 2px red5].tpbtn type='button' data-bs-toggle='tooltip' data-bs-placement='top' title='关闭伺服电源'>
+							<button[d:flex ja:center w:100px h:30px pos:absolute t:1rem r:1rem bgc:red6 @hover:red7 c:#fff outline:none rd:5px cursor:pointer bd:none box-shadow:0 0 15px 5px red5 @hover:0 0 10px 2px red5].tpbtn type='button' data-bs-toggle='tooltip' data-bs-placement='top' title='关闭伺服电源' @click=shutdowncmd>
 								<img[scale:.7] src='./imgs/btn-stop.png'>
 								<span[fs:12px]> '紧急停车'
 						<div[m:0 p:0 5 c:gray4]> '卫星列表数据'
