@@ -27,7 +27,7 @@ tag tianxian
 		.tphover zi:0 w:auto p:3 visibility:hidden o:0 transform:translateX(-20%) translateY(-20px) tween:.6s pos:absolute bgc:cyan9 c:gra2 rd:5px t:125%
 		.tphover::before content:'' pos:abs w:30px h:30px bg:cyan9 t:0 r:50% transform:rotate(45deg) zi:-1
 	css .tuop-chart@hover 
-		.tphover visibility:visible o:1 transform:translateX(-20%) translateY(0px)
+		.tphover visibility:visible o:1 transform:translateX(-20%) translateY(0px) zi:10
 
 	prop data
 	# prop routeid = route.params.id
@@ -81,23 +81,23 @@ tag tianxian
 											<div[d:inline fs:20px c:teal4 fw:bold ff:monospace]> item.Value
 							<div[h:auto d:hflex ja:center g:15px m:5 10]> for item,i in data[antindex].Devices
 								if item.StatusList[item.StatusList.length - 1].Value === 'Disconnected'
-									<button[x:{xydata[i].x} y:{xydata[i].y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
+									<button[x:{x} y:{y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
 										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
-											if n < 4
+											if n < 5
 												<div[d:hflex ja:center]>
 													<div[fs:12px]> tpitem.StName+':'
 													<div[c:teal4 fs:16px fw:bold]> tpitem.Value
 								if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length === 0
-									<button[x:{xydata[i].x} y:{xydata[i].y} bgc:{devcolor[0]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
+									<button[x:{x} y:{y} bgc:{devcolor[0]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
 										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
-											if n < 4
+											if n < 5
 												<div[d:hflex ja:center]>
 													<div[fs:12px]> tpitem.StName+':'
 													<div[c:teal4 fs:16px fw:bold]> tpitem.Value
 								if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length !== 0
 									<button[x:{x} y:{y} bgc:{devcolor[1]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
 										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
-											if n < 4
+											if n < 5
 												<div[d:hflex ja:center]>
 													<div[fs:12px]> tpitem.StName+':'
 													<div[c:teal4 fs:16px fw:bold]> tpitem.Value
