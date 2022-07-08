@@ -6,7 +6,8 @@ import './ctrsider'
 import './antcard'
 import './devall'
 import './devlog'
-import wsdata from './antenna.json'
+# import wsdata from './antenna.json'
+import wsdata from './状态.json'
 global css html
 	ff:sans
 global css body bg:center url('./imgs/bg-antenna.jpg') m:0 p:0 c:gray3
@@ -17,6 +18,7 @@ let txs = ['tx1','tx2','tx3','tx4','tx5']
 let devdata
 let wsAdds
 let wsrefresh
+let isLogin = no # 判断用户登录的标识
 tag app
 	# 有关main的部分都放在以下 
 	css .main m:0 p:5px of:hidden d:hflex h:95% bdt:solid 1px rgb(12,100,100)
@@ -61,10 +63,34 @@ tag app
 		socket.addEventListener 'message' do(e)
 		# 进行进来的信号做初始值设定
 			devdata = JSON.parse(e.data)
+			# 判断服务器发来的用户检查命令
+			if devdata.Cmd == 'Login'
+				switch devdata.Params.Status
+					when 'Successful'
+						isLogin = yes
+					when 'Failed'
+						isLogin = no
+						window.alert('输入的用户或密码错误！')
+					when '未登录'
+						window.alert('请登录后操作')
+					else
+						throw 'nope'
 			console.log devdata
 			imba.commit!
 	def alarmNo
-		
+
+	def login val1,val2
+		let data = 
+			Cmd : 'Login'
+			Params : {
+				name : val1
+				pwd : val2
+			}
+		console.log data
+		socket.send(JSON.stringify(data))
+
+		# isLogin = yes
+
 	def mount
 		console.log 'mount 开始'
 		wsopen(wsAdds ??= "ws://localhost:1880/test")
@@ -78,19 +104,25 @@ tag app
 			console.log data
 		
 	def render()
+		console.log $txjm.$txctrl.islogined
+		isLogin = $txjm.$txctrl.islogined
 		devdata ??= wsdata # 当devdata 没有ws数据灌入时候，就赋值本地的jsondata
 		# 这里是一个初始值，确保devlist不管是否点击目录也可以有值
 		devlist ??= wsdata[0]
-		console.log 'render 开始' # 知道有事件发生就会render
+		# console.log 'render 开始' # 知道有事件发生就会render
 		# console.log $devall.alarmNo
-
+		if !isLogin 
+			username = '观察员'
+			$txjm.$txctrl.islogined = no
+		else
+			username = 'admin'
 		<self>
 			<div.header>
 				<button[d:hflex ai:center pl:5 bgc:transparent bd:none c:gray3].setting>
 					<img[mr:2 scale:.7] src='./imgs/menu.png'>
 					<div> '菜单'
 					<span[fs:10px ml:3 c:gray4/70]> "上海盛磊2022{<sup> '©'}"
-				<button[bd:none outline:none shadow:none bgc:transparent].logo route-to='/home'>
+				<button[bd:none outline:none shadow:none bgc:transparent].logo route-to='/antall'>
 					<img[scale:0.5] src='./imgs/logo.png'>
 					<span[c:#fff fs:18px]> "天线精灵控制软件" 
 						<sub> 'v1.0'
@@ -98,22 +130,23 @@ tag app
 					<button[bgc:transparent bd:none ml:auto].pos-relative.notify-msg route-to='/devall'>
 						<img[scale:.8] src='./imgs/alert.png'>
 						<span[w:8 fs:12px pos:absolute top:1 right:21% c:gray2 bgc:red5 rd:9px bd:solid .5px gray2]> $devall.alarmNo
-					<div[d:hflex ja:center ml:auto].notify-user>
+					<button[d:hflex ja:center ml:auto bgc:transparent bd:none c:gray2].notify-user route-to='/login'>
 						<img[mr:2] src='./imgs/user.png'>
-						<div> 'admin'
-					<button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5].notify-logout data-bs-toggle='modal' data-bs-target='#exitModal'>
+						<span> username  # 增加对用户登录状态的判断。点击进去登录界面。
+					<button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5] route-to='/logout' @click=($txjm.$txctrl.islogined = no)>
+					# <button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5].notify-logout data-bs-toggle='modal' data-bs-target='#exitModal'>
 						<img[mr:2] src='./imgs/logout.png'>
 						<div> '退出'
-					<div.modal.fade id='exitModal' tabindex='-1' aria-labelledby='exitModalLabel' aria-hidden='true'>
-						<div.modal-dialog>
-							<div.modal-content>
-								<div.modal-header>
-									<h5.modal-title id='exitModalLabel'> "退出"
-									<button.btn-close data-bs-dismiss='modal' aira-label='close'>
-								<div.modal-body> "是否确认退出"
-								<div.modal-footer>
-									<button.btn.btn-secondary data-bs-dismiss='modal'> "关闭"
-									<button.btn.btn-primary> "退出"
+					# <div.modal.fade id='exitModal' tabindex='-1' aria-labelledby='exitModalLabel' aria-hidden='true'>
+					# 	<div.modal-dialog>
+					# 		<div.modal-content>
+					# 			<div.modal-header>
+					# 				<h5.modal-title id='exitModalLabel'> "退出"
+					# 				<button.btn-close data-bs-dismiss='modal' aira-label='close'>
+					# 			<div.modal-body> "是否确认退出"
+					# 			<div.modal-footer>
+					# 				<button.btn.btn-secondary data-bs-dismiss='modal'> "关闭"
+					# 				<button.btn.btn-primary @click=(window.close!)> "退出"
 			<div.main>
 				<div.menu>
 					<div.accordion id='menu'>
@@ -128,21 +161,22 @@ tag app
 									<div[fs:14px c:gray3 ml:5]> item.AntName
 
 
-						<div.accordion-item>
-							<h6.accordion-header id='menu02'>
-								<button[d:hflex p:5 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#cols02' aria-expanded='true' aria-control='cols02' route-to='/devall'>
-									<div[w:90%]> '阵地设备总览'
-									<div[w:10% ml:auto].triangle-right>
-							<div.accordion-collapse.collapse.show id='cols02' aria-labelledby='menu02' data-bs-parent='#ctl'>
-								<div[m:0 p:4 d:hflex].accordion-body>
-									<div[fs:14px c:gray3 ml:3]> '暂定留空'
+						# <div.accordion-item>
+						# 	<h6.accordion-header id='menu02'>
+						# 		<button[d:hflex p:5 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#cols02' aria-expanded='true' aria-control='cols02' route-to='/devall'>
+						# 			<div[w:90%]> '阵地设备总览'
+						# 			<div[w:10% ml:auto].triangle-right>
+						# 	<div.accordion-collapse.collapse.show id='cols02' aria-labelledby='menu02' data-bs-parent='#ctl'>
+						# 		<div[m:0 p:4 d:hflex].accordion-body>
+						# 			<div[fs:14px c:gray3 ml:3]> '暂定留空'
+					<button.menunodrop route-to='/devlog' route-to='/devall'> "阵地设备总览"
 					<button.menunodrop route-to='/devlog'> "日志"
 					<button.menunodrop route-to='/setting'> "设置"
 					# <button.menunodrop route-to='/users'>
 					<i.bi.bi-alarm>
 
 				
-				<tianxian$routeid[w:100%] route='/txst/:id' data=devdata ws=socket antindex=antindex> # 这里的index是为了区分是哪个天线的数据，但是如果这样，就会导致纯通过route不能获取最新的数据了。解决方案就是，点击要的index传进去，然后再component里面直接做，不转手。
+				<tianxian$txjm[w:100%] route='/txst/:id' data=devdata ws=socket antindex=antindex islogin=isLogin> # 这里的index是为了区分是哪个天线的数据，但是如果这样，就会导致纯通过route不能获取最新的数据了。解决方案就是，点击要的index传进去，然后再component里面直接做，不转手。
 				<div[p:5 w:100% d:grid gtc:1fr 1fr 1fr g:5 a:baseline].antall route='/antall'> for item in devdata
 					<antcard rdata=item>
 				<div[w:100% ta:center].antall route='/devall'>
@@ -160,9 +194,26 @@ tag app
 						<div> '系统刷新率设置：'
 							<input$wsrefresh type='text' placeholder='刷新率' bind=wsrefresh>
 							<button[ml:5].btn.btn-success @click=changewsadd($wsrefresh.value)> "修改"
+				
+				<div[w:100% pt:40].antall route='/login'>
+					if isLogin || username === 'admin'
+						<div[ta:center mb:10]> '您已登录'
 
-				# <div.antall route='/users'>
-				# 	<p> 'test!!'
+					<div[ta:center mb:5]> '请登录后，进行命令指令下发操作！'
+					<div[d:vflex ja:center g:5].mdlogin>
+						<div>
+							<span> '用户名:'
+							<input$uname[ml:3] type='string' placeholder='输入...'>
+						<div>
+							<span> '密码:'
+							<input$pass[ml:7] type='password' placeholder='输入...'>
+						<div>
+							<button[mr:4].btn.btn-danger route-to='/antall'> '取消'
+							<button.btn.btn-success @click=login($uname.value,$pass.value)> '登录'
+				<div[w:100% d:vflex a:center pt:30].antall route='/logout'>
+					<h1> '欢迎使用天线精灵远控系统'
+					<div> '如果要进行设备操控，请您登录后进行操作'
+					<button[mt:10].btn.btn-success route-to='/login'> "登录"
 
 
 imba.mount <app>

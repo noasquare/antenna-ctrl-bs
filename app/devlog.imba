@@ -1,6 +1,5 @@
-
 let table
-let tabledata
+let tabledata = null
 let sortCol
 let sortAsc = no
 const pageSize = 15
@@ -62,15 +61,49 @@ tag devlog
 			<td> {c.ctrluser}
 			`
 		table.innerHTML = result if result
-	
-	def logload url # 从数据库查询得到的信息
 
+	def renderdevlist tada
+		let result = ''
+		let devlist = []
+		tada.forEach do(d)
+			devlist.push(d.devname)
+		let unique = [...new Set(devlist)]
+		console.log unique
+		unique.forEach do(dev)
+			result += `
+			<option> {dev}
+			`
+		devlistsel.innerHTML = result if result
+
+	def renderantlist tada
+		let result = ''
+		let antlist = []
+		tada.forEach do(d)
+			antlist.push(d.antname)
+		let unique = [...new Set(antlist)]
+		console.log unique
+		unique.forEach do(dev)
+			result += `
+			<option> {dev}
+			`
+		antlistsel.innerHTML = result if result
+
+
+
+
+
+	def logload url # 从数据库查询得到的信息
+		devlistsel = querySelector('#seachDevList')
+		antlistsel = querySelector('#seachAntList')
 		table = querySelector('#logtable tbody')
 		window.fetch(url).then do(res)
 			res.json!
 			.then do(data)
 				tabledata = data
+				# console.log tabledata
 				renderTable(tabledata)
+				renderdevlist(tabledata)
+				renderantlist(tabledata)
 
 	def prevPage
 		curPage-- if curPage > 1
@@ -119,6 +152,24 @@ tag devlog
 			console.log '啥都没找到'
 			renderTable(tabledata)
 		# console.log tabledata
+	def searchant
+		# console.log '开始查询列表'
+		let test = tabledata.filter(do(row,index)
+			if (row.antname == $antname.value)
+				return yes
+			)
+		console.log test
+		if test.length > 0
+			searchflag = yes
+			console.log '查询找到了'
+			searchdata = test
+			console.log searchdata
+			renderTable(searchdata)
+		else
+			searchflag = no
+			console.log '啥都没找到'
+			renderTable(tabledata)
+		# console.log tabledata
 
 	
 
@@ -142,9 +193,15 @@ tag devlog
 	<self[o@off:0.5 x@in:5px tween:all 2s ease]> 
 		<div[d:hflex ja:center fs:14px].devsearch>
 			<div[bdl:solid 10px teal4 ml:3 pl:2 fs:18px mr:auto]> '阵地设备日志'
+			<div[d:hflex mr:5]>
+				<div> '天线查询'
+				<select$antname#seachAntList[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px c:gray3] @change=searchant>
+					<option> 'loading...'
 			<div[d:hflex]>
-				<div> '输入查询'
-				<input$devname[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px] type='text' @change=searchdev placeholder="输入设备名称-回车查询"> 
+				<div> '设备查询'
+				<select$devname#seachDevList[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px c:gray3] @change=searchdev>
+					<option> 'loading...'
+				# <input$devname[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px] type='text' @change=searchdev placeholder="输入设备名称-回车查询">
 			<div[d:hflex pl:5]>
 				<div> '开始日期'
 				<input$startdate[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px c:gray3] type='date'> 

@@ -27,9 +27,11 @@ tag tianxian
 		.tphover zi:0 w:auto p:3 visibility:hidden o:0 transform:translateX(-20%) translateY(-20px) tween:.6s pos:absolute bgc:cyan9 c:gra2 rd:5px t:125%
 		.tphover::before content:'' pos:abs w:30px h:30px bg:cyan9 t:0 r:50% transform:rotate(45deg) zi:-1
 	css .tuop-chart@hover 
-		.tphover visibility:visible o:1 transform:translateX(-20%) translateY(0px) zi:10
+		.tphover visibility:visible o:.8 transform:translateX(-20%) translateY(0px) zi:10 w:50
 
 	prop data
+	prop islogin
+	# prop islogined
 	# prop routeid = route.params.id
 	prop tpname
 	prop ws
@@ -63,6 +65,7 @@ tag tianxian
 				# devctrdata ??= data[index].Devices[0] # 并把天线里面的第一台设备赋给devctrdata，这个的？？=意思是如果不存在就赋值。
 				# console.log "routed",devctrdata
 	def render()
+		# islogined = $txctrl.islogined
 		# 默认是第一个伺服，如果有点击按钮，就用被点击的设备的序号。
 		ctrindex ??= 0
 		if ctrindex > (data[antindex].Devices.length - 1) # 当通过路由参数进来的index大于所有列表的长度，就重新赋值0
@@ -82,23 +85,23 @@ tag tianxian
 							<div[h:auto d:hflex ja:center g:15px m:5 10]> for item,i in data[antindex].Devices
 								if item.StatusList[item.StatusList.length - 1].Value === 'Disconnected'
 									<button[x:{x} y:{y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
-										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
+										<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 											if n < 5
-												<div[d:hflex ja:center]>
+												<div[d:hflex ja:left a:center ml:3]>
 													<div[fs:12px]> tpitem.StName+':'
 													<div[c:teal4 fs:16px fw:bold]> tpitem.Value
 								if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length === 0
 									<button[x:{x} y:{y} bgc:{devcolor[0]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
-										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
+										<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 											if n < 5
-												<div[d:hflex ja:center]>
+												<div[d:hflex ja:left a:center ml:3]>
 													<div[fs:12px]> tpitem.StName+':'
 													<div[c:teal4 fs:16px fw:bold]> tpitem.Value
 								if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length !== 0
 									<button[x:{x} y:{y} bgc:{devcolor[1]} c:gray2 w:auto].tuop-chart @touch.moved.sync(self) @click=devctr(i)> item.DevName
-										<div[d:grid gtc:1fr 1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
+										<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 											if n < 5
-												<div[d:hflex ja:center]>
+												<div[d:hflex ja:left a:center ml:3]>
 													<div[fs:12px]> tpitem.StName+':'
 													<div[c:teal4 fs:16px fw:bold]> tpitem.Value
 
@@ -153,6 +156,6 @@ tag tianxian
 										<td> '发发射'
 										<td.log-code> '255>GAIN_15.00'
 				<div[w:30% bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid 1px rgb(12,100,100)]>
-					<ctrsider data=data[antindex].Devices[ctrindex] ws=ws ant=route.params.id>
+					<ctrsider$txctrl data=data[antindex].Devices[ctrindex] ws=ws ant=route.params.id islogin=islogin>
 
 

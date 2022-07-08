@@ -64,10 +64,10 @@ tag devall
 			for devitem in item.Devices
 				devnum[0] += 1
 				for stitem in devitem.StatusList
-					if stitem.StName === 'ConnectStatus' && stitem.Value === 'Normal'
+					if stitem.StName === '设备状态' && stitem.Value === 'Normal'
 						# console.log '判断在线依据'
 						devnum[1] += 1
-					if stitem.StName === 'ConnectStatus' && stitem.Value === 'Disconnected'
+					if stitem.StName === '设备状态' && stitem.Value === 'Disconnected'
 						# console.log '判断掉线依据'
 						devnum[3] += 1
 				if devitem.FaultList.length !== 0 # 这里告警依据待定
@@ -120,9 +120,9 @@ tag devall
 								<td> item.AntNo
 								<td> devitem.DevName
 								for stitem in devitem.StatusList
-									if stitem.StName === 'ConnectStatus' && stitem.Value === 'Normal' && devitem.FaultList.length == 0
+									if stitem.StName === '设备状态' && stitem.Value === 'Normal' && devitem.FaultList.length == 0
 										<td[bgi:url('./imgs/online.png') bgr:no-repeat bgs:30px bgp:left]> '在线'
-									if stitem.StName === 'ConnectStatus' && stitem.Value === 'Disconnected'
+									if stitem.StName === '设备状态' && stitem.Value === 'Disconnected'
 										<td[bgi:url('./imgs/offline.png') bgr:no-repeat bgs:30px bgp:left]> '离线'
 								if devitem.FaultList.length !== 0
 									<td[bgi:url('./imgs/alarm.png') bgr:no-repeat bgs:30px bgp:left]> '告警'

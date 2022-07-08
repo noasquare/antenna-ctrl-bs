@@ -13,23 +13,36 @@ tag ctrsider
 	showlogin = no # 是否显示登录框
 	# prop inputvalue
 	prop ant
+	prop islogin
+	prop islogined
 	def auth
-		uname = $uname.value
-		pass = $pass.value
-		if uname === 'admin' && pass === '12345'
+		let data =
+			Cmd : 'Login'
+			Params : {
+				name : $uname.value
+				pwd : $pass.value
+			}
+		console.log data
+		ws.send(JSON.stringify(data))
+		# uname = $uname.value
+		# pass = $pass.value
+		if $uname.value === 'admin' && $pass.value === '12345'
+			islogin = yes
 			showlogin = no
-			return yes
-		else
-			window.alert('用户名密码不正确')
-			return no
+			islogined = yes
+
+		# 	return yes
+		# else
+		# 	window.alert('用户名密码不正确')
+		# 	return no
 
 	def isadmin
-		if auth!
+		if islogin
 			return yes
 		else
+			window.alert('请先登录！')
 			showlogin = !showlogin
 			return no
-		
 
 	def sendremote
 		let data = 
@@ -94,12 +107,13 @@ tag ctrsider
 					}
 				console.log data
 				ws.send(JSON.stringify(data))
+
 	def colapse
 	def remotestatus list
 		# console.log '检查远控状态'
 		for item in list
-			if item.StName == 'RemoteOn'
-				if item.Value is 'False'
+			if item.StName == '控制'
+				if item.Value is '本控'
 					$remote.checked = no
 				else
 					$remote.checked = yes
@@ -146,10 +160,17 @@ tag ctrsider
 								<div[w:10% ml:auto].triangle-right>
 						<div.accordion-collapse.collapse.show id='collapseOne' aria-labelledby='headingOne' data-bs-parent='#ctl'>
 							<div[m:0 p:5px d:vflex ai:left max-height:60 ofy:auto].accordion-body> for ctritem,stindex in data.StatusList
-								if ctritem.ReadOnly == no && ctritem.StName !== 'RemoteOn'
+								if ctritem.ReadOnly == no && ctritem.StName !== '控制' && !ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
-										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="{ctritem.Value}" @change=sendpara(ctritem,this.value) value="{ctritem.Value}" type='number' step='.01'>
+										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="{ctritem.Value}" @change=sendpara(ctritem,this.value) value="{ctritem.Value}" type='number' step='1'>
+								if ctritem.cmdSelect
+									<div[d:hflex ai:center p:1 2]>
+										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
+										<select[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] @change=sendpara(ctritem,this.value)>
+											for sel in ctritem.cmdSelect
+												<option> sel.option
+									
 					<div.accordion-item>
 						<h6.accordion-header id='headingTwo'>
 							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='true' aria-control='collapseTwo'>
@@ -264,13 +285,13 @@ tag ctrsider
 			<div[d:vflex ja:center g:5].mdlogin [o:1 visibility:visible]=showlogin>
 				<div>
 					<span> '用户名:'
-					<input$uname[ml:3] type='string' placeholder='输入...'>
+					<input$uname[ml:3] type='string' placeholder='输入...' autofocus>
 				<div>
 					<span> '密码:'
 					<input$pass[ml:7] type='password' placeholder='输入...'>
 				<div>
 					<button[mr:4].btn.btn-danger @click=(showlogin=no)> '取消'
-					<button.btn.btn-success @click=auth> '确认'
+					<button.btn.btn-success @click=auth @hotkey('enter')> '确认'
 				
 						 
 
