@@ -30,5 +30,6 @@ app.get(/.*/) do(req,res)
 
 	res.send index.body
 	
-
+app.get '/' do(req,res)
+	res.redirect('/antall')
 imba.serve app.listen(process.env.PORT or 3000)

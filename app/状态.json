@@ -561,12 +561,11 @@
           },
           {
             "StName": "参考源",
-            "Value": "内参考",
+            "Value": "外参考",
             "ReadOnly": false,
             "cmdSelect":[
-              {"option":"参考1"},
-              {"option":"参考2"},
-              {"option":"参考3"}
+              {"option":"内参考"},
+              {"option":"外参考"}
             ]
           },
           {

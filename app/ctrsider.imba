@@ -167,9 +167,12 @@ tag ctrsider
 								if ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
-										<select[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] @change=sendpara(ctritem,this.value)>
+										<select[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] @change=sendpara(ctritem,this.value) focus=>
 											for sel in ctritem.cmdSelect
-												<option> sel.option
+												if ctritem.Value === sel.option
+													<option selected> sel.option
+												else
+													<option> sel.option
 									
 					<div.accordion-item>
 						<h6.accordion-header id='headingTwo'>
