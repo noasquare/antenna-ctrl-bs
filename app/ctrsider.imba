@@ -102,8 +102,38 @@ tag ctrsider
 					DevNo : data.DevNo
 					Cmd : item.StName
 					Params : {
-						"{item.StName}2" : value1
-						"{item.StName}1" : value2
+						"{item.StName}1" : value1
+						"{item.StName}2" : value2
+					}
+				console.log data
+				ws.send(JSON.stringify(data))
+
+	def sendpara_multi3 item,value1,value2,value3
+		# todo = 这里要增加一个发指令前的用户权限判断-可以是个函数 应该是个bool函数 ：isadmin
+		# 1- 弹出一个用户名密码的窗口弹窗，输入值，不管对不对先发送给
+		if isadmin!
+			console.log typeof(item)
+			if typeof(item) !== 'object'
+				let data =
+					AntennaNo : ant
+					DevNo : data.DevNo
+					Cmd : item
+					Params : {
+						"{item}1" : value1
+						"{item}2" : value2
+						"{item}3" : value3
+					}
+				console.log data
+				ws.send(JSON.stringify(data))
+			else if value1 && value2 && value3
+				let data =
+					AntennaNo : ant
+					DevNo : data.DevNo
+					Cmd : item.StName
+					Params : {
+						"{item.StName}1" : value1
+						"{item.StName}2" : value2
+						"{item.StName}3" : value3
 					}
 				console.log data
 				ws.send(JSON.stringify(data))
@@ -128,6 +158,16 @@ tag ctrsider
 			isJh = no
 		else
 			isJh = yes
+		
+		if data.DevName == "空调控制器"
+			isAirctr = no
+		else
+			isAirctr = yes
+
+		if data.DevName == "君威LNA供电"
+			isLNAlimits = no
+		else
+			isLNAlimits = yes
 		
 
 
@@ -261,6 +301,33 @@ tag ctrsider
 
 
 							# ========跟踪接收机指令================================
+
+							# ========君威LNA电流上下限指令================================
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isLNAlimits> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '电流上下限:'
+								<select$lnaTun[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto]>
+									<option> '通道1'
+									<option> '通道2'
+									<option> '通道3'
+									<option> '通道4'
+									<option> '通道5'
+									<option> '通道6'
+								<input$lnamin[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] type='number' placeholder='下限'>
+								<input$lnamax[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] type='number' placeholder='上限'>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi3('LNAlimits',$lnaTun.value,$lnamin.value,$lnamax.value)> "设置"
+							# ========君威LNA电流上下限指令================================
+
+							# ========温湿度传感指令================================
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isAirctr> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '制冷开:'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('coldOpen','true')> "制冷"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isAirctr> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '制热开:'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('hotOpen','true')> "制热"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isAirctr> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '空调关闭:'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('airctrClose','true')> "关闭"
+							# ========温湿度传感指令================================
 
 
 				<div.sdtitle> '更多参数' 

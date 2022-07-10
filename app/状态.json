@@ -921,6 +921,32 @@
           }
         ],
         "FaultList": []
+      },
+      {
+        "DevNo": "89",
+        "DevName": "空调控制器",
+        "DriverClass": "AirControl",
+        "StatusList": [
+          {
+            "cmdSelect": null,
+            "StName": "温度",
+            "Value": "0",
+            "ReadOnly": true
+          },
+          {
+            "cmdSelect": null,
+            "StName": "湿度",
+            "Value": "0",
+            "ReadOnly": true
+          },
+          {
+            "cmdSelect": null,
+            "StName": "连接状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": []
       }
     ]
   }

@@ -54,19 +54,19 @@ tag antcard
 				<div[w:100% h:80% d:vflex].antbody>
 					<button[w:100% h:80% d:hflex ja:center shadow:none bd:none bgc:transparent c:gray2].antstatus1 route-to="/txst/{rdata.AntNo}">
 						<img[size:20% p:2] src='./imgs/antcardimg.png'>
-						<div[w:38% d:vflex]> for item,i in rdata.Devices[0].StatusList
+						<div[w:auto d:vflex mr:auto]> for item,i in rdata.Devices[0].StatusList
 							if i < 4
-								<div[d:hflex w:100% h:25% ja:center]>
+								<div[d:hflex w:100% h:25% a:center ml:5]>
 									<div[]> item.StName + ':'
 									<div[c:teal4 fs:16px fw:bold ff:mono ml:2 o@off:0].antstatus> item.Value
-						<div[w:38% d:vflex g:10px]> 
-							<div[d:hflex w:100% ja:center]>
+						<div[w:auto d:vflex g:10px pr:10]> 
+							<div[d:hflex w:100% a:center j:right]>
 								<div[p:1 2 bgc:teal7 rd:4px c:gray2 fs:12px mr:3]> online
 								<div[fs:14px c:teal5]> '在线'
-							<div[d:hflex w:100% ja:center]>
+							<div[d:hflex w:100% a:center j:right]>
 								<div[p:1 2 bgc:red7 rd:4px c:gray2 fs:12px mr:3]> alarm
 								<div[fs:14px c:teal5]> '告警'
-							<div[d:hflex w:100% ja:center]>
+							<div[d:hflex w:100% a:center j:right]>
 								<div[p:1 2 bgc:sky7 rd:4px c:gray2 fs:12px mr:3]> offline
 								<div[fs:14px c:teal5]> '离线'
 							
@@ -74,11 +74,11 @@ tag antcard
 
 					<div[p:4 5 w:100% h:20% d:hflex].antstatus2>
 						<div[w:30% d:hflex].antagc> for agc in rdata.Devices[0].StatusList # 这里第0个就是伺服，每个天线第0个都是伺服
-							if agc.StName == "SignalLevel"
+							if agc.StName == "信号电平"
 								<div> 'AGC:'
 								<div[c:rgb(23,168,62) ml:3]> agc.Value
 						<div[w:30% d:hflex].antlock> for agc in rdata.Devices[0].StatusList # 这里第0个就是伺服，每个天线第0个都是伺服
-							if agc.StName == "SignalQuality"
+							if agc.StName == "信号质量"
 
 								# <img src=''> 'lock pic'
 								<div[ml:5]> agc.Value
