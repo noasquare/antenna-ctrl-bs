@@ -65,7 +65,7 @@ tag app
 			devdata = JSON.parse(e.data)
 			# 判断服务器发来的用户检查命令
 			if devdata.Cmd == 'Login'
-				switch devdata.Params.Status
+				switch devdata.Params[0].Status
 					when 'Successful'
 						isLogin = yes
 					when 'Failed'
@@ -80,14 +80,18 @@ tag app
 	def alarmNo
 
 	def login val1,val2
-		let data = 
-			Cmd : 'Login'
-			Params : {
-				name : val1
-				pwd : val2
-			}
-		console.log data
-		socket.send(JSON.stringify(data))
+		# console.log val1.length
+		if val1.length === 0 || val2.length === 0
+			window.alert('用户名或密码不能为空')
+		if val1 && val2
+			let data = 
+				Cmd : 'Login'
+				Params : {
+					name : val1
+					pwd : val2
+				}
+			console.log data
+			socket.send(JSON.stringify(data))
 
 		# isLogin = yes
 
@@ -209,7 +213,7 @@ tag app
 							<input$pass[ml:7] type='password' placeholder='输入...'>
 						<div>
 							<button[mr:4].btn.btn-danger route-to='/antall'> '取消'
-							<button.btn.btn-success @click=login($uname.value,$pass.value)> '登录'
+							<button.btn.btn-success @click=login($uname.value,$pass.value) route-to='/antall'> '登录'
 				<div[w:100% d:vflex a:center pt:30].antall route='/logout'>
 					<h1> '欢迎使用天线精灵远控系统'
 					<div> '如果要进行设备操控，请您登录后进行操作'
