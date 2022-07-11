@@ -80,7 +80,6 @@ tag tianxian
 							<div[d:vflex ja:center h:25%]>
 								<div[pos:relative p:5px m:10px w:50% c:gray3 bgc:teal8/40 bd:solid 1px teal4 rd:5px d:grid gtc:1fr 1fr]> for item,index in data[antindex].Devices[ctrindex].StatusList # 就tm多了一个操作，连通性就断掉了。
 									<div[pos:absolute r:0 t:0 fs:small c:white bgc:teal6/60 p:0 1 rd:0 0 4 4 ]> data[antindex].Devices[ctrindex].DevName
-									
 									if index < 5 # 这里控制显示的参数数量，5个重要信息。
 										<div[p:3]> item.StName+' : '
 											<div[d:inline fs:20px c:teal4 fw:bold ff:monospace]> item.Value
