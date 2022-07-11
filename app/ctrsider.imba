@@ -164,7 +164,7 @@ tag ctrsider
 		else
 			isAirctr = yes
 
-		if data.DevName == "君威LNA供电"
+		if data.DriverClass == "JWLNAPower"
 			isLNAlimits = no
 		else
 			isLNAlimits = yes
@@ -203,7 +203,7 @@ tag ctrsider
 								if ctritem.ReadOnly == no && ctritem.StName !== '控制' && !ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
-										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="{ctritem.Value}" @change=sendpara(ctritem,this.value) value="{ctritem.Value}" type='number' step='1'>
+										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="{ctritem.Value}" @change=sendpara(ctritem,this.value) value="{ctritem.Value}" type='number' step=(isServo ? '1' : '0.01') >
 								if ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
@@ -223,7 +223,10 @@ tag ctrsider
 							# ========伺服指令================================
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '驱动上电:'
-								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('EnableDriver','test')> "上电"
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('EnableDriver',null)> "上电"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '驱动下电:'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('DisableDriver',null)> "下电"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '步进跟踪步距:'
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.001-1.000" @change=sendpara("SetTrackStep",this.value) type='number' step='0.001'>

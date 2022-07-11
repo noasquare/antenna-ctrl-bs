@@ -65,7 +65,8 @@ tag app
 			devdata = JSON.parse(e.data)
 			# 判断服务器发来的用户检查命令
 			if devdata.Cmd == 'Login'
-				switch devdata.Params[0].Status
+				console.log devdata.Params.Status
+				switch devdata.Params.Status
 					when 'Successful'
 						isLogin = yes
 					when 'Failed'
@@ -75,6 +76,7 @@ tag app
 						window.alert('请登录后操作')
 					else
 						throw 'nope'
+			console.log isLogin
 			console.log devdata
 			imba.commit!
 	def alarmNo
@@ -109,7 +111,8 @@ tag app
 		
 	def render()
 		console.log $txjm.$txctrl.islogined
-		isLogin = $txjm.$txctrl.islogined
+		if $txjm.$txctrl.islogined
+			isLogin = $txjm.$txctrl.islogined
 		devdata ??= wsdata # 当devdata 没有ws数据灌入时候，就赋值本地的jsondata
 		# 这里是一个初始值，确保devlist不管是否点击目录也可以有值
 		devlist ??= wsdata[0]
@@ -203,17 +206,17 @@ tag app
 					if isLogin || username === 'admin'
 						<div[ta:center mb:10]> '您已登录'
 
-					<div[ta:center mb:5]> '请登录后，进行命令指令下发操作！'
+					<div[ta:center mb:5] [visibility:hidden]=isLogin> '请登录后，进行命令指令下发操作！'
 					<div[d:vflex ja:center g:5].mdlogin>
 						<div>
-							<span> '用户名:'
-							<input$uname[ml:3] type='string' placeholder='输入...'>
+							<span[visibility:hidden]=isLogin> '用户名:'
+							<input$uname[ml:3] [visibility:hidden]=isLogin type='string' placeholder='输入...'>
 						<div>
-							<span> '密码:'
-							<input$pass[ml:7] type='password' placeholder='输入...'>
+							<span[visibility:hidden]=isLogin> '密码:'
+							<input$pass[ml:7] [visibility:hidden]=isLogin type='password' placeholder='输入...'>
 						<div>
-							<button[mr:4].btn.btn-danger route-to='/antall'> '取消'
-							<button.btn.btn-success @click=login($uname.value,$pass.value) route-to='/antall'> '登录'
+							<button[mr:4].btn.btn-danger route-to='/antall' [visibility:hidden]=isLogin> '取消'
+							<button.btn.btn-success @click=login($uname.value,$pass.value) route-to='/antall' [visibility:hidden]=isLogin> '登录'
 				<div[w:100% d:vflex a:center pt:30].antall route='/logout'>
 					<h1> '欢迎使用天线精灵远控系统'
 					<div> '如果要进行设备操控，请您登录后进行操作'
