@@ -39,9 +39,11 @@ tag ctrsider
 	def isadmin
 		if islogin
 			return yes
+
 		else
 			window.alert('请先登录！')
 			showlogin = !showlogin
+			setFocus!
 			return no
 
 	def sendremote
@@ -169,7 +171,9 @@ tag ctrsider
 		else
 			isLNAlimits = yes
 		
-
+	def setFocus
+		test = document.getElementById('#userinput')
+		console.log test
 
 	def mount
 		console.log 'sider mount'
@@ -203,7 +207,7 @@ tag ctrsider
 								if ctritem.ReadOnly == no && ctritem.StName !== '控制' && !ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
-										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="{ctritem.Value}" @change=sendpara(ctritem,this.value) value="{ctritem.Value}" type='number' step=(isServo ? '1' : '0.01') >
+										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder=ctritem.Value @change=sendpara(ctritem,this.value) type='number' step=(isServo ? '1' : '0.01') >
 								if ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
@@ -358,12 +362,12 @@ tag ctrsider
 			<div[d:vflex ja:center g:5].mdlogin [o:1 visibility:visible]=showlogin>
 				<div>
 					<span> '用户名:'
-					<input$uname[ml:3] type='string' placeholder='输入...' autofocus>
+					<input$uname[ml:3]#userinput type='string' placeholder='输入...'>
 				<div>
 					<span> '密码:'
 					<input$pass[ml:7] type='password' placeholder='输入...'>
 				<div>
-					<button[mr:4].btn.btn-danger @click=(showlogin=no)> '取消'
+					<button[mr:4].btn.btn-danger @click=(showlogin=no) @hotkey('esc')=(showlogin=no)> '取消'
 					<button.btn.btn-success @click=auth @hotkey('enter')> '确认'
 				
 						 

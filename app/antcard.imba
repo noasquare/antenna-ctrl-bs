@@ -1,4 +1,5 @@
 import axios from 'axios'
+# import test from 'test.svg'
 
 tag antcard
 	prop rdata
@@ -56,10 +57,10 @@ tag antcard
 						<img[size:20% p:2] src='./imgs/antcardimg.png'>
 						<div[w:auto d:vflex mr:auto]> for item,i in rdata.Devices[0].StatusList
 							if i < 4
-								<div[d:hflex w:100% h:25% a:center ml:5]>
+								<div[d:hflex w:100% h:25% a:center ml:3]>
 									<div[]> item.StName + ':'
 									<div[c:teal4 fs:16px fw:bold ff:mono ml:2 o@off:0].antstatus> item.Value
-						<div[w:auto d:vflex g:10px pr:10]> 
+						<div[w:auto d:vflex g:10px pr:5]> 
 							<div[d:hflex w:100% a:center j:right]>
 								<div[p:1 2 bgc:teal7 rd:4px c:gray2 fs:12px mr:3]> online
 								<div[fs:14px c:teal5]> '在线'

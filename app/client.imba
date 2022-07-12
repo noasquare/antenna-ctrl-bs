@@ -125,7 +125,7 @@ tag app
 			username = 'admin'
 		<self>
 			<div.header>
-				<button[d:hflex ai:center pl:5 bgc:transparent bd:none c:gray3].setting>
+				<button[d:hflex ai:center pl:5 bgc:transparent bd:none c:gray3].setting route-to='/setting'>
 					<img[mr:2 scale:.7] src='./imgs/menu.png'>
 					<div> '菜单'
 					<span[fs:10px ml:3 c:gray4/70]> "上海盛磊2022{<sup> '©'}"
@@ -215,7 +215,7 @@ tag app
 							<span[visibility:hidden]=isLogin> '密码:'
 							<input$pass[ml:7] [visibility:hidden]=isLogin type='password' placeholder='输入...'>
 						<div>
-							<button[mr:4].btn.btn-danger route-to='/antall' [visibility:hidden]=isLogin> '取消'
+							<button[mr:4].btn.btn-danger route-to='/antall' [visibility:hidden]=isLogin @hotkey('escape')> '取消'
 							<button.btn.btn-success @click=login($uname.value,$pass.value) route-to='/antall' [visibility:hidden]=isLogin> '登录'
 				<div[w:100% d:vflex a:center pt:30].antall route='/logout'>
 					<h1> '欢迎使用天线精灵远控系统'
