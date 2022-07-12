@@ -215,7 +215,7 @@ tag app
 							<span[visibility:hidden]=isLogin> '密码:'
 							<input$pass[ml:7] [visibility:hidden]=isLogin type='password' placeholder='输入...'>
 						<div>
-							<button[mr:4].btn.btn-danger route-to='/antall' [visibility:hidden]=isLogin @hotkey('escape')> '取消'
+							<button[mr:4].btn.btn-danger route-to='/antall' [visibility:hidden]=isLogin> '取消'
 							<button.btn.btn-success @click=login($uname.value,$pass.value) route-to='/antall' [visibility:hidden]=isLogin> '登录'
 				<div[w:100% d:vflex a:center pt:30].antall route='/logout'>
 					<h1> '欢迎使用天线精灵远控系统'
