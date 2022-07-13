@@ -16,6 +16,13 @@ tag ctrsider
 	prop islogin
 	prop islogined
 	def auth
+		console.log $uname.value
+		console.log $pass.value
+		if $uname.value === 'admin' && $pass.value === '12345'
+			console.log '密码正确'
+			islogin = yes
+			showlogin = no
+			islogined = yes
 		let data =
 			Cmd : 'Login'
 			Params : {
@@ -24,12 +31,6 @@ tag ctrsider
 			}
 		console.log data
 		ws.send(JSON.stringify(data))
-		# uname = $uname.value
-		# pass = $pass.value
-		if $uname.value === 'admin' && $pass.value === '12345'
-			islogin = yes
-			showlogin = no
-			islogined = yes
 
 		# 	return yes
 		# else
@@ -37,6 +38,7 @@ tag ctrsider
 		# 	return no
 
 	def isadmin
+		console.log islogin
 		if islogin
 			return yes
 
@@ -187,7 +189,7 @@ tag ctrsider
 		remotestatus(data.StatusList) # 显示远控的状态
 		<self> 
 			<div>
-				<div.sdtitle> "设备控制" 
+				<div.sdtitle> "设备控制"
 					<div[d:inline float:right].form-check.form-switch>
 						<input$remote.form-check-input type="checkbox" role="switch" id="flexSwitchCheckDefault" @change=sendremote>
 					if $remote.checked == no
@@ -232,6 +234,26 @@ tag ctrsider
 								<div[fs:14px c:gray3 ml:3]> '驱动下电:'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('DisableDriver',null)> "下电"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '方位收藏:'
+								<select$azshoucang[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
+									<option value='01'> '收藏'
+									<option value='02'> '收藏停止'
+									<option value='03'> '插锁'
+									<option value='04'> '插锁停止'
+									<option value='05'> '拔锁'
+									<option value='06'> '拔锁停止'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Azshoucang',$azshoucang.value)> "确定"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '俯仰收藏:'
+								<select$elshoucang[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
+									<option value='01'> '收藏'
+									<option value='02'> '收藏停止'
+									<option value='03'> '插锁'
+									<option value='04'> '插锁停止'
+									<option value='05'> '拔锁'
+									<option value='06'> '拔锁停止'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Elshoucang',$elshoucang.value)> "确定"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '步进跟踪步距:'
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.001-1.000" @change=sendpara("SetTrackStep",this.value) type='number' step='0.001'>
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
@@ -254,7 +276,6 @@ tag ctrsider
 								<input$azrange[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="方位/0.00" type='number' step='.01'>
 								<input$elrange[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="俯仰/0.00" type='number' step='.01'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('Search',$azrange.value,$elrange.value)> "搜索"
-
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储卫星:'
 								<input$satid[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/00~23" type='number' step='1'>
@@ -339,16 +360,16 @@ tag ctrsider
 
 				<div.sdtitle> '更多参数' 
 				<div.accordion id='ctl-status'>
-					<div.accordion-item>
-						<h6.accordion-header id='headingStatus'>
-							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseStatus' aria-expanded='true' aria-control='collapseStatus'>
-								<div[w:90%]> '设备参数'
-								<div[w:10% ml:auto].triangle-right>
-						<div[max-height:40 ofy:auto].accordion-collapse.collapse.show id='collapseStatus' aria-labelledby='headingStatus' data-bs-parent='#ctl-status'> for item,index in data.StatusList
-							if index > 4
-								<div[m:0 p:5px d:hflex ai:left].accordion-body>
-									<div[fs:14px c:gray3 ml:3]> item.StName+':'
-									<div[fs:14px ml:auto mr:5 c:rgb(31,219,220)]> item.Value
+					# <div.accordion-item>
+					# 	<h6.accordion-header id='headingStatus'>
+					# 		<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseStatus' aria-expanded='true' aria-control='collapseStatus'>
+					# 			<div[w:90%]> '设备参数'
+					# 			<div[w:10% ml:auto].triangle-right>
+					# 	<div[max-height:40 ofy:auto].accordion-collapse.collapse.show id='collapseStatus' aria-labelledby='headingStatus' data-bs-parent='#ctl-status'> for item,index in data.StatusList
+					# 		if index > 4
+					# 			<div[m:0 p:5px d:hflex ai:left].accordion-body>
+					# 				<div[fs:14px c:gray3 ml:3]> item.StName+':'
+					# 				<div[fs:14px ml:auto mr:5 c:rgb(31,219,220)]> item.Value
 					<div.accordion-item>
 						<h6.accordion-header id='headingFault'>
 							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseFault' aria-expanded='true' aria-control='collapseFault'>

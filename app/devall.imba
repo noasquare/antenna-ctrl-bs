@@ -82,7 +82,7 @@ tag devall
 		for item in antroute
 			if item.AntNo === antno # 这里用的是绝对等于才可以，如果两个等于号就会出现路由错误的问题。学习了
 				route-to = "/txst/{antno}"	
-				
+
 	def mount
 		document.querySelectorAll('#devtable tbody tr').forEach do(r)
 			# console.log '增加行点击事件'

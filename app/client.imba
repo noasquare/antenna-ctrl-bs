@@ -96,6 +96,9 @@ tag app
 			socket.send(JSON.stringify(data))
 
 		# isLogin = yes
+	def usrlogout
+		$txjm.$txctrl.islogined = no
+		$txjm.islogined = no
 
 	def mount
 		console.log 'mount 开始'
@@ -111,8 +114,11 @@ tag app
 		
 	def render()
 		console.log $txjm.$txctrl.islogined
-		if $txjm.$txctrl.islogined
-			isLogin = $txjm.$txctrl.islogined
+		console.log $txjm.islogined
+		if $txjm.$txctrl.islogined || $txjm.islogined
+			isLogin = $txjm.$txctrl.islogined || $txjm.islogined
+		else
+			isLogin = no
 		devdata ??= wsdata # 当devdata 没有ws数据灌入时候，就赋值本地的jsondata
 		# 这里是一个初始值，确保devlist不管是否点击目录也可以有值
 		devlist ??= wsdata[0]
@@ -120,7 +126,7 @@ tag app
 		# console.log $devall.alarmNo
 		if !isLogin 
 			username = '观察员'
-			$txjm.$txctrl.islogined = no
+			$txjm.$txctrl.islogined = $txjm.islogined = no
 		else
 			username = 'admin'
 		<self>
@@ -140,7 +146,7 @@ tag app
 					<button[d:hflex ja:center ml:auto bgc:transparent bd:none c:gray2].notify-user route-to='/login'>
 						<img[mr:2] src='./imgs/user.png'>
 						<span> username  # 增加对用户登录状态的判断。点击进去登录界面。
-					<button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5] route-to='/logout' @click=($txjm.$txctrl.islogined = no)>
+					<button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5] route-to='/logout' @click=($txjm.$txctrl.islogined = $txjm.islogined = no)>
 					# <button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5].notify-logout data-bs-toggle='modal' data-bs-target='#exitModal'>
 						<img[mr:2] src='./imgs/logout.png'>
 						<div> '退出'

@@ -67,7 +67,7 @@ tag devlog
 		let devlist = []
 		tada.forEach do(d)
 			devlist.push(d.devname)
-		let unique = [...new Set(devlist)]
+		let unique = [...new Set(devlist)] # 这个功能是去重，牛逼
 		console.log unique
 		unique.forEach do(dev)
 			result += `

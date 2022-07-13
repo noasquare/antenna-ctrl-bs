@@ -19,6 +19,16 @@ app.get('/loglist') do(req,res)
 		console.log er if er
 		res.send(rows)
 
+app.get('/servoplist') do(req,res) 
+	mysql.connection.query 'SELECT * FROM servo_poslist;' do(er,rows) # 获取伺服位置列表
+		console.log er if er
+		res.send(rows)
+
+app.get('/servoslist') do(req,res)
+	mysql.connection.query 'SELECT * FROM servo_satlist;' do(er,rows) # 获取伺服的卫星列表
+		console.log er if er
+		res.send(rows)
+
 
 
 

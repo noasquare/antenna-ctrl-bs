@@ -9,7 +9,7 @@ export default class test
 		host : 'localhost'
 		user : 'root'
 		password : 'password'
-		database : 'txjl'
+		database : 'txjl2'
 
 	def connect
 		# console.log connection
