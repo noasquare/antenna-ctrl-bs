@@ -6,47 +6,47 @@ const devcolor = ['teal7','red7','sky7'] # 设置设备状态的一个颜色数�
 let xydata = [
 	{
 		x:-235px
-		y:305px
+		y:309px
 	}
 	{
 		x:-249px
-		y:136px
+		y:140px
 	}
 	{
 		x:90px
-		y:198px
+		y:202px
 	}
 	{
 		x:277px
-		y:-71px
+		y:-67px
 	}
 	{
 		x:285px
-		y:87px
+		y:92px
 	}
 	{
 		x:-77px
-		y:-123px
+		y:-119px
 	}
 	{
 		x:51px
-		y:-180px
+		y:-174px
 	}
 	{
 		x:-240px
-		y:-317px
+		y:-313px
 	}
 	{
 		x:270px
-		y:-451px
+		y:-444px
 	}
 	{
-		x:170px
-		y:-351px
+		x:-48px
+		y:-464px
 	}
 	{
-		x:250px
-		y:-251px
+		x:78px
+		y:-520px
 	}
 ]
 # let devlistdata # 单个电线数据

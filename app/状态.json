@@ -947,6 +947,58 @@
           }
         ],
         "FaultList": []
+      },
+      {
+        "DevNo": "90",
+        "DevName": "功放1",
+        "DriverClass": "AirControl",
+        "StatusList": [
+          {
+            "cmdSelect": null,
+            "StName": "温度",
+            "Value": "0",
+            "ReadOnly": true
+          },
+          {
+            "cmdSelect": null,
+            "StName": "湿度",
+            "Value": "0",
+            "ReadOnly": true
+          },
+          {
+            "cmdSelect": null,
+            "StName": "连接状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": []
+      },
+      {
+        "DevNo": "91",
+        "DevName": "功放2",
+        "DriverClass": "AirControl",
+        "StatusList": [
+          {
+            "cmdSelect": null,
+            "StName": "温度",
+            "Value": "0",
+            "ReadOnly": true
+          },
+          {
+            "cmdSelect": null,
+            "StName": "湿度",
+            "Value": "0",
+            "ReadOnly": true
+          },
+          {
+            "cmdSelect": null,
+            "StName": "连接状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": []
       }
     ]
   }
