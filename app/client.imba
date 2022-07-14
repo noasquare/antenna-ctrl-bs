@@ -113,8 +113,8 @@ tag app
 			console.log data
 		
 	def render()
-		console.log $txjm.$txctrl.islogined
-		console.log $txjm.islogined
+		# console.log $txjm.$txctrl.islogined
+		# console.log $txjm.islogined
 		if $txjm.$txctrl.islogined || $txjm.islogined
 			isLogin = $txjm.$txctrl.islogined || $txjm.islogined
 		else

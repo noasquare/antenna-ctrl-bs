@@ -1,7 +1,6 @@
 import './ctrsider'
 import test from './imgs/天线1.svg'
 import Drawflow from 'drawflow'
-import styleDrawflow from 'drawflow/dist/drawflow.min.css'
 
 const devcolor = ['teal7','red7','sky7'] # 设置设备状态的一个颜色数组
 let xydata = [
@@ -53,7 +52,7 @@ let xydata = [
 # let devlistdata # 单个电线数据
 tag tianxian
 	css	.btitle d:flex h:5% w:100% c:#fff fs:15px ja:center
-	css	.tuop h:70% w:100% pos:relative
+	css	.tuop h:60% w:100% pos:relative
 		.tpimg pos:absolute bottom:0 left:0
 	css	.mlog 
 		.log-code c:rgb(23,168,62)
@@ -90,6 +89,7 @@ tag tianxian
 			<td> {c.El}
 			`
 		# console.log table
+		let table = querySelector('#servoplist tbody')
 		
 		table.innerHTML = result if result
 		document.querySelectorAll('#servoplist tbody tr').forEach do(r)
@@ -105,6 +105,7 @@ tag tianxian
 			<td> {c.Az}
 			<td> {c.El}
 			`
+		let stable = querySelector('#servoslist tbody')
 		stable.innerHTML = result if result
 		document.querySelectorAll('#servoslist tbody tr').forEach do(r)
 			# console.log '增加行点击事件'
@@ -120,6 +121,7 @@ tag tianxian
 			<td> {c.polar1}
 			<td> {c.polar2}
 			`
+		let stable = querySelector('#jihualist tbody')
 		stable.innerHTML = result if result
 		document.querySelectorAll('#jihualist tbody tr').forEach do(r)
 			# console.log '增加行点击事件'
@@ -127,21 +129,21 @@ tag tianxian
 				tablerowjh(e))
 		
 	def listload url # 从数据库查询得到的信息
-		table = querySelector('#servoplist tbody')
+		# table = querySelector('#servoplist tbody')
 		window.fetch(url).then do(res)
 			res.json!
 			.then do(data)
 				renderTable(data)
 		
 	def slistload url # 从数据库查询得到的信息
-		stable = querySelector('#servoslist tbody')
+		# stable = querySelector('#servoslist tbody')
 		window.fetch(url).then do(res)
 			res.json!
 			.then do(data)
 				renderSTable(data)
 
 	def jhlistload url # 从数据库查询得到的信息
-		stable = querySelector('#jihualist tbody')
+		# stable = querySelector('#jihualist tbody')
 		window.fetch(url).then do(res)
 			res.json!
 			.then do(data)
@@ -229,6 +231,10 @@ tag tianxian
 
 
 	def mount
+		listload('/servoplist') # 查询伺服位置列表
+		slistload('/servoslist') # 查询伺服卫星列表
+		jhlistload('/jihualist')
+		console.log '数据库mount 加载'
 
 	def tpcontent data
 		tpname = data.StatusList[0].StName
@@ -251,14 +257,14 @@ tag tianxian
 		# islogined = $txctrl.islogined
 		if data[antindex].Devices[ctrindex].DevName === '伺服器'
 			isServo = yes
-			listload('/servoplist') # 查询伺服位置列表
-			slistload('/servoslist') # 查询伺服卫星列表
+			# listload('/servoplist') # 查询伺服位置列表
+			# slistload('/servoslist') # 查询伺服卫星列表
 		else 
 			isServo = no
 		
 		if data[antindex].Devices[ctrindex].DevName === '极化控制器'
 			isJh = yes
-			jhlistload('/jihualist')
+			# jhlistload('/jihualist')
 		else
 			isJh = no
 		# 默认是第一个伺服，如果有点击按钮，就用被点击的设备的序号。
@@ -269,7 +275,10 @@ tag tianxian
 					<div.txbody>
 						<div.btitle>
 							<div[ta:center]> "{data[antindex].AntName}:设备拓扑图"
-						<div[pos:absolute b:1 l:1 p:5px 15px w:100] [visibility:hidden]=!isServo> '伺服方位数据'
+						<div[pos:absolute b:1 l:1 p:5px 15px w:100] [visibility:hidden]=!isServo> 
+							<div[d:hflex a:center j:left g:5 pb:2]>
+								<button.btn.btn-success.btn-small @click=mount!> '刷新'
+								<div> '伺服方位数据'
 							<table[bd:solid 1px gray5 ta:center].table.table-hover#servoplist>
 								<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
 									<tr>
@@ -278,7 +287,10 @@ tag tianxian
 										<th scope="col"> '俯仰'
 								<tbody[d:block c:gray3 r:rgb(64,73,91) h:35 ofy:auto]>
 									<tr> <td colSpan="3"> <i> 'Loading...'
-						<div[pos:absolute b:1 r:1 p:5px 15px w:100] [visibility:hidden]=!isServo> '伺服卫星数据'
+						<div[pos:absolute b:1 r:1 p:5px 15px w:100] [visibility:hidden]=!isServo> 
+							<div[d:hflex a:center j:left g:5 pb:2]>
+								<button.btn.btn-success.btn-small @click=mount!> '刷新'
+								<div> '伺服卫星数据'
 							<table[bd:solid 1px gray5 ta:center].table#servoslist>
 								<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
 									<tr>
@@ -289,7 +301,10 @@ tag tianxian
 								<tbody[d:block c:gray4 border-color:rgb(64,73,91) h:35 ofy:auto]>
 									<tr> <td colSpan="4"> <i> 'Loading...'
 
-						<div[pos:absolute b:1 l:1 p:5px 15px w:150] [visibility:hidden]=!isJh> '极化卫星及位置数据'
+						<div[pos:absolute b:1 l:1 p:5px 15px w:150] [visibility:hidden]=!isJh> 
+							<div[d:hflex a:center j:left g:5 pb:2]>
+								<button.btn.btn-success.btn-small @click=mount!> '刷新'
+								<div> '极化卫星及位置数据'
 							<table[bd:solid 1px gray5 ta:center].table#jihualist>
 								<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
 									<tr>

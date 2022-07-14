@@ -59,7 +59,7 @@ tag devall
 	def nextPage
 	def devcount
 		devnum = [0,0,0,0]
-		console.log '开始计算'
+		# console.log '开始计算'
 		for item in data
 			for devitem in item.Devices
 				devnum[0] += 1
