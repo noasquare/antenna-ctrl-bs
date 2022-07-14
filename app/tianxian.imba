@@ -111,6 +111,21 @@ tag tianxian
 			r.addEventListener('click',do(e)
 				tablerow(e))
 		
+	def renderjhTable tada
+		let result = ''
+		tada.forEach do(c)
+			result += `<tr class="tbody">
+			<td> {c.id}
+			<td> {c.satlon}
+			<td> {c.polar1}
+			<td> {c.polar2}
+			`
+		stable.innerHTML = result if result
+		document.querySelectorAll('#jihualist tbody tr').forEach do(r)
+			# console.log '增加行点击事件'
+			r.addEventListener('click',do(e)
+				tablerowjh(e))
+		
 	def listload url # 从数据库查询得到的信息
 		table = querySelector('#servoplist tbody')
 		window.fetch(url).then do(res)
@@ -124,6 +139,13 @@ tag tianxian
 			res.json!
 			.then do(data)
 				renderSTable(data)
+
+	def jhlistload url # 从数据库查询得到的信息
+		stable = querySelector('#jihualist tbody')
+		window.fetch(url).then do(res)
+			res.json!
+			.then do(data)
+				renderjhTable(data)
 
 
 	# prop route
@@ -199,6 +221,12 @@ tag tianxian
 		preEl = array[2]
 		sendcmd('prepos',preAz,preEl)
 
+	def tablerowjh event
+		let array = event.currentTarget.innerText.split(/\r?\n/) # 采集获取的行内的所有数据。
+		jh1 = array[2]
+		jh2 = array[3]
+		sendcmd('prejihua',jh1,jh2)
+
 
 	def mount
 
@@ -227,6 +255,12 @@ tag tianxian
 			slistload('/servoslist') # 查询伺服卫星列表
 		else 
 			isServo = no
+		
+		if data[antindex].Devices[ctrindex].DevName === '极化控制器'
+			isJh = yes
+			jhlistload('/jihualist')
+		else
+			isJh = no
 		# 默认是第一个伺服，如果有点击按钮，就用被点击的设备的序号。
 		# console.log "天线视图刷新"
 		<self>
@@ -255,12 +289,23 @@ tag tianxian
 								<tbody[d:block c:gray4 border-color:rgb(64,73,91) h:35 ofy:auto]>
 									<tr> <td colSpan="4"> <i> 'Loading...'
 
+						<div[pos:absolute b:1 l:1 p:5px 15px w:150] [visibility:hidden]=!isJh> '极化卫星及位置数据'
+							<table[bd:solid 1px gray5 ta:center].table#jihualist>
+								<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
+									<tr>
+										<th scope="col"> '序号'
+										<th scope="col"> '经度'
+										<th scope="col"> '极化1'
+										<th scope="col"> '极化2'
+								<tbody[d:block c:gray4 border-color:rgb(64,73,91) h:35 ofy:auto]>
+									<tr> <td colSpan="4"> <i> 'Loading...'
+
 						<div.tuop>
 							<div[d:vflex a:center h:30%]>
 								<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:40 ta:center]> data[antindex].Devices[ctrindex].DevName
 								<div[pos:relative p:2 w:70% c:gray3 bgc:teal8/40 bd:solid 1px teal4 rd:5px d:grid gtc:1fr 1fr 1fr ofy:auto]> for item,index in data[antindex].Devices[ctrindex].StatusList # 就tm多了一个操作，连通性就断掉了。
 									# if index < 5 # 这里控制显示的参数数量，5个重要信息。
-									<div[p:1 fs:medium]> item.StName+ ':'
+									<div[p:1 fs:small]> item.StName+ ':'
 										<div[d:inline fs:large c:teal4 fw:bold ff:monospace pl:2]> item.Value
 							<div[d:flex j:center pos:relative]>
 								<svg[pt:5 o:.6] src=test>
