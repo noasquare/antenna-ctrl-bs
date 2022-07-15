@@ -38,7 +38,7 @@ tag ctrsider
 		# 	return no
 
 	def isadmin
-		console.log islogin
+		# console.log islogin
 		if islogin
 			return yes
 

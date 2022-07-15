@@ -117,8 +117,8 @@ tag app
 		# console.log $txjm.islogined
 		if $txjm.$txctrl.islogined || $txjm.islogined
 			isLogin = $txjm.$txctrl.islogined || $txjm.islogined
-		else
-			isLogin = no
+		# else
+		# 	isLogin = no
 		devdata ??= wsdata # 当devdata 没有ws数据灌入时候，就赋值本地的jsondata
 		# 这里是一个初始值，确保devlist不管是否点击目录也可以有值
 		devlist ??= wsdata[0]
@@ -146,20 +146,10 @@ tag app
 					<button[d:hflex ja:center ml:auto bgc:transparent bd:none c:gray2].notify-user route-to='/login'>
 						<img[mr:2] src='./imgs/user.png'>
 						<span> username  # 增加对用户登录状态的判断。点击进去登录界面。
-					<button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5] route-to='/logout' @click=($txjm.$txctrl.islogined = $txjm.islogined = no)>
+					<button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5] route-to='/logout' @click=($txjm.$txctrl.islogined = $txjm.islogined = isLogin = no)>
 					# <button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5].notify-logout data-bs-toggle='modal' data-bs-target='#exitModal'>
 						<img[mr:2] src='./imgs/logout.png'>
 						<div> '退出'
-					# <div.modal.fade id='exitModal' tabindex='-1' aria-labelledby='exitModalLabel' aria-hidden='true'>
-					# 	<div.modal-dialog>
-					# 		<div.modal-content>
-					# 			<div.modal-header>
-					# 				<h5.modal-title id='exitModalLabel'> "退出"
-					# 				<button.btn-close data-bs-dismiss='modal' aira-label='close'>
-					# 			<div.modal-body> "是否确认退出"
-					# 			<div.modal-footer>
-					# 				<button.btn.btn-secondary data-bs-dismiss='modal'> "关闭"
-					# 				<button.btn.btn-primary @click=(window.close!)> "退出"
 			<div.main>
 				<div.menu>
 					<div.accordion id='menu'>
@@ -173,22 +163,11 @@ tag app
 								<button.accordion-body.menudroplink route-to="/txst/{item.AntNo}" @click=antdata(index)>
 									<div[fs:14px c:gray3 ml:5]> item.AntName
 
-
-						# <div.accordion-item>
-						# 	<h6.accordion-header id='menu02'>
-						# 		<button[d:hflex p:5 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#cols02' aria-expanded='true' aria-control='cols02' route-to='/devall'>
-						# 			<div[w:90%]> '阵地设备总览'
-						# 			<div[w:10% ml:auto].triangle-right>
-						# 	<div.accordion-collapse.collapse.show id='cols02' aria-labelledby='menu02' data-bs-parent='#ctl'>
-						# 		<div[m:0 p:4 d:hflex].accordion-body>
-						# 			<div[fs:14px c:gray3 ml:3]> '暂定留空'
 					<button.menunodrop route-to='/devlog' route-to='/devall'> "阵地设备总览"
 					<button.menunodrop route-to='/devlog'> "日志"
 					<button.menunodrop route-to='/setting'> "设置"
-					# <button.menunodrop route-to='/users'>
 					<i.bi.bi-alarm>
 
-				
 				<tianxian$txjm[w:100%] route='/txst/:id' data=devdata ws=socket antindex=antindex islogin=isLogin> # 这里的index是为了区分是哪个天线的数据，但是如果这样，就会导致纯通过route不能获取最新的数据了。解决方案就是，点击要的index传进去，然后再component里面直接做，不转手。
 				<div[p:5 w:100% d:grid gtc:1fr 1fr 1fr g:5 a:baseline].antall route='/antall'> for item in devdata
 					<antcard rdata=item>
