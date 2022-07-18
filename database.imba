@@ -5,7 +5,8 @@ let mysql = require('mysql')
 # 	password : 'password'
 # 	database : 'txjl'
 export default class test
-	prop connection = mysql.createConnection
+	prop connection = mysql.createPool
+		connectionLimit : 2
 		host : 'localhost'
 		user : 'root'
 		password : 'password'
@@ -13,7 +14,7 @@ export default class test
 
 	def connect
 		# console.log connection
-		connection.connect! do(er)
+		connection.getConnection! do(er)
 			if er
 				throw er
 			else

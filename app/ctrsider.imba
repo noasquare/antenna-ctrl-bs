@@ -7,11 +7,17 @@ tag ctrsider
 	css	.accordion --bs-accordion-bg:transparent bd:none --bs-accordion-border-width:0px
 		.triangle-right w:0 h:0 bdt:5px solid transparent bdl:10px solid gray3 bdb:5px solid transparent
 		.triangle-down w:0 h:0 bdt:10px solid gray3 bdl:5px solid transparent bdr:5px solid transparent
+	css input color-scheme:dark	
+	css table tr d:hgrid
+	css	.table >>> .tbody d:hgrid bgc:gray7/20 @hover:teal6/50 cursor:pointer fs:sm
+	css	.table-active >>> .tobdy c:red4
+
 	css .mdlogin bgc:gray6/80 c:gray2 w:40% h:100 pos:absolute t:40% l:50% x:-50% y:-50% rd:xl o:0 tween:all 500ms ease visibility:hidden
 	prop ws
 	prop data
 	showlogin = no # 是否显示登录框
 	# prop inputvalue
+	prop today = new Date().toISOString().substring(0,16)
 	prop ant
 	prop islogin
 	prop islogined
@@ -142,6 +148,27 @@ tag ctrsider
 				console.log data
 				ws.send(JSON.stringify(data))
 
+	def sendCalpara item,val_xl,val_start,val_stop,val_inter
+		# todo = 这里要增加一个发指令前的用户权限判断-可以是个函数 应该是个bool函数 ：isadmin
+		# 1- 弹出一个用户名密码的窗口弹窗，输入值，不管对不对先发送给
+		if isadmin!
+			console.log typeof(item)
+			if typeof(item) !== 'object' && val_xl && val_start && val_stop && val_inter
+				let data =
+					AntennaNo : ant
+					DevNo : data.DevNo
+					Cmd : item
+					Params : {
+						"{item}1" : val_xl
+						"{item}2" : val_start
+						"{item}3" : val_stop
+						"{item}4" : val_inter
+					}
+				console.log data
+				ws.send(JSON.stringify(data))
+			else
+				window.alert('输入参数不完整！')
+
 	def colapse
 	def remotestatus list
 		# console.log '检查远控状态'
@@ -172,20 +199,49 @@ tag ctrsider
 			isLNAlimits = no
 		else
 			isLNAlimits = yes
+	def listload url # 从数据库查询得到的信息
+		# table = querySelector('#servoplist tbody')
+		window.fetch(url).then do(res)
+			res.json!
+			.then do(data)
+				# console.log data
+				renderTable(data)
+	
+	def renderTable tada
+		let result = ''
+		# console.log tabledata
+		tada.forEach do(c)
+			result += `<tr class="tbody">
+			<td> {c.time}
+			<td> {c.az}
+			<td> {c.el}
+			`
+		# console.log table
+		let table = querySelector('#servoTracklist tbody')
 		
+		table.innerHTML = result if result
+
+		let activeCol = querySelectorAll('#servoTracklist tbody tr')[0]
+		activeCol.classList.add('table-active')
+
+		console.log querySelectorAll('#servoTracklist tbody tr')[0]
+
 	def setFocus
 		test = document.getElementById('#userinput')
 		console.log test
 
 	def mount
-		console.log 'sider mount'
-		$uname.value = ''
-		$pass.value = ''
+		listload('/tracklist') # 查询二行星历列表
+
+		# console.log 'sider mount'
+		# $uname.value = ''
+		# $pass.value = ''
+
 
 	def render()
 		# console.log data.DevName
 		cmdbyDevice!
-
+		# console.log today
 		remotestatus(data.StatusList) # 显示远控的状态
 		<self> 
 			<div>
@@ -356,11 +412,41 @@ tag ctrsider
 								<div[fs:14px c:gray3 ml:3]> '空调关闭:'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('airctrClose','true')> "关闭"
 							# ========温湿度传感指令================================
-
+							# ========伺服指令================================
+						
+						
+						<h6.accordion-header id='heading3' [d:none]=isServo>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapse3' aria-expanded='true' aria-control='collapse3'>
+								<div[w:90%]> '跟踪控制：'
+								<div[w:10% ml:auto].triangle-right>
+						<div[max-height:100 ofy:auto].accordion-collapse.collapse.show id='collapse3' aria-labelledby='heading3' data-bs-parent='#ctl' [d:none]=isServo>
+							# <div[d:vflex g:3 m:0]>
+							<textarea$trackXL[w:90% h:14 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:2 3] placeholder='输入两行星历'>
+							<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
+								<input$startTime[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='开始日期' defaultValue=today>
+								<input$stopTime[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='结束日期'>
+								<input$trackInterval[w:30% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number' placeholder='间隔' step='1' value='1'> <span> '秒/s'
+							<div[d:hflex ja:center g:4]>
+								<button[].btn.btn-success.btn-sm @click=sendCalpara('TrackCal',$trackXL.value,$startTime.value,$stopTime.value,$trackInterval.value)> "计算"
+								<button[].btn.btn-success.btn-sm @click=sendpara('TrackStart',null)> "开始跟踪"
+								<button[].btn.btn-success.btn-sm @click=sendpara('TrackStop',null)> "结束跟踪"
+								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
+							<div[b:1 l:1 p:5px 15px w:100% c:gray2] > 
+								<div[d:hflex a:center j:left g:3 pb:1]>
+									<div[fs:sm]> '星历计算结果:'
+								<table[bd:solid 1px gray5 ta:center].table.table-hover.table-sm.table-dark#servoTracklist>
+									<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
+										<tr>
+											<th scope="col"> '时间'
+											<th scope="col"> '方位'
+											<th scope="col"> '俯仰'
+									<tbody[d:block c:gray3 r:rgb(64,73,91) h:35 ofy:auto]>
+										<tr> <td colSpan="3"> <i> 'Loading...'
+								# <div[fs:14px c:gray3 ml:3]> '程序跟踪：'
 
 				<div.sdtitle> '更多参数' 
 				<div.accordion id='ctl-status'>
-					# <div.accordion-item>
+					# <div.accordion-item> # 暂时不把参数显示在这里。
 					# 	<h6.accordion-header id='headingStatus'>
 					# 		<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseStatus' aria-expanded='true' aria-control='collapseStatus'>
 					# 			<div[w:90%]> '设备参数'

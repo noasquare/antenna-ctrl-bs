@@ -277,7 +277,7 @@ tag tianxian
 							<div[ta:center]> "{data[antindex].AntName}:设备拓扑图"
 						<div[pos:absolute b:1 l:1 p:5px 15px w:100] [visibility:hidden]=!isServo> 
 							<div[d:hflex a:center j:left g:5 pb:2]>
-								<button.btn.btn-success.btn-small @click=mount!> '刷新'
+								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
 								<div> '伺服方位数据'
 							<table[bd:solid 1px gray5 ta:center].table.table-hover#servoplist>
 								<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
@@ -289,7 +289,7 @@ tag tianxian
 									<tr> <td colSpan="3"> <i> 'Loading...'
 						<div[pos:absolute b:1 r:1 p:5px 15px w:100] [visibility:hidden]=!isServo> 
 							<div[d:hflex a:center j:left g:5 pb:2]>
-								<button.btn.btn-success.btn-small @click=mount!> '刷新'
+								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
 								<div> '伺服卫星数据'
 							<table[bd:solid 1px gray5 ta:center].table#servoslist>
 								<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
@@ -303,7 +303,7 @@ tag tianxian
 
 						<div[pos:absolute b:1 l:1 p:5px 15px w:150] [visibility:hidden]=!isJh> 
 							<div[d:hflex a:center j:left g:5 pb:2]>
-								<button.btn.btn-success.btn-small @click=mount!> '刷新'
+								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
 								<div> '极化卫星及位置数据'
 							<table[bd:solid 1px gray5 ta:center].table#jihualist>
 								<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
@@ -317,7 +317,9 @@ tag tianxian
 
 						<div.tuop>
 							<div[d:vflex a:center h:30%]>
-								<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:40 ta:center]> data[antindex].Devices[ctrindex].DevName
+								<div[d:hflex w:70%]>
+									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:40 ta:center mr:auto]> data[antindex].Devices[ctrindex].DevName
+									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:30 ta:center] [visibility:hidden]=!isServo> '跟踪中...'
 								<div[pos:relative p:2 w:70% c:gray3 bgc:teal8/40 bd:solid 1px teal4 rd:5px d:grid gtc:1fr 1fr 1fr ofy:auto]> for item,index in data[antindex].Devices[ctrindex].StatusList # 就tm多了一个操作，连通性就断掉了。
 									# if index < 5 # 这里控制显示的参数数量，5个重要信息。
 									<div[p:1 fs:small]> item.StName+ ':'

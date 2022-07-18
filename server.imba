@@ -34,6 +34,11 @@ app.get('/jihualist') do(req,res)
 		console.log er if er
 		res.send(rows)
 
+app.get('/tracklist') do(req,res)
+	mysql.connection.query 'SELECT * FROM ephemeris LIMIT 20;' do(er,rows) # 获取伺服的卫星列表
+		console.log er if er
+		res.send(rows)
+
 
 
 
