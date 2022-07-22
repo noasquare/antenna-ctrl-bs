@@ -319,7 +319,7 @@ tag tianxian
 							<div[d:vflex a:center h:30%]>
 								<div[d:hflex w:70%]>
 									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:40 ta:center mr:auto]> data[antindex].Devices[ctrindex].DevName
-									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:30 ta:center] [visibility:hidden]=!isServo> '跟踪中...'
+									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:30 ta:center] [visibility:hidden]=!isServo> data[antindex].Devices[ctrindex].TrackStatus
 								<div[pos:relative p:2 w:70% c:gray3 bgc:teal8/40 bd:solid 1px teal4 rd:5px d:grid gtc:1fr 1fr 1fr ofy:auto]> for item,index in data[antindex].Devices[ctrindex].StatusList # 就tm多了一个操作，连通性就断掉了。
 									# if index < 5 # 这里控制显示的参数数量，5个重要信息。
 									<div[p:1 fs:small]> item.StName+ ':'
