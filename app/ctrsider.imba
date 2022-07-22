@@ -481,7 +481,8 @@ tag ctrsider
 								<input$startTime1[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='开始日期' defaultValue=today>
 								<input$stopTime1[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='结束日期'>
 							<div[d:hflex ja:center g:4]>
-								<button[].btn.btn-success.btn-sm @click=sendpara_multi('TrackStartHis',$startTime1.value,$stopTime1.value)> "开始跟踪"
+								<button[].btn.btn-success.btn-sm @click=sendpara_multi('TrackCalHis',$startTime1.value,$stopTime1.value)> "计算"
+								<button[].btn.btn-success.btn-sm @click=sendpara('TrackStartHis',null)> "开始跟踪"
 								<button[].btn.btn-success.btn-sm @click=sendpara('TrackStopHis',null)> "结束跟踪"
 								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
 							<div[b:1 l:1 p:5px 15px w:100% c:gray2] > 
