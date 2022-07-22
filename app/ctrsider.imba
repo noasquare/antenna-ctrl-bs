@@ -224,7 +224,32 @@ tag ctrsider
 		let activeCol = querySelectorAll('#servoTracklist tbody tr')[0]
 		activeCol.classList.add('table-active')
 
-		console.log querySelectorAll('#servoTracklist tbody tr')[0]
+	def listloadhis url # 从数据库查询得到的信息
+		# table = querySelector('#servoplist tbody')
+		window.fetch(url).then do(res)
+			res.json!
+			.then do(data)
+				# console.log data
+				renderTablehis(data)
+	
+	def renderTablehis tada
+		let result = ''
+		# console.log tabledata
+		tada.forEach do(c)
+			result += `<tr class="tbody">
+			<td> {c.time}
+			<td> {c.az}
+			<td> {c.el}
+			`
+		let table = querySelector('#servoTracklistHis tbody')
+		# console.log table
+		
+		table.innerHTML = result if result
+
+		let activeCol = querySelectorAll('#servoTracklistHis tbody tr')[0]
+		activeCol.classList.add('table-active')
+
+		# console.log querySelectorAll('#servoTracklist tbody tr')[0]
 
 	def setFocus
 		test = document.getElementById('#userinput')
@@ -232,6 +257,7 @@ tag ctrsider
 
 	def mount
 		listload('/tracklist') # 查询二行星历列表
+		listloadhis('/tracklisthis') # 记忆跟踪列表查询
 
 		# console.log 'sider mount'
 		# $uname.value = ''
@@ -334,21 +360,23 @@ tag ctrsider
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('Search',$azrange.value,$elrange.value)> "搜索"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储卫星:'
-								<input$satid[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/00~23" type='number' step='1'>
+								<input$satid[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
 								<input$satlon[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度/0.00" type='number' step='.01'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('StoreSat',$satid.value,$satlon.value)> "存储"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '删除卫星:'
-								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/00~23" @change=sendpara("RemoveSat",this.value) type='number' step='1'>
+								<input$satdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemoveSat',$satdel.value)> "删除"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储当前位置:'
-								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/00~23" @change=sendpara("StorePos",this.value) type='number' step='1'>
+								<input$satposStore[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StorePos',$satposStore.value)> "存储"
 							# ========伺服指令================================
 						
 							# ========极化控制指令================================
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '查询卫星表:'
-								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/00~23" @change=sendpara("QuerySatelliteTable",this.value) type='number' step='1'>
+								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" @change=sendpara("QuerySatelliteTable",this.value) type='number' step='1'>
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '故障复位:'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Reset','test')> "复位"
@@ -368,7 +396,8 @@ tag ctrsider
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('PresetPos',$posId.value,$posValue.value)> "预置"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对极化控制设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '预置卫星经度:'
-								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度/0.0" @change=sendpara("PresetSat",this.value) type='number' step='.1'>
+								<input$PresetSat[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度/0.0" type='number' step='.1'>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('PresetSat',$PresetSat.value)> "预置"
 
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对极化控制设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储卫星:'
@@ -377,7 +406,8 @@ tag ctrsider
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('StoreSat',$jhSatNo.value,$jhSatLon.value)> "存储"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '删除卫星:'
-								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/00~23" @change=sendpara("RemoveSat",this.value) type='number' step='1'>
+								<input$removesat[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemoveSat',$removesat.value)> "删除"
 							# ========极化控制指令================================
 
 							# ========跟踪接收机指令================================
@@ -417,10 +447,9 @@ tag ctrsider
 						
 						<h6.accordion-header id='heading3' [d:none]=isServo>
 							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapse3' aria-expanded='true' aria-control='collapse3'>
-								<div[w:90%]> '跟踪控制：'
+								<div[w:90%]> '程序跟踪'
 								<div[w:10% ml:auto].triangle-right>
 						<div[max-height:100 ofy:auto].accordion-collapse.collapse.show id='collapse3' aria-labelledby='heading3' data-bs-parent='#ctl' [d:none]=isServo>
-							# <div[d:vflex g:3 m:0]>
 							<textarea$trackXL[w:90% h:14 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:2 3] placeholder='输入两行星历'>
 							<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
 								<input$startTime[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='开始日期' defaultValue=today>
@@ -435,6 +464,30 @@ tag ctrsider
 								<div[d:hflex a:center j:left g:3 pb:1]>
 									<div[fs:sm]> '星历计算结果:'
 								<table[bd:solid 1px gray5 ta:center].table.table-hover.table-sm.table-dark#servoTracklist>
+									<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
+										<tr>
+											<th scope="col"> '时间'
+											<th scope="col"> '方位'
+											<th scope="col"> '俯仰'
+									<tbody[d:block c:gray3 r:rgb(64,73,91) h:35 ofy:auto]>
+										<tr> <td colSpan="3"> <i> 'Loading...'
+								# <div[fs:14px c:gray3 ml:3]> '程序跟踪：'
+						<h6.accordion-header id='heading4' [d:none]=isServo>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapse4' aria-expanded='true' aria-control='collapse4'>
+								<div[w:90%]> '记忆跟踪'
+								<div[w:10% ml:auto].triangle-right>
+						<div[max-height:100 ofy:auto].accordion-collapse.collapse.show id='collapse4' aria-labelledby='heading4' data-bs-parent='#ctl' [d:none]=isServo>
+							<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
+								<input$startTime1[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='开始日期' defaultValue=today>
+								<input$stopTime1[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='结束日期'>
+							<div[d:hflex ja:center g:4]>
+								<button[].btn.btn-success.btn-sm @click=sendpara_multi('TrackStartHis',$startTime1.value,$stopTime1.value)> "开始跟踪"
+								<button[].btn.btn-success.btn-sm @click=sendpara('TrackStopHis',null)> "结束跟踪"
+								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
+							<div[b:1 l:1 p:5px 15px w:100% c:gray2] > 
+								<div[d:hflex a:center j:left g:3 pb:1]>
+									<div[fs:sm]> '星历跟踪列表:'
+								<table[bd:solid 1px gray5 ta:center].table.table-hover.table-sm.table-dark#servoTracklistHis>
 									<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
 										<tr>
 											<th scope="col"> '时间'
