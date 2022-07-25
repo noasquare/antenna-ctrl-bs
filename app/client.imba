@@ -6,6 +6,7 @@ import './ctrsider'
 import './antcard'
 import './devall'
 import './devlog'
+# import './test'
 # import wsdata from './antenna.json'
 import wsdata from './状态.json'
 global css html
@@ -166,6 +167,7 @@ tag app
 					<button.menunodrop route-to='/devlog' route-to='/devall'> "阵地设备总览"
 					<button.menunodrop route-to='/devlog'> "日志"
 					<button.menunodrop route-to='/setting'> "设置"
+					# <button.menunodrop route-to='/test'> "test"
 					<i.bi.bi-alarm>
 
 				<tianxian$txjm[w:100%] route='/txst/:id' data=devdata ws=socket antindex=antindex islogin=isLogin> # 这里的index是为了区分是哪个天线的数据，但是如果这样，就会导致纯通过route不能获取最新的数据了。解决方案就是，点击要的index传进去，然后再component里面直接做，不转手。
@@ -206,6 +208,8 @@ tag app
 					<h1> '欢迎使用天线精灵远控系统'
 					<div> '如果要进行设备操控，请您登录后进行操作'
 					<button[mt:10].btn.btn-success route-to='/login'> "登录"
+				# <div route='/test'>
+				# 	<test>
 
 
 imba.mount <app>

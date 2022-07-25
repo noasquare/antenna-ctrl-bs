@@ -1,6 +1,7 @@
 import './ctrsider'
 import test from './imgs/天线1.svg'
 import Drawflow from 'drawflow'
+import './tpframe'
 
 const devcolor = ['teal7','red7','sky7'] # 设置设备状态的一个颜色数组
 let xydata = [
@@ -300,7 +301,6 @@ tag tianxian
 										<th scope="col"> '俯仰'
 								<tbody[d:block c:gray4 border-color:rgb(64,73,91) h:35 ofy:auto]>
 									<tr> <td colSpan="4"> <i> 'Loading...'
-
 						<div[pos:absolute b:1 l:1 p:5px 15px w:150] [visibility:hidden]=!isJh> 
 							<div[d:hflex a:center j:left g:5 pb:2]>
 								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
@@ -324,8 +324,9 @@ tag tianxian
 									# if index < 5 # 这里控制显示的参数数量，5个重要信息。
 									<div[p:1 fs:small]> item.StName+ ':'
 										<div[d:inline fs:large c:teal4 fw:bold ff:monospace pl:2]> item.Value
+							<tpframe[pos:absolute t:30% l:0 w:100%]>
 							<div[d:flex j:center pos:relative]>
-								<svg[pt:5 o:.6] src=test>
+								# <svg[pt:5 o:.6] src=test>
 								<div[h:auto m:5 10 pos:absolute t:0]> for item,i in data[antindex].Devices
 									if item.StatusList[item.StatusList.length - 1].Value === 'Disconnected'
 										<button[x:{xydata[i].x} y:{xydata[i].y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart  @click=devctr(i)> item.DevName
