@@ -76,6 +76,7 @@ tag tianxian
 	prop islogin
 	showlogin = no
 	prop islogined
+	prop isadminClick
 	prop tpname
 	prop ws
 	prop x
@@ -252,6 +253,12 @@ tag tianxian
 				# devctrdata ??= data[index].Devices[0] # 并把天线里面的第一台设备赋给devctrdata，这个的？？=意思是如果不存在就赋值。
 				# console.log "routed",devctrdata
 	def render()
+		tpbox = querySelector('#tpframe') # 获取拓扑图的画布的宽度
+
+		# 	console.log tpbox.clientWidth
+		
+		# console.log islogin
+		# console.log $tpframe.isSaved
 		ctrindex ??= 0
 		if ctrindex > (data[antindex].Devices.length - 1) # 当通过路由参数进来的index大于所有列表的长度，就重新赋值0
 			ctrindex = 0
@@ -324,10 +331,14 @@ tag tianxian
 									# if index < 5 # 这里控制显示的参数数量，5个重要信息。
 									<div[p:1 fs:small]> item.StName+ ':'
 										<div[d:inline fs:large c:teal4 fw:bold ff:monospace pl:2]> item.Value
-							<tpframe[pos:absolute t:30% l:0 w:100%]>
+							<tpframe$tpframe[pos:absolute t:30% l:0 w:100%]#tpframe display=!isadminClick tpelement=tpbox>
 							<div[d:flex j:center pos:relative]>
-								# <svg[pt:5 o:.6] src=test>
-								<div[h:auto m:5 10 pos:absolute t:0]> for item,i in data[antindex].Devices
+								<div[mr:auto p:2] [d:none]=!islogin>
+									if isadminClick
+										<button.btn.btn-primary.btn-sm @click=(isadminClick = !isadminClick)> '关闭拓扑图编辑'
+									else
+										<button.btn.btn-success.btn-sm @click=(isadminClick = !isadminClick)> '打开拓扑图编辑'
+								<div[h:0 pos:absolute t:0]> for item,i in data[antindex].Devices
 									if item.StatusList[item.StatusList.length - 1].Value === 'Disconnected'
 										<button[x:{xydata[i].x} y:{xydata[i].y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart  @click=devctr(i)> item.DevName
 											<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
