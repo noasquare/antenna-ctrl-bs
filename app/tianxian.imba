@@ -2,6 +2,7 @@ import './ctrsider'
 import test from './imgs/天线1.svg'
 import Drawflow from 'drawflow'
 import './tpframe'
+import axios from 'axios'
 
 const devcolor = ['teal7','red7','sky7'] # 设置设备状态的一个颜色数组
 let xydata = [
@@ -71,7 +72,7 @@ tag tianxian
 	css table tr d:hgrid
 	css	.table >>> .tbody d:hgrid bgc:clear @hover:teal6/50 cursor:pointer
 	css .mdlogin bgc:gray6/80 c:gray2 w:40% h:100 pos:absolute t:40% l:50% x:-50% y:-50% rd:xl o:0 tween:all 500ms ease visibility:hidden
-
+	squaresdata
 	prop data
 	prop islogin
 	showlogin = no
@@ -231,11 +232,16 @@ tag tianxian
 		jh2 = array[3]
 		sendcmd('prejihua',jh1,jh2)
 
-
+	def gettpdata
+		axios.get('/savetuop')
+			.then do(res)
+				console.log res
+				squaresdata = res.data
 	def mount
 		listload('/servoplist') # 查询伺服位置列表
 		slistload('/servoslist') # 查询伺服卫星列表
 		jhlistload('/jihualist')
+		gettpdata!
 		console.log '数据库mount 加载'
 
 	def tpcontent data
@@ -331,7 +337,7 @@ tag tianxian
 									# if index < 5 # 这里控制显示的参数数量，5个重要信息。
 									<div[p:1 fs:small]> item.StName+ ':'
 										<div[d:inline fs:large c:teal4 fw:bold ff:monospace pl:2]> item.Value
-							<tpframe$tpframe[pos:absolute t:30% l:0 w:100%]#tpframe display=!isadminClick tpelement=tpbox>
+							<tpframe$tpframe[pos:absolute t:30% l:0 w:100%]#tpframe display=!isadminClick tpelement=tpbox squares=squaresdata antno=data[antindex].AntNo>
 							<div[d:flex j:center pos:relative]>
 								<div[mr:auto p:2] [d:none]=!islogin>
 									if isadminClick
