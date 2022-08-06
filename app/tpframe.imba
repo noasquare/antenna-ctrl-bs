@@ -18,7 +18,7 @@ tag tpframe
 		# wratio = e.offsetX/tpelement.clientWidth
 		# hratio = e.offsetX/tpelement.clientWidth
 		return context = false if context
-		squares = squares.concat({id:111,antname:antno,antdevname:'设备名称',width:100,height:100,x:e.offsetX,y:e.offsetY,upcon:no,uppointx:0,uppointy:0,downcon:no,downpointx:0,downpointy:0,leftcon:no,leftpointx:0,leftpointy:0,rightcon:no,rightpointx:50,rightpointy:50})
+		squares = squares.concat({id:111,antname:antno,devname:'设备名称',width:100,height:100,x:e.offsetX,y:e.offsetY,upcon:no,uppointx:0,uppointy:0,downcon:no,downpointx:0,downpointy:0,leftcon:no,leftpointx:0,leftpointy:0,rightcon:no,rightpointx:50,rightpointy:50})
 		selection = squares[squares.length - 1] # 这里是选择最新的圆形
 		mount!
 		# squarex.push(e.offsetX)
@@ -44,8 +44,13 @@ tag tpframe
 	def savedata
 		context = no
 		# isSaved = yes
+		let anttpdata = squares.filter(do(item)
+			item.antname === antno
+			)
+		console.log anttpdata
 		axios.post('/savetuop',
-			data: JSON.stringify(squares)
+			data: JSON.stringify(anttpdata)  # 这里的data应该只能是每个天线对应的 框图数组。现在是全部的数组
+			# antNo : antno
 			).then do(res)
 				console.log res
 
@@ -78,13 +83,14 @@ tag tpframe
 
 	def render
 		# console.log squares
+		# console.log antno
 		# console.log tpelement
 		# console.log $upp.value
 		# console.log selection..downcon
 		<self>
 			if context
 				<div[o@off:0].context-menu ease>
-					<input$devname type="text" bind=selection..devname>
+					<input$devname type="text" bind=selection..devname >
 					# <input$devname type="text" bind=devname[selectIndex]>
 					<p> "第{selectIndex + 1}元素位置： ({selection..x}, {selection..y})"
 					<div[d:grid gtc:1fr 1fr g:3]>
@@ -128,10 +134,10 @@ tag tpframe
 					<marker#arrowhead[fill:teal5] markerWidth="5" markerHeight="5" 
 					refX="0" refY="2" orient="auto">
 						<polygon points="0 0, 5 2, 0 4">
+				
 				if squares
-					# console.log squares
-					if squares.length !== 0 && squares[0].antname === antno
-						for square,i in squares
+					for square,i in squares
+						if square.antname === antno
 							const selected = selection..x === square.x && selection..y === square.y
 							# console.log selection..x === square.x
 							<rect rx=10 ry=10 width=square.width height=square.height
@@ -167,7 +173,7 @@ tag tpframe
 								else
 									point = `{square..x},{square..y + square.height/2} {square..x + square..width/2 - square..leftpointx},{square..y + square.height/2} {square..x + square..width/2 - square..leftpointx},{square..y + square.height/2 + square..leftpointy}`
 								<polyline[stroke:teal5 fill:clear] points=point stroke-width="2" marker-end="url(#arrowhead)">			
-						
+					
 			<div[d:hflex j:right g:4] [d:none]=display>
 				<button.btn.btn-success.btn-sm @click=addsquare> '添加'
 				<button.btn.btn-danger.btn-sm @click=clear> '清空'

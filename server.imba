@@ -56,12 +56,12 @@ app.get '/savetuop' do(req,res)
 app.post('/savetuop',jasonParser) do(req,res)
 	try
 		let tuopdata = JSON.parse(req.body.data)
-		# console.log tuopdata
+		# console.log JSON.parse(req.body.antNo)
 		# console.log tuopdata[0].devname
 		let sql = `DELETE FROM tuop_data WHERE antname='{tuopdata[0].antname}'; alter table tuop_data auto_increment=1 ; INSERT INTO tuop_data(antname,devname,width,height,x,y,upcon,uppointx,uppointy,downcon,downpointx,downpointy,leftcon,leftpointx,leftpointy,rightcon,rightpointx,rightpointy) VALUES ? `
 		let values = []
 		for item,i in tuopdata
-			values.push([item.antname,item.antdevname,item.width,item.height,item.x,item.y,item.upcon,item.uppointx,item.uppointy,item.downcon,item.downpointx,item.downpointy,item.leftcon,item.leftpointx,item.leftpointy,item.rightcon,item.rightpointx,item.rightpointy])
+			values.push([item.antname,item.devname,item.width,item.height,item.x,item.y,item.upcon,item.uppointx,item.uppointy,item.downcon,item.downpointx,item.downpointy,item.leftcon,item.leftpointx,item.leftpointy,item.rightcon,item.rightpointx,item.rightpointy])
 		# console.log values
 		mysql.connection.query(sql,[values],do(er,rows)
 			console.log er if er

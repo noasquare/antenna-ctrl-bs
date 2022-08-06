@@ -232,11 +232,21 @@ tag tianxian
 		jh2 = array[3]
 		sendcmd('prejihua',jh1,jh2)
 
-	def gettpdata
+	def gettpdata # 获取到拓扑图的详细数组数据
+		
 		axios.get('/savetuop')
 			.then do(res)
 				console.log res
 				squaresdata = res.data
+				# squaresdata = res.data.filter(do(item)
+				# 	item.antname === data[antindex].AntNo
+				# 	)
+				# console.log "来自{data[antindex].AntNo}的{squaresdata}"
+				
+
+	def anttpdata tpdata
+		return tpdata.antname === data[antindex].AntNo
+
 	def mount
 		listload('/servoplist') # 查询伺服位置列表
 		slistload('/servoslist') # 查询伺服卫星列表
@@ -260,9 +270,7 @@ tag tianxian
 				# console.log "routed",devctrdata
 	def render()
 		tpbox = querySelector('#tpframe') # 获取拓扑图的画布的宽度
-
 		# 	console.log tpbox.clientWidth
-		
 		# console.log islogin
 		# console.log $tpframe.isSaved
 		ctrindex ??= 0
@@ -275,7 +283,6 @@ tag tianxian
 			# slistload('/servoslist') # 查询伺服卫星列表
 		else 
 			isServo = no
-		
 		if data[antindex].Devices[ctrindex].DevName === '极化控制器'
 			isJh = yes
 			# jhlistload('/jihualist')
