@@ -67,7 +67,11 @@ tag tpframe
 		x=y=10
 	def clear
 		# window.alert('清除后无法恢复')
-		squares = []
+		console.log squares
+		squares = squares.filter(do(item)
+			item.antname !== antno
+			)
+
 	def delcurrent i
 		squares.splice(i,1)
 		context = no

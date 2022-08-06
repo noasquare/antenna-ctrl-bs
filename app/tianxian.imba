@@ -5,52 +5,13 @@ import './tpframe'
 import axios from 'axios'
 
 const devcolor = ['teal7','red7','sky7'] # 设置设备状态的一个颜色数组
-let xydata = [
-	{
-		x:-235px
-		y:309px
+let xdata 
+let ydata 
+# let tpxydata = []
+let xydata = {
+		x: 10px
+		y: 10px
 	}
-	{
-		x:-249px
-		y:140px
-	}
-	{
-		x:90px
-		y:202px
-	}
-	{
-		x:277px
-		y:-67px
-	}
-	{
-		x:285px
-		y:92px
-	}
-	{
-		x:-77px
-		y:-119px
-	}
-	{
-		x:51px
-		y:-174px
-	}
-	{
-		x:-240px
-		y:-313px
-	}
-	{
-		x:270px
-		y:-444px
-	}
-	{
-		x:-78px
-		y:-464px
-	}
-	{
-		x:48px
-		y:-520px
-	}
-]
 # let devlistdata # 单个电线数据
 tag tianxian
 	css	.btitle d:flex h:5% w:100% c:#fff fs:15px ja:center
@@ -82,6 +43,9 @@ tag tianxian
 	prop ws
 	prop x
 	prop y
+	prop tpxydata = []
+	prop isdataload = no
+	
 	def renderTable tada
 		let result = ''
 		# console.log tabledata
@@ -236,8 +200,24 @@ tag tianxian
 		
 		axios.get('/savetuop')
 			.then do(res)
-				console.log res
+				# console.log res
 				squaresdata = res.data
+				isdataload = yes
+				# 这里就可以把拓扑数据的xy值赋给 我们的方块数组。
+				let tpdata = squaresdata.filter(do(item)
+					item.antname === antrouted
+					)
+				tpdata.forEach(do(item,i)
+					let xydata = {
+						x:"{item.x}px"
+						y:"{(item.y - i*55) + (item.height - 55)/2}px"
+					}
+					tpxydata[i] = xydata
+					# tpxydata[i].x = item.x
+					# tpxydata[i].y = (item.y - i*55) + (item.height - 55)/2
+					)
+				console.log tpxydata
+				render!
 				# squaresdata = res.data.filter(do(item)
 				# 	item.antname === data[antindex].AntNo
 				# 	)
@@ -251,7 +231,19 @@ tag tianxian
 		listload('/servoplist') # 查询伺服位置列表
 		slistload('/servoslist') # 查询伺服卫星列表
 		jhlistload('/jihualist')
+		for item,i in data[antindex].Devices
+			tpxydata[i] = xydata
+
+		# xdata [data[antindex].Devices.length]
+		# tpxydata = new Array(data[antindex].Devices.length)
+		# tpxydata.unshift(xydata)
+		# console.log tpxydata
+		# data[antindex].Devices.forEach do
+		# 	xdata.push(0)
+		# 	ydata.push(0)
+		# console.log xdata
 		gettpdata!
+
 		console.log '数据库mount 加载'
 
 	def tpcontent data
@@ -262,13 +254,16 @@ tag tianxian
 		# 通过路由id中的天线编号来载入每个天线的全部数据，并初始化设备数据
 	def routed params,state
 		# console.log data
+		antrouted = params.id
 		for item,index in data
 			if item.AntNo == params.id
 				antindex = index
-				
+				mount!
+				# $tpframe.render
 				# devctrdata ??= data[index].Devices[0] # 并把天线里面的第一台设备赋给devctrdata，这个的？？=意思是如果不存在就赋值。
 				# console.log "routed",devctrdata
 	def render()
+		# console.log xydata
 		tpbox = querySelector('#tpframe') # 获取拓扑图的画布的宽度
 		# 	console.log tpbox.clientWidth
 		# console.log islogin
@@ -351,23 +346,23 @@ tag tianxian
 										<button.btn.btn-primary.btn-sm @click=(isadminClick = !isadminClick)> '关闭拓扑图编辑'
 									else
 										<button.btn.btn-success.btn-sm @click=(isadminClick = !isadminClick)> '打开拓扑图编辑'
-								<div[h:0 pos:absolute t:0]> for item,i in data[antindex].Devices
-									if item.StatusList[item.StatusList.length - 1].Value === 'Disconnected'
-										<button[x:{xydata[i].x} y:{xydata[i].y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart  @click=devctr(i)> item.DevName
+								<div[h:0 pos:absolute t:0 l:0]> for item,i in data[antindex].Devices
+									if item.StatusList[item.StatusList.length - 1].Value === 'Disconnected' && isdataload
+										<button[x:{tpxydata[i].x} y:{tpxydata[i].y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart  @click=devctr(i) > item.DevName
 											<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 												if n < 5
 													<div[d:hflex ja:left a:center ml:3]>
 														<div[fs:12px mr:2]> tpitem.StName+':'
 														<div[c:teal4 fs:16px fw:bold]> tpitem.Value
-									if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length === 0
-										<button[x:{xydata[i].x} y:{xydata[i].y} bgc:{devcolor[0]} c:gray2 w:auto].tuop-chart  @click=devctr(i)> item.DevName
+									if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length === 0 && isdataload
+										<button[x:{tpxydata[i].x} y:{tpxydata[i].y} bgc:{devcolor[0]} c:gray2 w:auto].tuop-chart  @click=devctr(i)> item.DevName
 											<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 												if n < 5
 													<div[d:hflex ja:left a:center ml:3]>
 														<div[fs:12px mr:2]> tpitem.StName+':'
 														<div[c:teal4 fs:16px fw:bold]> tpitem.Value
-									if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length !== 0
-										<button[x:{xydata[i].x} y:{xydata[i].y} bgc:{devcolor[1]} c:gray2 w:auto].tuop-chart  @click=devctr(i)> item.DevName
+									if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length !== 0 && isdataload
+										<button[x:{tpxydata[i].x} y:{tpxydata[i].y} bgc:{devcolor[1]} c:gray2 w:auto].tuop-chart  @click=devctr(i)> item.DevName
 											<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
 												if n < 5
 													<div[d:hflex ja:left a:center ml:3]>

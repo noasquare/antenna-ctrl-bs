@@ -111,7 +111,7 @@ tag app
 			new bootstrap.Tooltip(item)
 		# console.log tooltipList
 		load('/testforu').then do(data)  # 这里是查询数据库里面的 用户信息。
-			console.log data
+			# console.log data
 		
 	def render()
 		# console.log $txjm.$txctrl.islogined
