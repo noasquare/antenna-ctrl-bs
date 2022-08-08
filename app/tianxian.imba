@@ -7,6 +7,7 @@ import axios from 'axios'
 const devcolor = ['teal7','red7','sky7'] # 设置设备状态的一个颜色数组
 let xdata 
 let ydata 
+let tpdata
 # let tpxydata = []
 let xydata = {
 		x: 10px
@@ -200,29 +201,12 @@ tag tianxian
 		
 		axios.get('/savetuop')
 			.then do(res)
-				# console.log res
 				squaresdata = res.data
 				isdataload = yes
 				# 这里就可以把拓扑数据的xy值赋给 我们的方块数组。
-				let tpdata = squaresdata.filter(do(item)
+				tpdata = squaresdata.filter do(item)
 					item.antname === antrouted
-					)
-				tpdata.forEach(do(item,i)
-					let xydata = {
-						x:"{item.x}px"
-						y:"{(item.y - i*55) + (item.height - 55)/2}px"
-					}
-					tpxydata[i] = xydata
-					# tpxydata[i].x = item.x
-					# tpxydata[i].y = (item.y - i*55) + (item.height - 55)/2
-					)
-				console.log tpxydata
 				render!
-				# squaresdata = res.data.filter(do(item)
-				# 	item.antname === data[antindex].AntNo
-				# 	)
-				# console.log "来自{data[antindex].AntNo}的{squaresdata}"
-				
 
 	def anttpdata tpdata
 		return tpdata.antname === data[antindex].AntNo
@@ -233,41 +217,32 @@ tag tianxian
 		jhlistload('/jihualist')
 		for item,i in data[antindex].Devices
 			tpxydata[i] = xydata
-
-		# xdata [data[antindex].Devices.length]
-		# tpxydata = new Array(data[antindex].Devices.length)
-		# tpxydata.unshift(xydata)
-		# console.log tpxydata
-		# data[antindex].Devices.forEach do
-		# 	xdata.push(0)
-		# 	ydata.push(0)
-		# console.log xdata
 		gettpdata!
-
-		console.log '数据库mount 加载'
+		# console.log '数据库mount 加载'
 
 	def tpcontent data
 		tpname = data.StatusList[0].StName
 		tpvalue = data.StatusList[0].Value
 		imba.commit!
-		# console.log tpname
-		# 通过路由id中的天线编号来载入每个天线的全部数据，并初始化设备数据
 	def routed params,state
-		# console.log data
 		antrouted = params.id
 		for item,index in data
 			if item.AntNo == params.id
 				antindex = index
 				mount!
-				# $tpframe.render
-				# devctrdata ??= data[index].Devices[0] # 并把天线里面的第一台设备赋给devctrdata，这个的？？=意思是如果不存在就赋值。
-				# console.log "routed",devctrdata
 	def render()
-		# console.log xydata
 		tpbox = querySelector('#tpframe') # 获取拓扑图的画布的宽度
-		# 	console.log tpbox.clientWidth
-		# console.log islogin
-		# console.log $tpframe.isSaved
+		tpelement = querySelectorAll('.tuop-chart')
+		
+		if tpelement.length > 0 && isdataload
+			tpelement.forEach do(item,i)
+				if tpdata[i]
+					let xydata = {
+						x:"{tpdata[i].x + (tpdata[i].width - item.clientWidth)/2}px"
+						y:"{(tpdata[i].y - i*(item.clientHeight)) + (tpdata[i].height - item.clientHeight)/2}px"
+					}
+					tpxydata[i] = xydata
+
 		ctrindex ??= 0
 		if ctrindex > (data[antindex].Devices.length - 1) # 当通过路由参数进来的index大于所有列表的长度，就重新赋值0
 			ctrindex = 0
@@ -339,13 +314,13 @@ tag tianxian
 									# if index < 5 # 这里控制显示的参数数量，5个重要信息。
 									<div[p:1 fs:small]> item.StName+ ':'
 										<div[d:inline fs:large c:teal4 fw:bold ff:monospace pl:2]> item.Value
-							<tpframe$tpframe[pos:absolute t:30% l:0 w:100%]#tpframe display=!isadminClick tpelement=tpbox squares=squaresdata antno=data[antindex].AntNo>
+							<tpframe$tpframe[pos:absolute t:30% l:0 w:100% h:78%]#tpframe display=(!isadminClick) tpelement=tpbox squares=squaresdata antno=data[antindex].AntNo>
 							<div[d:flex j:center pos:relative]>
-								<div[mr:auto p:2] [d:none]=!islogin>
+								<div[mr:auto p:2 pos:absolute t:-10 l:2] [d:none]=!islogin>
 									if isadminClick
-										<button.btn.btn-primary.btn-sm @click=(isadminClick = !isadminClick)> '关闭拓扑图编辑'
+										<button.btn.btn-primary.btn-sm @click=(isadminClick = !isadminClick)> '关闭编辑'
 									else
-										<button.btn.btn-success.btn-sm @click=(isadminClick = !isadminClick)> '打开拓扑图编辑'
+										<button.btn.btn-success.btn-sm @click=(isadminClick = !isadminClick)> '打开编辑'
 								<div[h:0 pos:absolute t:0 l:0]> for item,i in data[antindex].Devices
 									if item.StatusList[item.StatusList.length - 1].Value === 'Disconnected' && isdataload
 										<button[x:{tpxydata[i].x} y:{tpxydata[i].y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart  @click=devctr(i) > item.DevName

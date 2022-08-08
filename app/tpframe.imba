@@ -2,7 +2,7 @@ import axios from 'axios'
 tag tpframe
 	prop display
 	prop devdata
-	prop tpelement
+	prop tpelement # 把父类的画图区域传入到该组件中。
 	prop squares
 	prop antno
 	isSaved
@@ -34,7 +34,7 @@ tag tpframe
 	
 	css d:block pos:relative
 
-	css svg bg:teal7/50 w:100% h:25em
+	css svg bg:teal7/50 w:100% h:100%
 	css @touch cursor:pointer
 	css .context-menu 
 		pos:absolute w:50% t:-23 l:50% px:5 py:3 bg:white/90 rd:lg
@@ -47,7 +47,7 @@ tag tpframe
 		let anttpdata = squares.filter(do(item)
 			item.antname === antno
 			)
-		console.log anttpdata
+		# console.log anttpdata
 		axios.post('/savetuop',
 			data: JSON.stringify(anttpdata)  # 这里的data应该只能是每个天线对应的 框图数组。现在是全部的数组
 			# antNo : antno
@@ -80,8 +80,9 @@ tag tpframe
 		squares[i].width = 100
 		squares[i].height = 100
 		context = no
+		render!
 	def mount
-		console.log '拓扑mount开始'
+		# console.log '拓扑mount开始'
 		isSaved = no
 		# gettpdata!
 
@@ -118,17 +119,17 @@ tag tpframe
 							<span[c:black]> "右连线"
 					<div[d:grid gtc:1fr 1fr g:3]>
 						if selection..upcon
-							<input type="range" bind=selection..uppointx max="100" min='-100'>
-							<input type="range" bind=selection..uppointy max="100" min='-100' @dblclick=(selection.uppointy = 0)>
+							<input type="range" bind=selection..uppointx max="500" min='0'>
+							<input type="range" bind=selection..uppointy max="500" min='-500' @dblclick=(selection.uppointy = 0)>
 						if selection..downcon
-							<input type="range" bind=selection..downpointx max="-100" min='-200'>
-							<input type="range" bind=selection..downpointy max="100" min='-100' @dblclick=(selection.downpointy = 0)>
+							<input type="range" bind=selection..downpointx max="500" min='0'>
+							<input type="range" bind=selection..downpointy max="500" min='-500' @dblclick=(selection.downpointy = 0)>
 						if selection..leftcon
-							<input type="range" bind=selection..leftpointx max="200" min='0'>
-							<input type="range" bind=selection..leftpointy max="100" min='-100' @dblclick=(selection.leftpointy = 0 )>
+							<input type="range" bind=selection..leftpointx max="500" min='0'>
+							<input type="range" bind=selection..leftpointy max="500" min='-500' @dblclick=(selection.leftpointy = 0 )>
 						if selection..rightcon
-							<input type="range" bind=selection..rightpointx max="200" min='0'>
-							<input type="range" bind=selection..rightpointy max="100" min='-100' @dblclick=(selection.rightpointy = 0 )>
+							<input type="range" bind=selection..rightpointx max="500" min='0'>
+							<input type="range" bind=selection..rightpointy max="500" min='-500' @dblclick=(selection.rightpointy = 0 )>
 					<div[d:hflex ja:center g:3]>
 						<button[fs:sm- p:1 bgc:gray3 rd:2] @click=savedata> '保存'
 						<button[fs:sm- p:1 bgc:gray3 rd:2] @click=delcurrent(selectIndex)> '删除'
@@ -159,23 +160,23 @@ tag tpframe
 							if square.downcon
 								let point = ''
 								if square.downpointy == 0
-									point = `{square..x + square..width/2},{square..y + square.height} {square..x + square..width/2},{square..y - square..downpointx}`
+									point = `{square..x + square..width/2},{square..y + square.height} {square..x + square..width/2},{square..y + square.height + square..downpointx}`
 								else
-									point = `{square..x + square..width/2},{square..y + square.height} {square..x + square..width/2},{square..y - square..downpointx} {square..x + square..width/2 + square..downpointy},{square..y - square..downpointx}`
+									point = `{square..x + square..width/2},{square..y + square.height} {square..x + square..width/2},{square..y + square.height + square..downpointx} {square..x + square..width/2 + square..downpointy},{square..y + square.height + square..downpointx}`
 								<polyline[stroke:teal5 fill:clear] points=point stroke-width="2" marker-end="url(#arrowhead)">			
 							if square.rightcon
 								let point = ''
 								if square.rightpointy == 0
-									point = `{square..x + square..width},{square..y + square.height/2} {square..x + square..width + square..rightpointx },{square..y + square.height/2}`
+									point = `{square..x + square..width},{square..y + square.height/2} {square..x + square..width + square..rightpointx},{square..y + square.height/2}`
 								else
 									point = `{square..x + square..width},{square..y + square.height/2} {square..x + square..width + square..rightpointx },{square..y + square.height/2} {square..x + square..width + square..rightpointx },{square..y + square.height/2 + square..rightpointy}`
 								<polyline[stroke:teal5 fill:clear] points=point stroke-width="2" marker-end="url(#arrowhead)">			
 							if square.leftcon
 								let point = ''
 								if square.leftpointy == 0
-									point = `{square..x},{square..y + square.height/2} {square..x + square..width/2 - square..leftpointx},{square..y + square.height/2}`
+									point = `{square..x},{square..y + square.height/2} {square..x - square..leftpointx},{square..y + square.height/2}`
 								else
-									point = `{square..x},{square..y + square.height/2} {square..x + square..width/2 - square..leftpointx},{square..y + square.height/2} {square..x + square..width/2 - square..leftpointx},{square..y + square.height/2 + square..leftpointy}`
+									point = `{square..x},{square..y + square.height/2} {square..x - square..leftpointx},{square..y + square.height/2} {square..x - square..leftpointx},{square..y + square.height/2 + square..leftpointy}`
 								<polyline[stroke:teal5 fill:clear] points=point stroke-width="2" marker-end="url(#arrowhead)">			
 					
 			<div[d:hflex j:right g:4] [d:none]=display>

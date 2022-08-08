@@ -51,7 +51,7 @@ tag app
 	set wscheck dev
 		dev ??= '--本地数据'
 	def load url
-		console.log 'load 来了'
+		# console.log 'load 来了'
 		# window.fetch(url).then do(res)
 		# 	res.json
 		let res = await window.fetch(url)
@@ -102,7 +102,7 @@ tag app
 		$txjm.islogined = no
 
 	def mount
-		console.log 'mount 开始'
+		# console.log 'mount 开始'
 		wsopen(wsAdds ??= "ws://localhost:1880/test")
 		# console.log '来自mount' # mount里面的数据只加载一次。
 		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -112,7 +112,11 @@ tag app
 		# console.log tooltipList
 		load('/testforu').then do(data)  # 这里是查询数据库里面的 用户信息。
 			# console.log data
-		
+	def displaySeting
+		$txjm.$txctrl.islogined = $txjm.islogined = isLogin = no
+		$txjm.isadminClick = !$txjm.isadminClick
+
+
 	def render()
 		# console.log $txjm.$txctrl.islogined
 		# console.log $txjm.islogined
@@ -147,7 +151,7 @@ tag app
 					<button[d:hflex ja:center ml:auto bgc:transparent bd:none c:gray2].notify-user route-to='/login'>
 						<img[mr:2] src='./imgs/user.png'>
 						<span> username  # 增加对用户登录状态的判断。点击进去登录界面。
-					<button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5] route-to='/logout' @click=($txjm.$txctrl.islogined = $txjm.islogined = isLogin = no)>
+					<button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5] route-to='/logout' @click=displaySeting>
 					# <button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5].notify-logout data-bs-toggle='modal' data-bs-target='#exitModal'>
 						<img[mr:2] src='./imgs/logout.png'>
 						<div> '退出'
