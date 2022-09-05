@@ -114,7 +114,13 @@ tag app
 			# console.log data
 	def displaySeting
 		$txjm.$txctrl.islogined = $txjm.islogined = isLogin = no
-		$txjm.isadminClick = !$txjm.isadminClick
+
+		# 一个简单的登录登出判断
+		if $txjm.isadminClick
+			$txjm.isadminClick = no
+		else
+			return
+		# $txjm.isadminClick = !$txjm.isadminClick
 
 
 	def render()
@@ -153,8 +159,11 @@ tag app
 						<span> username  # 增加对用户登录状态的判断。点击进去登录界面。
 					<button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5] route-to='/logout' @click=displaySeting>
 					# <button[d:hflex ja:center bgc:transparent bd:none c:gray3 ml:auto pr:5].notify-logout data-bs-toggle='modal' data-bs-target='#exitModal'>
-						<img[mr:2] src='./imgs/logout.png'>
-						<div> '退出'
+						<img[mr:2] src='./imgs/logout.png'> 
+						if isLogin
+							<div> '退出'
+						else 
+							<div> '登录'
 			<div.main>
 				<div.menu>
 					<div.accordion id='menu'>
