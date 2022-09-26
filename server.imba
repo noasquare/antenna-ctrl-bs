@@ -40,6 +40,16 @@ app.get('/tracklist') do(req,res)
 		console.log er if er
 		res.send(rows)
 
+app.get('/satbaselist') do(req,res)
+	mysql.connection.query 'SELECT * FROM sat_baseinfo;' do(er,rows) # 获取伺服的卫星列表
+		console.log er if er
+		res.send(rows)
+
+app.get('/satlistinfo') do(req,res)
+	mysql.connection.query 'SELECT * FROM sat_listinfo;' do(er,rows) # 获取伺服的卫星列表
+		console.log er if er
+		res.send(rows)
+
 app.get('/tracklisthis') do(req,res)
 	mysql.connection.query 'SELECT * FROM memory LIMIT 20;' do(er,rows) # 获取伺服的昨天的卫星跟踪列表
 		console.log er if er

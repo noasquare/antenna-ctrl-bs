@@ -1,3 +1,4 @@
+let satlistno
 tag ctrsider
 	css .sdtitle c:rgb(31,219,220) fw:bold p:10px bdb:solid 1px rgb(31,219,220)
 	css	.sdstatus d:hflex p:5px c:gray3 fs:14px
@@ -77,7 +78,7 @@ tag ctrsider
 					Params : {
 						"{item}" : itemvalue
 					}
-
+				
 				console.log data
 				ws.send(JSON.stringify(data))
 			else if itemvalue
@@ -200,29 +201,100 @@ tag ctrsider
 		else
 			isLNAlimits = yes
 	def listload url # 从数据库查询得到的信息
-		# table = querySelector('#servoplist tbody')
+		table = querySelector('#servoplist tbody')
 		window.fetch(url).then do(res)
 			res.json!
 			.then do(data)
 				# console.log data
-				renderTable(data)
+				renderTable(data,table)
+	def sbsent event
+		let array = event.currentTarget.innerText.split(/\r?\n/) # 采集获取的行内的所有数据。
+		satno = array[0]
+		# jh2 = array[3]
+		sendpara('satNo',satno)
+
+	def listloadsatbase url,thetb # 从数据库查询得到的所有卫星数据库
+		# console.log thetb
+		# table = querySelector("#{thetb} tbody")
+		window.fetch(url).then do(res)
+			res.json!
+			.then do(data)
+				# console.log data
+				renderSatbaseTable(data,thetb)
+	def listloadsatlist url,thetb # 从数据库查询得到的选取的卫星数据库
+		# console.log thetb
+		# table = querySelector("#{thetb} tbody")
+		window.fetch(url).then do(res)
+			res.json!
+			.then do(data)
+				# console.log data
+				renderSatlistTable(data,thetb)
 	
-	def renderTable tada
+	def renderTable tada,table
 		let result = ''
 		# console.log tabledata
+		# console.log tr[0]
 		tada.forEach do(c)
 			result += `<tr class="tbody">
-			<td> {c.time}
+			<td> {c.time} 
 			<td> {c.az}
 			<td> {c.el}
 			`
 		# console.log table
-		let table = querySelector('#servoTracklist tbody')
-		
+		# let table = querySelector('#servoTracklist tbody')
 		table.innerHTML = result if result
-
 		let activeCol = querySelectorAll('#servoTracklist tbody tr')[0]
 		activeCol.classList.add('table-active')
+	def getlistno event
+		let array = event.currentTarget.innerText.split(/\r?\n/) # 采集获取的行内的所有数据。
+		satlistno = array[0]
+		console.log satlistno
+		render!
+		# jh2 = array[3]
+
+		# sendpara('satNo',satno)
+
+	def renderSatbaseTable tada,tb
+		let result = ''
+		# console.log tabledata
+		# console.log tr[0]
+		tada.forEach do(c)
+			result += `<tr class="tbody">
+			<td> {c.SatNo} 
+			<td> {c.SatName}
+			<td> {c.SatLon}
+			`
+		# console.log table
+		let table = querySelector("#{tb} tbody")
+
+		table.innerHTML = result if result
+		let activeCol = querySelectorAll("#{tb} tbody tr")[0]
+		activeCol.classList.add('table-active')
+		document.querySelectorAll("#{tb} tbody tr").forEach do(r)
+			# console.log '增加行点击事件'
+			r.addEventListener('click',do(e)
+				sbsent(e))
+	
+	def renderSatlistTable tada,tb
+		let result = ''
+		# console.log tabledata
+		# console.log tr[0]
+		tada.forEach do(c)
+			result += `<tr class="tbody">
+			<td> {c.SatNo} 
+			<td> {c.SatName}
+			<td> {c.Az}
+			<td> {c.El}
+			`
+		# console.log table
+		let table = querySelector("#{tb} tbody")
+		table.innerHTML = result if result
+		let activeCol = querySelectorAll("#{tb} tbody tr")[0]
+		activeCol.classList.add('table-active')
+		document.querySelectorAll("#{tb} tbody tr").forEach do(r)
+			# console.log '增加行点击事件'
+			r.addEventListener('click',do(e)
+				getlistno(e))
 
 	def listloadhis url # 从数据库查询得到的信息
 		# table = querySelector('#servoplist tbody')
@@ -257,6 +329,11 @@ tag ctrsider
 
 	def mount
 		listload('/tracklist') # 查询二行星历列表
+		let thetab = 'satbaselist'
+		let tblist = 'satlistinfo'
+		# let thetr = ['SatNo','SatName','SatLon']
+		listloadsatbase('/satbaselist',thetab) # 查询卫星经度数据库列表
+		listloadsatlist('/satlistinfo',tblist) # 查询卫星经度数据库列表
 		listloadhis('/tracklisthis') # 记忆跟踪列表查询
 
 		# console.log 'sider mount'
@@ -265,6 +342,7 @@ tag ctrsider
 
 
 	def render()
+		# console.log querySelector('#satbase')
 		# console.log data.DevName
 		cmdbyDevice!
 		# console.log today
@@ -307,14 +385,66 @@ tag ctrsider
 							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='true' aria-control='collapseTwo'>
 								<div[w:90%]> '指令控制'
 								<div[w:10% ml:auto].triangle-right>
-						<div[max-height:80 ofy:auto].accordion-collapse.collapse.show id='collapseTwo' aria-labelledby='headingTwo' data-bs-parent='#ctl'>
+						<div[max-height:150 ofy:auto].accordion-collapse.collapse.show id='collapseTwo' aria-labelledby='headingTwo' data-bs-parent='#ctl'>
 							# ========伺服指令================================
+							<div[d:hflex]>
+								<div[d:vflex ja:center mt:2 w:50%] [d:none]=isServo>
+									<div[mb:2]>
+										<button[bgc:teal4 rd:full w:10 h:10 shadow:clear bd:none] @click=sendpara('manuservo_up',$manuspeed.value)> "上"
+									<div[d:hflex ja:center g:2]>
+										<button[bgc:teal4 rd:full w:10 h:10 shadow:clear bd:none] @click=sendpara('manuservo_cc',$manuspeed.value)> "逆"
+										<button[bgc:teal4 rd:full w:10 h:10 shadow:clear bd:none] @click=sendpara('manuservo_stop')> "停"
+										<button[bgc:teal4 rd:full w:10 h:10 shadow:clear bd:none] @click=sendpara('manuservo_c',$manuspeed.value)> "顺"
+									<div[mt:2]>
+										<button[bgc:teal4 rd:full w:10 h:10 shadow:clear bd:none] @click=sendpara('manuservo_down',$manuspeed.value)> "下"
+
+								<div[d:vflex g:3 mt:2 p:5 w:50%] [d:none]=isServo>
+									<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
+										<div[fs:14px c:gray3]> '手动速度：'
+										<input$manuspeed[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] type='number' value=1 step=0.01 max=1 min=0>
+									<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
+										<div[fs:14px c:gray3]> '驱动上电:'
+										<button[ml:auto].btn.btn-success.btn-sm @click=sendpara('EnableDriver',null)> "上电"
+									<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
+										<div[fs:14px c:gray3]> '驱动下电:'
+										<button[ml:auto].btn.btn-success.btn-sm @click=sendpara('DisableDriver',null)> "下电"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
-								<div[fs:14px c:gray3 ml:3]> '驱动上电:'
-								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('EnableDriver',null)> "上电"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
-								<div[fs:14px c:gray3 ml:3]> '驱动下电:'
-								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('DisableDriver',null)> "下电"
+								<div[fs:14px c:gray3 ml:3]> '卫星数据库:'
+								<button[ml:auto mr:2].btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#satbase"> "读取"
+								<button[mr:4].btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#satlist"> "编辑"
+							<div.modal.fade[$bs-modal-bg:gray4]#satbase tabindex='-1' aria-hidden='true'> 'test'
+								<div.modal-dialog>
+									<div.modal-content>
+										<div.modal-header>
+											<h5> '卫星经度数据库'
+											<button.btn-close data-bs-dismiss='modal' aria-lable='Close'>
+										<table[bd:solid 1px gray5 ta:center].table.table-hover.table-sm.table-dark#satbaselist>
+											<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
+												<tr>
+													<th scope="col"> '编号'
+													<th scope="col"> '名称'
+													<th scope="col"> '经度'
+											<tbody[d:block c:gray3 r:rgb(64,73,91) h:80 ofy:auto]>
+												<tr> <td colSpan="3"> <i> 'Loading...'
+							<div.modal.fade[$bs-modal-bg:gray4]#satlist tabindex='-1' aria-hidden='true'> 'test'
+								<div.modal-dialog>
+									<div.modal-content>
+										<div.modal-header>
+											<h5> '卫星列表-可点击删除'
+											<button.btn-close data-bs-dismiss='modal' aria-lable='Close'>
+										<table[bd:solid 1px gray5 ta:center].table.table-hover.table-sm.table-dark#satlistinfo>
+											<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
+												<tr>
+													<th scope="col"> '编号'
+													<th scope="col"> '名称'
+													<th scope="col"> '方位'
+													<th scope="col"> '俯仰'
+											<tbody[d:block c:gray3 r:rgb(64,73,91) h:80 ofy:auto]>
+												<tr> <td colSpan="3"> <i> 'Loading...'
+										<div[p:3 m:3 d:hflex ja:center g:5]>
+											<span> '要删除的编号是：'
+											<input[h:7 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistno value=1234>
+											<button.btn.btn-success.btn-sm @click=sendpara('delsatalistno',satlistno)> '删除' 
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '方位收藏:'
 								<select$azshoucang[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >

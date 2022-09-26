@@ -10,7 +10,7 @@ export default class test
 		host : 'localhost'
 		user : 'root'
 		password : 'password'
-		database : 'txjl2'
+		database : 'txjl3'
 		multipleStatements : true # 非常关键的一条语句，让你可以多条query持续输出。
 
 	def connect
