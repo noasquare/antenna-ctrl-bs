@@ -1,4 +1,6 @@
 let satlistno
+let satlistaz
+let satlistel
 tag ctrsider
 	css .sdtitle c:rgb(31,219,220) fw:bold p:10px bdb:solid 1px rgb(31,219,220)
 	css	.sdstatus d:hflex p:5px c:gray3 fs:14px
@@ -149,6 +151,38 @@ tag ctrsider
 				console.log data
 				ws.send(JSON.stringify(data))
 
+	def sendpara_multi4 item,value1,value2,value3,value4
+		# todo = 这里要增加一个发指令前的用户权限判断-可以是个函数 应该是个bool函数 ：isadmin
+		# 1- 弹出一个用户名密码的窗口弹窗，输入值，不管对不对先发送给
+		if isadmin!
+			console.log typeof(item)
+			if typeof(item) !== 'object'
+				let data =
+					AntennaNo : ant
+					DevNo : data.DevNo
+					Cmd : item
+					Params : {
+						"{item}1" : value1
+						"{item}2" : value2
+						"{item}3" : value3
+						"{item}4" : value4
+					}
+				console.log data
+				ws.send(JSON.stringify(data))
+			else if value1 && value2 && value3 && value4
+				let data =
+					AntennaNo : ant
+					DevNo : data.DevNo
+					Cmd : item.StName
+					Params : {
+						"{item.StName}1" : value1
+						"{item.StName}2" : value2
+						"{item.StName}3" : value3
+						"{item.StName}4" : value4
+					}
+				console.log data
+				ws.send(JSON.stringify(data))
+
 	def sendCalpara item,val_xl,val_start,val_stop,val_inter
 		# todo = 这里要增加一个发指令前的用户权限判断-可以是个函数 应该是个bool函数 ：isadmin
 		# 1- 弹出一个用户名密码的窗口弹窗，输入值，不管对不对先发送给
@@ -200,6 +234,11 @@ tag ctrsider
 			isLNAlimits = no
 		else
 			isLNAlimits = yes
+
+		iscetc39 = (data.DriverClass == 'cetc39') ? yes : no # 39所老私服
+		iscetc54 = (data.DriverClass == 'cetc54') ? yes : no # 54所伺服
+		isServoAcu2010 = (data.DriverClass == 'ServoAcu2010') ? yes : no # 39所小型伺服
+
 	def listload url # 从数据库查询得到的信息
 		table = querySelector('#servoplist tbody')
 		window.fetch(url).then do(res)
@@ -248,8 +287,10 @@ tag ctrsider
 	def getlistno event
 		let array = event.currentTarget.innerText.split(/\r?\n/) # 采集获取的行内的所有数据。
 		satlistno = array[0]
-		console.log satlistno
+		satlistaz = array[2]
+		satlistel = array[3]
 		render!
+		# console.log satlistno
 		# jh2 = array[3]
 
 		# sendpara('satNo',satno)
@@ -328,20 +369,17 @@ tag ctrsider
 		console.log test
 
 	def mount
+		console.log 'mount哟哟'
 		listload('/tracklist') # 查询二行星历列表
 		let thetab = 'satbaselist'
 		let tblist = 'satlistinfo'
 		# let thetr = ['SatNo','SatName','SatLon']
-		listloadsatbase('/satbaselist',thetab) # 查询卫星经度数据库列表
-		listloadsatlist('/satlistinfo',tblist) # 查询卫星经度数据库列表
+		listloadsatbase('/satbaselist',thetab) # 查询卫星经度原始数据库列表
+		listloadsatlist('/satlistinfo',tblist) # 查询卫星经度保存数据库列表
 		listloadhis('/tracklisthis') # 记忆跟踪列表查询
 
-		# console.log 'sider mount'
-		# $uname.value = ''
-		# $pass.value = ''
-
-
 	def render()
+		# console.log '刷新按钮'
 		# console.log querySelector('#satbase')
 		# console.log data.DevName
 		cmdbyDevice!
@@ -387,7 +425,7 @@ tag ctrsider
 								<div[w:10% ml:auto].triangle-right>
 						<div[max-height:150 ofy:auto].accordion-collapse.collapse.show id='collapseTwo' aria-labelledby='headingTwo' data-bs-parent='#ctl'>
 							# ========伺服指令================================
-							<div[d:hflex]>
+							<div[d:hflex] [d:none]=isServoAcu2010>
 								<div[d:vflex ja:center mt:2 w:50%] [d:none]=isServo>
 									<div[mb:2]>
 										<button[bgc:teal4 rd:full w:10 h:10 shadow:clear bd:none] @click=sendpara('manuservo_up',$manuspeed.value)> "上"
@@ -401,7 +439,7 @@ tag ctrsider
 								<div[d:vflex g:3 mt:2 p:5 w:50%] [d:none]=isServo>
 									<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
 										<div[fs:14px c:gray3]> '手动速度：'
-										<input$manuspeed[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] type='number' value=1 step=0.01 max=1 min=0>
+										<input$manuspeed[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] type='number' value=0.1 step=0.01 max=1 min=0>
 									<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
 										<div[fs:14px c:gray3]> '驱动上电:'
 										<button[ml:auto].btn.btn-success.btn-sm @click=sendpara('EnableDriver',null)> "上电"
@@ -430,7 +468,7 @@ tag ctrsider
 								<div.modal-dialog>
 									<div.modal-content>
 										<div.modal-header>
-											<h5> '卫星列表-可点击删除'
+											<h5> '卫星列表-单击选中'
 											<button.btn-close data-bs-dismiss='modal' aria-lable='Close'>
 										<table[bd:solid 1px gray5 ta:center].table.table-hover.table-sm.table-dark#satlistinfo>
 											<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
@@ -441,11 +479,18 @@ tag ctrsider
 													<th scope="col"> '俯仰'
 											<tbody[d:block c:gray3 r:rgb(64,73,91) h:80 ofy:auto]>
 												<tr> <td colSpan="3"> <i> 'Loading...'
-										<div[p:3 m:3 d:hflex ja:center g:5]>
+										<div[p:1 d:hflex ja:center g:3]>
 											<span> '要删除的编号是：'
 											<input[h:7 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistno value=1234>
 											<button.btn.btn-success.btn-sm @click=sendpara('delsatalistno',satlistno)> '删除' 
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+											<button.btn.btn-success.btn-sm @click=(mount!)> '刷新' 
+										<div[p:1 d:hflex ja:center g:3]>
+											<span> '方位俯仰:'
+											<input$satlistaz[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistaz value=1234>
+											<input$satlistel[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistel value=1234>
+											<button.btn.btn-success.btn-sm @click=sendpara_multi('SetSatAZEL',satlistaz,satlistel)> '置位' 
+											<button.btn.btn-success.btn-sm @click=sendpara_multi('UpdateSatAZEL',$satlistaz.value,$satlistel.value)> '修改' 
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '方位收藏:'
 								<select$azshoucang[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
 									<option value='01'> '收藏'
@@ -455,52 +500,81 @@ tag ctrsider
 									<option value='05'> '拔锁'
 									<option value='06'> '拔锁停止'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Azshoucang',$azshoucang.value)> "确定"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc54||iscetc39  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '俯仰收藏:'
 								<select$elshoucang[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
 									<option value='01'> '收藏'
-									<option value='02'> '收藏停止'
-									<option value='03'> '插锁'
-									<option value='04'> '插锁停止'
-									<option value='05'> '拔锁'
-									<option value='06'> '拔锁停止'
+									<option value='02' > '收藏停止'
+									<option value='03'> '入锁'
+									<option value='04'> '入锁停止'
+									<option value='05'> '退锁'
+									<option value='06'> '退锁停止'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Elshoucang',$elshoucang.value)> "确定"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '俯仰收藏:'
+								<select$elshoucang1[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
+									<option value='01'> '收藏'
+									<option value='02'> '入锁'
+									<option value='03'> '退锁'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Elshoucang',$elshoucang1.value)> "确定"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54 [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '步进跟踪步距:'
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.001-1.000" @change=sendpara("SetTrackStep",this.value) type='number' step='0.001'>
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '跟踪门限:'
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.00~9.99V" @change=sendpara("SetTrackMinLevel",this.value) type='number' step='0.01'>
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '跟踪间隔:'
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0~999.99min" @change=sendpara("SetTrackInterval",this.value) type='number' step='0.01'>
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39  [d:none]=iscetc54  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '跟踪失锁门限:'
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.00~9.99V" @change=sendpara("SetTrackUnlockLevel",this.value) type='number' step='0.01'>
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '步进跟踪:'
+								<input[h:7 fs:14px bgc:transparent c:gray4 w:40% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0~99999.999MHz" @change=sendpara("SetTrackUnlockLevel",this.value) type='number' step='0.01'  [d:none]=iscetc39>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StepTrack','test')> "跟踪"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo  [d:none]=iscetc39 [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '单脉冲跟踪:'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StepTrack','test')> "跟踪"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '预置卫星经度:'
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.00~200.00" @change=sendpara("SatLon",this.value) type='number' step='.01'>
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54 [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '自动搜索:'
 								<input$azrange[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="方位/0.00" type='number' step='.01'>
 								<input$elrange[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="俯仰/0.00" type='number' step='.01'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('Search',$azrange.value,$elrange.value)> "搜索"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '自动搜索:'
+								<input$azrange1[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="方位" type='number' step='.01'>
+								<input$azstep[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="AZ步进" type='number' step='.01'>
+								<input$elrange1[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="俯仰" type='number' step='.01'>
+								<input$elstep[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="EL步进" type='number' step='.01'>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi4('Search',$azrange1.value,$azstep.value,$elrange1.value,$elstep.value)> "搜索"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储卫星:'
 								<input$satid[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
 								<input$satlon[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度/0.00" type='number' step='.01'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('StoreSat',$satid.value,$satlon.value)> "存储"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '删除位置:'
+								<input$posdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID" type='number' step='1'>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemovePos',$posdel.value)> "删除"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '删除卫星:'
 								<input$satdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemoveSat',$satdel.value)> "删除"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储当前位置:'
 								<input$satposStore[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StorePos',$satposStore.value)> "存储"
+							# 以下为39所小伺服定制
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '跟踪：'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('ServoAcu2010Track')> "跟踪"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '待机：'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('ServoAcu2010Standby')> "待机"
 							# ========伺服指令================================
 						
 							# ========极化控制指令================================
