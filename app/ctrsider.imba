@@ -450,7 +450,7 @@ tag ctrsider
 								<div[fs:14px c:gray3 ml:3]> '卫星数据库:'
 								<button[ml:auto mr:2].btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#satbase"> "读取"
 								<button[mr:4].btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#satlist"> "编辑"
-							<div.modal.fade[$bs-modal-bg:gray4]#satbase tabindex='-1' aria-hidden='true'> 'test'
+							<div.modal.fade[$bs-modal-bg:gray4/90]#satbase tabindex='-1' aria-hidden='true'> 'test'
 								<div.modal-dialog>
 									<div.modal-content>
 										<div.modal-header>
@@ -464,7 +464,7 @@ tag ctrsider
 													<th scope="col"> '经度'
 											<tbody[d:block c:gray3 r:rgb(64,73,91) h:80 ofy:auto]>
 												<tr> <td colSpan="3"> <i> 'Loading...'
-							<div.modal.fade[$bs-modal-bg:gray4]#satlist tabindex='-1' aria-hidden='true'> 'test'
+							<div.modal.fade[$bs-modal-bg:gray4/90]#satlist tabindex='-1' aria-hidden='true'> 'test'
 								<div.modal-dialog>
 									<div.modal-content>
 										<div.modal-header>
@@ -480,16 +480,16 @@ tag ctrsider
 											<tbody[d:block c:gray3 r:rgb(64,73,91) h:80 ofy:auto]>
 												<tr> <td colSpan="3"> <i> 'Loading...'
 										<div[p:1 d:hflex ja:center g:3]>
-											<span> '要删除的编号是：'
-											<input[h:7 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistno value=1234>
-											<button.btn.btn-success.btn-sm @click=sendpara('delsatalistno',satlistno)> '删除' 
-											<button.btn.btn-success.btn-sm @click=(mount!)> '刷新' 
-										<div[p:1 d:hflex ja:center g:3]>
-											<span> '方位俯仰:'
+											<span[ml:3]> '方位俯仰:'
 											<input$satlistaz[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistaz value=1234>
 											<input$satlistel[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistel value=1234>
-											<button.btn.btn-success.btn-sm @click=sendpara_multi('SetSatAZEL',satlistaz,satlistel)> '置位' 
-											<button.btn.btn-success.btn-sm @click=sendpara_multi('UpdateSatAZEL',$satlistaz.value,$satlistel.value)> '修改' 
+											<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara_multi('SetSatAZEL',satlistaz,satlistel)> '置位' 
+											<button.btn.btn-success.btn-sm[mr:3] @click=sendpara_multi3('UpdateSatAZEL',$satlistaz.value,$satlistel.value,satlistno)> '修改' 
+										<div[p:1 d:hflex ja:center g:3]>
+											<span[ml:3]> '删除编号：'
+											<input[h:7 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistno value=1234>
+											<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara('delsatalistno',satlistno)> '删除' 
+											<button.btn.btn-success.btn-sm[mr:3] @click=(mount!)> '刷新' 
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '方位收藏:'
 								<select$azshoucang[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
@@ -513,9 +513,9 @@ tag ctrsider
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '俯仰收藏:'
 								<select$elshoucang1[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
-									<option value='01'> '收藏'
-									<option value='02'> '入锁'
-									<option value='03'> '退锁'
+									<option value='0'> '自动收藏'
+									<option value='1'> '入锁'
+									<option value='2'> '退锁'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Elshoucang',$elshoucang1.value)> "确定"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54 [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '步进跟踪步距:'
@@ -553,21 +553,21 @@ tag ctrsider
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi4('Search',$azrange1.value,$azstep.value,$elrange1.value,$elstep.value)> "搜索"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储卫星:'
-								<input$satid[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
-								<input$satlon[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度/0.00" type='number' step='.01'>
+								<input$satid[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
+								<input$satlon[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度-0.00" type='number' step='.01'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('StoreSat',$satid.value,$satlon.value)> "存储"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
-								<div[fs:14px c:gray3 ml:3]> '删除位置:'
-								<input$posdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID" type='number' step='1'>
-								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemovePos',$posdel.value)> "删除"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '删除卫星:'
-								<input$satdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
+								<input$satdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemoveSat',$satdel.value)> "删除"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
-								<div[fs:14px c:gray3 ml:3]> '存储当前位置:'
-								<input$satposStore[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
+								<div[fs:14px c:gray3 ml:3]> '存储位置:'
+								<input$satposStore[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StorePos',$satposStore.value)> "存储"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '删除位置:'
+								<input$posdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号" type='number' step='1'>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemovePos',$posdel.value)> "删除"
 							# 以下为39所小伺服定制
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '跟踪：'
