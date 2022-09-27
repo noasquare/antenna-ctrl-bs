@@ -100,22 +100,34 @@ tag tianxian
 		# table = querySelector('#servoplist tbody')
 		window.fetch(url).then do(res)
 			res.json!
-			.then do(data)
-				renderTable(data)
+			.then do(data1)
+				# console.log data1
+				# data1.foreach do(item,index)
+				let tbdata = data1.filter do(item)
+					item.antNo == data[antindex].AntNo
+
+				console.log tbdata
+				renderTable(tbdata)
 		
 	def slistload url # 从数据库查询得到的信息
 		# stable = querySelector('#servoslist tbody')
 		window.fetch(url).then do(res)
 			res.json!
-			.then do(data)
-				renderSTable(data)
+			.then do(data1)
+				console.log data1
+				let tbdata = data1.filter do(item)
+					item.antNo == data[antindex].AntNo
+				console.log tbdata
+				renderSTable(tbdata)
 
 	def jhlistload url # 从数据库查询得到的信息
 		# stable = querySelector('#jihualist tbody')
 		window.fetch(url).then do(res)
 			res.json!
-			.then do(data)
-				renderjhTable(data)
+			.then do(data1)
+				let tbdata = data1.filter do(item)
+					item.antNo == data[antindex].AntNo
+				renderjhTable(tbdata)
 
 
 	# prop route

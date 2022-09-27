@@ -240,7 +240,7 @@ tag ctrsider
 		isServoAcu2010 = (data.DriverClass == 'ServoAcu2010') ? yes : no # 39所小型伺服
 
 	def listload url # 从数据库查询得到的信息
-		table = querySelector('#servoplist tbody')
+		table = querySelector('#servoTracklist tbody')
 		window.fetch(url).then do(res)
 			res.json!
 			.then do(data)
@@ -531,8 +531,8 @@ tag ctrsider
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.00~9.99V" @change=sendpara("SetTrackUnlockLevel",this.value) type='number' step='0.01'>
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '步进跟踪:'
-								<input[h:7 fs:14px bgc:transparent c:gray4 w:40% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0~99999.999MHz" @change=sendpara("SetTrackUnlockLevel",this.value) type='number' step='0.01'  [d:none]=iscetc39>
-								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StepTrack','test')> "跟踪"
+								<input$steptrack[h:7 fs:14px bgc:transparent c:gray4 w:40% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0~99999.999MHz" @change=sendpara("SetTrackUnlockLevel",this.value) type='number' step='0.01'  [d:none]=iscetc39>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('SetTrackUnlockLevel',$steptrack.value)> "跟踪"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo  [d:none]=iscetc39 [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '单脉冲跟踪:'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StepTrack','test')> "跟踪"
@@ -551,20 +551,20 @@ tag ctrsider
 								<input$elrange1[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="俯仰" type='number' step='.01'>
 								<input$elstep[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="EL步进" type='number' step='.01'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi4('Search',$azrange1.value,$azstep.value,$elrange1.value,$elstep.value)> "搜索"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储卫星:'
 								<input$satid[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
 								<input$satlon[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度-0.00" type='number' step='.01'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('StoreSat',$satid.value,$satlon.value)> "存储"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '删除卫星:'
 								<input$satdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemoveSat',$satdel.value)> "删除"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储位置:'
 								<input$satposStore[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StorePos',$satposStore.value)> "存储"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '删除位置:'
 								<input$posdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemovePos',$posdel.value)> "删除"
@@ -580,13 +580,13 @@ tag ctrsider
 							# ========极化控制指令================================
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '查询卫星表:'
-								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" @change=sendpara("QuerySatelliteTable",this.value) type='number' step='1'>
+								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" @change=sendpara("QuerySatelliteTable",this.value) type='number' step='1'>
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '故障复位:'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Reset','test')> "复位"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '手控:'
-								<input$jhManId[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~6" type='number' step='1'>
+								<input$jhManId[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~6" type='number' step='1'>
 								<select$jhManDir[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
 									<option value='0'> '停止运动'
 									<option value='1'> '顺时针/左旋'
@@ -595,7 +595,7 @@ tag ctrsider
 
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对极化控制设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '预置位置:'
-								<input$posId[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~6" type='number' step='1'>
+								<input$posId[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~6" type='number' step='1'>
 								<input$posValue[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="位置/0.0" type='number' step='.1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('PresetPos',$posId.value,$posValue.value)> "预置"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对极化控制设备来定制的
@@ -605,12 +605,12 @@ tag ctrsider
 
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对极化控制设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储卫星:'
-								<input$jhSatNo[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/0~23" type='number' step='1'>
+								<input$jhSatNo[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号0~23" type='number' step='1'>
 								<input$jhSatLon[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度/0.0" type='number' step='.1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('StoreSat',$jhSatNo.value,$jhSatLon.value)> "存储"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '删除卫星:'
-								<input$removesat[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
+								<input$removesat[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemoveSat',$removesat.value)> "删除"
 							# ========极化控制指令================================
 
