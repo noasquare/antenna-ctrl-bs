@@ -369,7 +369,7 @@ tag ctrsider
 		console.log test
 
 	def mount
-		console.log 'mount哟哟'
+		# console.log 'mount哟哟'
 		listload('/tracklist') # 查询二行星历列表
 		let thetab = 'satbaselist'
 		let tblist = 'satlistinfo'
@@ -399,9 +399,8 @@ tag ctrsider
 				<div.accordion id='ctl'>
 					<div.accordion-item>
 						<h6.accordion-header id='headingOne'>
-							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-control='collapseOne'>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center ].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-control='collapseOne'>
 								<div[w:90%]> data.DevName+'参数控制' # 变量
-								<div[w:10% ml:auto].triangle-right>
 						<div.accordion-collapse.collapse.show id='collapseOne' aria-labelledby='headingOne' data-bs-parent='#ctl'>
 							<div[m:0 p:5px d:vflex ai:left max-height:60 ofy:auto].accordion-body> for ctritem,stindex in data.StatusList
 								if ctritem.ReadOnly == no && ctritem.StName !== '控制' && !ctritem.cmdSelect
@@ -418,11 +417,10 @@ tag ctrsider
 												else
 													<option> sel.option
 									
-					<div.accordion-item>
+					<div.accordion-item[]>
 						<h6.accordion-header id='headingTwo'>
-							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='true' aria-control='collapseTwo'>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='true' aria-control='collapseTwo'>
 								<div[w:90%]> '指令控制'
-								<div[w:10% ml:auto].triangle-right>
 						<div[max-height:150 ofy:auto].accordion-collapse.collapse.show id='collapseTwo' aria-labelledby='headingTwo' data-bs-parent='#ctl'>
 							# ========伺服指令================================
 							<div[d:hflex] [d:none]=isServoAcu2010>
@@ -650,9 +648,8 @@ tag ctrsider
 						
 						
 						<h6.accordion-header id='heading3' [d:none]=isServo>
-							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapse3' aria-expanded='true' aria-control='collapse3'>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#collapse3' aria-expanded='true' aria-control='collapse3'>
 								<div[w:90%]> '程序跟踪'
-								<div[w:10% ml:auto].triangle-right>
 						<div[max-height:100 ofy:auto].accordion-collapse.collapse.show id='collapse3' aria-labelledby='heading3' data-bs-parent='#ctl' [d:none]=isServo>
 							<textarea$trackXL[w:90% h:14 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:2 3] placeholder='输入两行星历'>
 							<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
@@ -677,9 +674,8 @@ tag ctrsider
 										<tr> <td colSpan="3"> <i> 'Loading...'
 								# <div[fs:14px c:gray3 ml:3]> '程序跟踪：'
 						<h6.accordion-header id='heading4' [d:none]=isServo>
-							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapse4' aria-expanded='true' aria-control='collapse4'>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#collapse4' aria-expanded='true' aria-control='collapse4'>
 								<div[w:90%]> '记忆跟踪'
-								<div[w:10% ml:auto].triangle-right>
 						<div[max-height:100 ofy:auto].accordion-collapse.collapse.show id='collapse4' aria-labelledby='heading4' data-bs-parent='#ctl' [d:none]=isServo>
 							<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
 								<input$startTime1[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='开始日期' defaultValue=today>
@@ -716,9 +712,8 @@ tag ctrsider
 					# 				<div[fs:14px ml:auto mr:5 c:rgb(31,219,220)]> item.Value
 					<div.accordion-item>
 						<h6.accordion-header id='headingFault'>
-							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseFault' aria-expanded='true' aria-control='collapseFault'>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseFault' aria-expanded='true' aria-control='collapseFault'>
 								<div[w:90%]> '错误参数'
-								<div[w:10% ml:auto].triangle-right>
 						<div[max-height:40 ofy:auto].accordion-collapse.collapse.show id='collapseFault' aria-labelledby='headingFault' data-bs-parent='#ctl-status'> for item,index in data.FaultList
 							<div[m:0 p:5px d:hflex ai:left].accordion-body>
 								<div[fs:14px c:gray3 ml:3]> item.Time+':'

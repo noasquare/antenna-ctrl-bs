@@ -169,9 +169,7 @@ tag app
 					<div.accordion id='menu'>
 						<div.accordion-item>
 							<h6.accordion-header id='menu01'>
-								<button[d:hflex p:5 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#cols01' aria-expanded='true' aria-control='cols01' @click=menuclickarrow route-to='/antall'>
-									<div[w:90%]> '阵地天线总览'
-									<div[w:10% ml:auto].triangle-right>
+								<button[p:5 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#cols01' aria-expanded='true' aria-controls='cols01' @click=menuclickarrow route-to='/antall'> '阵地天线总览'
 
 							<div.accordion-collapse.collapse.show id='cols01' aria-labelledby='menu01' data-bs-parent='#menu'> for item,index in devdata
 								<button.accordion-body.menudroplink route-to="/txst/{item.AntNo}" @click=antdata(index)>

@@ -52,7 +52,7 @@ tag tianxian
 		# console.log tabledata
 		tada.forEach do(c)
 			result += `<tr class="tbody">
-			<td> {c.id}
+			<td> {c.sn}
 			<td> {c.Az}
 			<td> {c.El}
 			`
@@ -68,7 +68,7 @@ tag tianxian
 		let result = ''
 		tada.forEach do(c)
 			result += `<tr class="tbody">
-			<td> {c.id}
+			<td> {c.sn}
 			<td> {c.SatLon}
 			<td> {c.Az}
 			<td> {c.El}
@@ -210,7 +210,6 @@ tag tianxian
 		sendcmd('prejihua',jh1,jh2)
 
 	def gettpdata # 获取到拓扑图的详细数组数据
-		
 		axios.get('/savetuop')
 			.then do(res)
 				squaresdata = res.data
