@@ -282,6 +282,8 @@ tag ctrsider
 		# console.log table
 		# let table = querySelector('#servoTracklist tbody')
 		table.innerHTML = result if result
+		table.innerHTML = '数据为空' if result === ''
+		render!
 		let activeCol = querySelectorAll('#servoTracklist tbody tr')[0]
 		activeCol.classList.add('table-active')
 	def getlistno event
@@ -309,6 +311,8 @@ tag ctrsider
 		let table = querySelector("#{tb} tbody")
 
 		table.innerHTML = result if result
+		table.innerHTML = '数据为空' if result === ''
+		render!
 		let activeCol = querySelectorAll("#{tb} tbody tr")[0]
 		activeCol.classList.add('table-active')
 		document.querySelectorAll("#{tb} tbody tr").forEach do(r)
@@ -330,6 +334,8 @@ tag ctrsider
 		# console.log table
 		let table = querySelector("#{tb} tbody")
 		table.innerHTML = result if result
+		table.innerHTML = '数据为空' if result === ''
+		render!
 		let activeCol = querySelectorAll("#{tb} tbody tr")[0]
 		activeCol.classList.add('table-active')
 		document.querySelectorAll("#{tb} tbody tr").forEach do(r)
@@ -359,6 +365,9 @@ tag ctrsider
 		
 		table.innerHTML = result if result
 
+		table.innerHTML = '数据为空' if result === ''
+		render!
+		
 		let activeCol = querySelectorAll('#servoTracklistHis tbody tr')[0]
 		activeCol.classList.add('table-active')
 
@@ -663,7 +672,7 @@ tag ctrsider
 								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
 							<div[b:1 l:1 p:5px 15px w:100% c:gray2] > 
 								<div[d:hflex a:center j:left g:3 pb:1]>
-									<div[fs:sm]> '星历计算结果:'
+									<div[fs:sm]> '历史数据:'
 								<table[bd:solid 1px gray5 ta:center].table.table-hover.table-sm.table-dark#servoTracklist>
 									<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
 										<tr>
