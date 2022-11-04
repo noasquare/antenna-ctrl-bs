@@ -52,14 +52,15 @@ tag tianxian
 		# console.log tabledata
 		tada.forEach do(c)
 			result += `<tr class="tbody">
-			<td> {c.id}
+			<td> {c.sn}
 			<td> {c.Az}
 			<td> {c.El}
 			`
-		# console.log table
+		console.log result
 		let table = querySelector('#servoplist tbody')
-		
 		table.innerHTML = result if result
+		table.innerHTML = '数据为空' if result === ''
+		render!
 		document.querySelectorAll('#servoplist tbody tr').forEach do(r)
 			# console.log '增加行点击事件'
 			r.addEventListener('click',do(e)
@@ -68,13 +69,15 @@ tag tianxian
 		let result = ''
 		tada.forEach do(c)
 			result += `<tr class="tbody">
-			<td> {c.id}
+			<td> {c.sn}
 			<td> {c.SatLon}
 			<td> {c.Az}
 			<td> {c.El}
 			`
 		let stable = querySelector('#servoslist tbody')
 		stable.innerHTML = result if result
+		stable.innerHTML = '数据为空' if result === ''
+		render!
 		document.querySelectorAll('#servoslist tbody tr').forEach do(r)
 			# console.log '增加行点击事件'
 			r.addEventListener('click',do(e)
@@ -90,7 +93,9 @@ tag tianxian
 			<td> {c.polar2}
 			`
 		let stable = querySelector('#jihualist tbody')
+		stable.innerHTML = '数据为空' if result === ''
 		stable.innerHTML = result if result
+		render!
 		document.querySelectorAll('#jihualist tbody tr').forEach do(r)
 			# console.log '增加行点击事件'
 			r.addEventListener('click',do(e)
@@ -100,22 +105,34 @@ tag tianxian
 		# table = querySelector('#servoplist tbody')
 		window.fetch(url).then do(res)
 			res.json!
-			.then do(data)
-				renderTable(data)
+			.then do(data1)
+				# console.log data1
+				# data1.foreach do(item,index)
+				let tbdata = data1.filter do(item)
+					item.antNo == data[antindex].AntNo
+
+				console.log tbdata
+				renderTable(tbdata)
 		
 	def slistload url # 从数据库查询得到的信息
 		# stable = querySelector('#servoslist tbody')
 		window.fetch(url).then do(res)
 			res.json!
-			.then do(data)
-				renderSTable(data)
+			.then do(data1)
+				# console.log data1
+				let tbdata = data1.filter do(item)
+					item.antNo == data[antindex].AntNo
+				# console.log tbdata
+				renderSTable(tbdata)
 
 	def jhlistload url # 从数据库查询得到的信息
 		# stable = querySelector('#jihualist tbody')
 		window.fetch(url).then do(res)
 			res.json!
-			.then do(data)
-				renderjhTable(data)
+			.then do(data1)
+				let tbdata = data1.filter do(item)
+					item.antNo == data[antindex].AntNo
+				renderjhTable(tbdata)
 
 
 	# prop route
@@ -198,7 +215,6 @@ tag tianxian
 		sendcmd('prejihua',jh1,jh2)
 
 	def gettpdata # 获取到拓扑图的详细数组数据
-		
 		axios.get('/savetuop')
 			.then do(res)
 				squaresdata = res.data
@@ -269,7 +285,7 @@ tag tianxian
 						<div[pos:absolute b:1 l:1 p:5px 15px w:100] [visibility:hidden]=!isServo> 
 							<div[d:hflex a:center j:left g:5 pb:2]>
 								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
-								<div> '伺服方位数据'
+								<div> '伺服位置数据'
 							<table[bd:solid 1px gray5 ta:center].table.table-hover#servoplist>
 								<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
 									<tr>
@@ -306,10 +322,10 @@ tag tianxian
 									<tr> <td colSpan="4"> <i> 'Loading...'
 
 						<div.tuop>
-							<div[d:vflex a:center h:30%]>
+							<div[d:vflex a:center h:30%] [h:auto]=(data[antindex].Devices.length===1)>
 								<div[d:hflex w:70%]>
 									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:40 ta:center mr:auto]> data[antindex].Devices[ctrindex].DevName
-									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:30 ta:center] [visibility:hidden]=!isServo> data[antindex].Devices[ctrindex].TrackStatus
+									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:30 ta:center] [visibility:hidden]=!isServo> data[antindex].Devices[ctrindex].TrackStatus # 显示伺服器是否在跟踪状态。
 								<div[pos:relative p:2 w:70% c:gray3 bgc:teal8/40 bd:solid 1px teal4 rd:5px d:grid gtc:1fr 1fr 1fr ofy:auto]> for item,index in data[antindex].Devices[ctrindex].StatusList # 就tm多了一个操作，连通性就断掉了。
 									# if index < 5 # 这里控制显示的参数数量，5个重要信息。
 									<div[p:1 fs:small]> item.StName+ ':'

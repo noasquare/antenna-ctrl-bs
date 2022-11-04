@@ -1,4 +1,8 @@
 import alarm from './imgs/alarm.png'
+
+let devicons = [
+	'bi-pc-display-horizontal'
+]
 tag devcard
 	prop devstatus
 	prop devnum
@@ -6,7 +10,8 @@ tag devcard
 	def mount
 		
 	<self[d:hflex h:10 ja:center fs:14px rd:10px bd:solid 1px gray4 w:auto bg:linear-gradient(0.25turn,{devstatus.bgcolor1},{devstatus.bgcolor2})]> 
-		<div> devstatus.title
+		<i.bi.{devstatus.icon}[fs:28px c:{devstatus.color} mr:3]>
+		<div> devstatus.title 
 		<div[p:2 1 c:{devstatus.color} fs:13 fw:700 ff:mono]> devnum
 		<div> '个'
 
@@ -19,14 +24,14 @@ let devstatus = [
 		color : 'sky5'
 		bgcolor1:'sky7'
 		bgcolor2:'sky9'
-		url: './imgs/alarm.png'
+		icon: 'bi-pc-display-horizontal'
 	}
 	{
 		title:'在线'
 		color:'green5'
 		bgcolor1:'green7'
 		bgcolor2:'green9'
-		url: './imgs/alarm.png'
+		icon: 'bi-link'
 
 	}
 	{
@@ -34,7 +39,7 @@ let devstatus = [
 		color:'red5'
 		bgcolor1:'purple7'
 		bgcolor2:'purple9'
-		url: './imgs/alarm.png'
+		icon: 'bi-radioactive'
 
 	}
 	{
@@ -42,7 +47,7 @@ let devstatus = [
 		color:'blue5'
 		bgcolor1:'blue7'
 		bgcolor2:'blue9'
-		url: './imgs/alarm.png'
+		icon: 'bi-wifi-off'
 
 	}
 ]
@@ -50,6 +55,7 @@ let devstatus = [
 let pagesize = 10
 let antroute
 tag devall
+	css table tr d:hgrid
 	prop data
 	prop alarmNo
 	css tbody tr cursor:pointer
@@ -93,7 +99,7 @@ tag devall
 		antroute = data
 
 		<self> 
-			<div[d:hflex ja:center mb:4]> for item,index in devstatus
+			<div[d:hflex ja:center g:5 mb:5]> for item,index in devstatus
 				<devcard[p:10 m:2] devstatus=item devnum=devnum[index]>
 			<div[d:hflex ja:center].devsearch>
 				<div[bdl:solid 10px teal4 ml:3 pl:2 fs:18px mr:auto]> '阵地设备状态'
@@ -104,16 +110,16 @@ tag devall
 					<div> '设备状态'
 					<input[bgc:transparent bd:solid 1px gray4 ml:3 rd:4px] type='text'> 
 				<button[bd:none shadow:none bgc:teal5 c:white rd:6px p:1 3 m:1 5 bg:linear-gradient(teal3,teal6) @hover:linear-gradient(teal6,teal4)] @click=search> "查询"
-			<div[p:3 5].devtable>
-				<table[w:100% ta:center ofy:scroll].table#devtable>
-					<thead[bgc:teal4 c:black]>
+			<div[p:3 5 w:100%].devtable>
+				<table[ta:center].table#devtable>
+					<thead[bgc:teal7 c:black d:block]>
 						<tr>
 							<th scope="col"> '所属天线'
 							<th scope="col"> '天线编号'
 							<th scope="col"> '设备名称'
 							<th scope="col"> '状态'
 							<th scope="col"> '设备编号'
-					<tbody[c:gray3 border-color:rgb(64,73,91)]> for item in data
+					<tbody[d:block c:gray3 border-color:rgb(64,73,91) h:120 ofy:auto]> for item in data
 						for devitem in item.Devices
 							<tr>
 								<td> item.AntName
@@ -121,14 +127,15 @@ tag devall
 								<td> devitem.DevName
 								for stitem in devitem.StatusList
 									if stitem.StName === '设备状态' && stitem.Value === 'Normal' && devitem.FaultList.length == 0
-										<td[bgi:url('./imgs/online.png') bgr:no-repeat bgs:30px bgp:left]> '在线'
+										<td> <i.bi.bi-link[c:sky4]> '  在线'
+										
 									if stitem.StName === '设备状态' && stitem.Value === 'Disconnected'
-										<td[bgi:url('./imgs/offline.png') bgr:no-repeat bgs:30px bgp:left]> '离线'
+										<td> <i.bi.bi-wifi-off[c:blue5]> '  离线'
 								if devitem.FaultList.length !== 0
-									<td[bgi:url('./imgs/alarm.png') bgr:no-repeat bgs:30px bgp:left]> '告警'
+									<td> <i.bi.bi-radioactive[c:red5]> '  告警'
 								<td> devitem.DevNo
-			<button[mr:5].btn.btn-secondary @click=prevPage> "前一页"
-			<button.btn.btn-secondary @click=nextPage> "下一页"
+			# <button[mr:5].btn.btn-secondary @click=prevPage> "前一页"
+			# <button.btn.btn-secondary @click=nextPage> "下一页"
 
 				
 

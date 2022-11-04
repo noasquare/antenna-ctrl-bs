@@ -7,7 +7,7 @@
         "DevNo": "01",
         "DevName": "伺服器",
         "TrackStatus": "ypypyp...",
-        "DriverClass": "ServoCetc39",
+        "DriverClass": "cetc54",
         "StatusList": [
           {
             "StName": "方位角度",
@@ -1006,6 +1006,1450 @@
   {
     "AntNo": "ANT2",
     "AntName": "2号天线",
+    "Devices": [
+      {
+        "DevNo": "01",
+        "DevName": "伺服器",
+        "TrackStatus": "ypypyp...",
+        "DriverClass": "ServoCetc39",
+        "StatusList": [
+          {
+            "StName": "方位角度",
+            "Value": "200.001",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰角度",
+            "Value": "1.659",
+            "ReadOnly": false
+          },
+          {
+            "StName": "方位速度",
+            "Value": "0",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰速度",
+            "Value": "-0.005",
+            "ReadOnly": false
+          },
+          {
+            "StName": "信号电平",
+            "Value": "0.98",
+            "ReadOnly": true
+          },
+          {
+            "StName": "工作模式",
+            "Value": "系统就绪",
+            "ReadOnly": true
+          },
+          {
+            "StName": "信号质量",
+            "Value": "未锁定",
+            "ReadOnly": true
+          },
+          {
+            "StName": "急停",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "自动搜索完成",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "正在自动搜索",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "驱动上电",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": []
+      },
+      {
+        "DevNo": "02",
+        "DevName": "极化控制器",
+        "DriverClass": "PolarCetc39",
+        "StatusList": [
+          {
+            "StName": "工作模式",
+            "Value": "无极化控制",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C极化角",
+            "Value": "23.4",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C极化角状态",
+            "Value": "顺限",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku极化角",
+            "Value": "-94.5",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku极化角状态",
+            "Value": "故障",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射左/右旋",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射左/右旋状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C接收线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C接收线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku发射水平/垂直",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku发射水平/垂直状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": [
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化1开关顺时针限位"
+          },
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化2位置检测故障"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AntNo": "ANT4",
+    "AntName": "4号天线",
+    "Devices": [
+      {
+        "DevNo": "01",
+        "DevName": "伺服器",
+        "TrackStatus": "ypypyp...",
+        "DriverClass": "ServoCetc39",
+        "StatusList": [
+          {
+            "StName": "方位角度",
+            "Value": "200.001",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰角度",
+            "Value": "1.659",
+            "ReadOnly": false
+          },
+          {
+            "StName": "方位速度",
+            "Value": "0",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰速度",
+            "Value": "-0.005",
+            "ReadOnly": false
+          },
+          {
+            "StName": "信号电平",
+            "Value": "0.98",
+            "ReadOnly": true
+          },
+          {
+            "StName": "工作模式",
+            "Value": "系统就绪",
+            "ReadOnly": true
+          },
+          {
+            "StName": "信号质量",
+            "Value": "未锁定",
+            "ReadOnly": true
+          },
+          {
+            "StName": "急停",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "自动搜索完成",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "正在自动搜索",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "驱动上电",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": []
+      }
+    ]
+  },
+  {
+    "AntNo": "ANT3",
+    "AntName": "3号天线",
+    "Devices": [
+      {
+        "DevNo": "01",
+        "DevName": "伺服器",
+        "TrackStatus": "ypypyp...",
+        "DriverClass": "ServoCetc39",
+        "StatusList": [
+          {
+            "StName": "方位角度",
+            "Value": "200.001",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰角度",
+            "Value": "1.659",
+            "ReadOnly": false
+          },
+          {
+            "StName": "方位速度",
+            "Value": "0",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰速度",
+            "Value": "-0.005",
+            "ReadOnly": false
+          },
+          {
+            "StName": "信号电平",
+            "Value": "0.98",
+            "ReadOnly": true
+          },
+          {
+            "StName": "工作模式",
+            "Value": "系统就绪",
+            "ReadOnly": true
+          },
+          {
+            "StName": "信号质量",
+            "Value": "未锁定",
+            "ReadOnly": true
+          },
+          {
+            "StName": "急停",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "自动搜索完成",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "正在自动搜索",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "驱动上电",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": []
+      },
+      {
+        "DevNo": "02",
+        "DevName": "极化控制器",
+        "DriverClass": "PolarCetc39",
+        "StatusList": [
+          {
+            "StName": "工作模式",
+            "Value": "无极化控制",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C极化角",
+            "Value": "23.4",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C极化角状态",
+            "Value": "顺限",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku极化角",
+            "Value": "-94.5",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku极化角状态",
+            "Value": "故障",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射左/右旋",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射左/右旋状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C接收线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C接收线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku发射水平/垂直",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku发射水平/垂直状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": [
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化1开关顺时针限位"
+          },
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化2位置检测故障"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AntNo": "ANT2",
+    "AntName": "19号天线",
+    "Devices": [
+      {
+        "DevNo": "01",
+        "DevName": "伺服器",
+        "TrackStatus": "ypypyp...",
+        "DriverClass": "ServoCetc39",
+        "StatusList": [
+          {
+            "StName": "方位角度",
+            "Value": "200.001",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰角度",
+            "Value": "1.659",
+            "ReadOnly": false
+          },
+          {
+            "StName": "方位速度",
+            "Value": "0",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰速度",
+            "Value": "-0.005",
+            "ReadOnly": false
+          },
+          {
+            "StName": "信号电平",
+            "Value": "0.98",
+            "ReadOnly": true
+          },
+          {
+            "StName": "工作模式",
+            "Value": "系统就绪",
+            "ReadOnly": true
+          },
+          {
+            "StName": "信号质量",
+            "Value": "未锁定",
+            "ReadOnly": true
+          },
+          {
+            "StName": "急停",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "自动搜索完成",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "正在自动搜索",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "驱动上电",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": []
+      },
+      {
+        "DevNo": "02",
+        "DevName": "极化控制器",
+        "DriverClass": "PolarCetc39",
+        "StatusList": [
+          {
+            "StName": "工作模式",
+            "Value": "无极化控制",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C极化角",
+            "Value": "23.4",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C极化角状态",
+            "Value": "顺限",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku极化角",
+            "Value": "-94.5",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku极化角状态",
+            "Value": "故障",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射左/右旋",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射左/右旋状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C接收线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C接收线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku发射水平/垂直",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku发射水平/垂直状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": [
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化1开关顺时针限位"
+          },
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化2位置检测故障"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AntNo": "ANT13",
+    "AntName": "13号天线",
+    "Devices": [
+      {
+        "DevNo": "01",
+        "DevName": "伺服器",
+        "TrackStatus": "ypypyp...",
+        "DriverClass": "ServoCetc39",
+        "StatusList": [
+          {
+            "StName": "方位角度",
+            "Value": "200.001",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰角度",
+            "Value": "1.659",
+            "ReadOnly": false
+          },
+          {
+            "StName": "方位速度",
+            "Value": "0",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰速度",
+            "Value": "-0.005",
+            "ReadOnly": false
+          },
+          {
+            "StName": "信号电平",
+            "Value": "0.98",
+            "ReadOnly": true
+          },
+          {
+            "StName": "工作模式",
+            "Value": "系统就绪",
+            "ReadOnly": true
+          },
+          {
+            "StName": "信号质量",
+            "Value": "未锁定",
+            "ReadOnly": true
+          },
+          {
+            "StName": "急停",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "自动搜索完成",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "正在自动搜索",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "驱动上电",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": []
+      },
+      {
+        "DevNo": "02",
+        "DevName": "极化控制器",
+        "DriverClass": "PolarCetc39",
+        "StatusList": [
+          {
+            "StName": "工作模式",
+            "Value": "无极化控制",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C极化角",
+            "Value": "23.4",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C极化角状态",
+            "Value": "顺限",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku极化角",
+            "Value": "-94.5",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku极化角状态",
+            "Value": "故障",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射左/右旋",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射左/右旋状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C接收线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C接收线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku发射水平/垂直",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku发射水平/垂直状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": [
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化1开关顺时针限位"
+          },
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化2位置检测故障"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AntNo": "ANT14",
+    "AntName": "14号天线",
+    "Devices": [
+      {
+        "DevNo": "01",
+        "DevName": "伺服器",
+        "TrackStatus": "ypypyp...",
+        "DriverClass": "ServoCetc39",
+        "StatusList": [
+          {
+            "StName": "方位角度",
+            "Value": "200.001",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰角度",
+            "Value": "1.659",
+            "ReadOnly": false
+          },
+          {
+            "StName": "方位速度",
+            "Value": "0",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰速度",
+            "Value": "-0.005",
+            "ReadOnly": false
+          },
+          {
+            "StName": "信号电平",
+            "Value": "0.98",
+            "ReadOnly": true
+          },
+          {
+            "StName": "工作模式",
+            "Value": "系统就绪",
+            "ReadOnly": true
+          },
+          {
+            "StName": "信号质量",
+            "Value": "未锁定",
+            "ReadOnly": true
+          },
+          {
+            "StName": "急停",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "自动搜索完成",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "正在自动搜索",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "驱动上电",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": []
+      },
+      {
+        "DevNo": "02",
+        "DevName": "极化控制器",
+        "DriverClass": "PolarCetc39",
+        "StatusList": [
+          {
+            "StName": "工作模式",
+            "Value": "无极化控制",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C极化角",
+            "Value": "23.4",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C极化角状态",
+            "Value": "顺限",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku极化角",
+            "Value": "-94.5",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku极化角状态",
+            "Value": "故障",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射左/右旋",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射左/右旋状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C接收线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C接收线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku发射水平/垂直",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku发射水平/垂直状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": [
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化1开关顺时针限位"
+          },
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化2位置检测故障"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AntNo": "ANT10",
+    "AntName": "10号天线",
+    "Devices": [
+      {
+        "DevNo": "01",
+        "DevName": "伺服器",
+        "TrackStatus": "ypypyp...",
+        "DriverClass": "ServoCetc39",
+        "StatusList": [
+          {
+            "StName": "方位角度",
+            "Value": "200.001",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰角度",
+            "Value": "1.659",
+            "ReadOnly": false
+          },
+          {
+            "StName": "方位速度",
+            "Value": "0",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰速度",
+            "Value": "-0.005",
+            "ReadOnly": false
+          },
+          {
+            "StName": "信号电平",
+            "Value": "0.98",
+            "ReadOnly": true
+          },
+          {
+            "StName": "工作模式",
+            "Value": "系统就绪",
+            "ReadOnly": true
+          },
+          {
+            "StName": "信号质量",
+            "Value": "未锁定",
+            "ReadOnly": true
+          },
+          {
+            "StName": "急停",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "自动搜索完成",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "正在自动搜索",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "驱动上电",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": []
+      },
+      {
+        "DevNo": "02",
+        "DevName": "极化控制器",
+        "DriverClass": "PolarCetc39",
+        "StatusList": [
+          {
+            "StName": "工作模式",
+            "Value": "无极化控制",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C极化角",
+            "Value": "23.4",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C极化角状态",
+            "Value": "顺限",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku极化角",
+            "Value": "-94.5",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku极化角状态",
+            "Value": "故障",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射左/右旋",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射左/右旋状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C接收线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C接收线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku发射水平/垂直",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku发射水平/垂直状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": [
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化1开关顺时针限位"
+          },
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化2位置检测故障"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AntNo": "ANT11",
+    "AntName": "11号天线",
+    "Devices": [
+      {
+        "DevNo": "01",
+        "DevName": "伺服器",
+        "TrackStatus": "ypypyp...",
+        "DriverClass": "ServoCetc39",
+        "StatusList": [
+          {
+            "StName": "方位角度",
+            "Value": "200.001",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰角度",
+            "Value": "1.659",
+            "ReadOnly": false
+          },
+          {
+            "StName": "方位速度",
+            "Value": "0",
+            "ReadOnly": false
+          },
+          {
+            "StName": "俯仰速度",
+            "Value": "-0.005",
+            "ReadOnly": false
+          },
+          {
+            "StName": "信号电平",
+            "Value": "0.98",
+            "ReadOnly": true
+          },
+          {
+            "StName": "工作模式",
+            "Value": "系统就绪",
+            "ReadOnly": true
+          },
+          {
+            "StName": "信号质量",
+            "Value": "未锁定",
+            "ReadOnly": true
+          },
+          {
+            "StName": "急停",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "自动搜索完成",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "正在自动搜索",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "方位拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰插锁到位",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "俯仰拔锁到位",
+            "Value": "False",
+            "ReadOnly": true
+          },
+          {
+            "StName": "驱动上电",
+            "Value": "True",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": []
+      },
+      {
+        "DevNo": "02",
+        "DevName": "极化控制器",
+        "DriverClass": "PolarCetc39",
+        "StatusList": [
+          {
+            "StName": "工作模式",
+            "Value": "无极化控制",
+            "ReadOnly": true
+          },
+          {
+            "StName": "控制",
+            "Value": "本控",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C极化角",
+            "Value": "23.4",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C极化角状态",
+            "Value": "顺限",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku极化角",
+            "Value": "-94.5",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku极化角状态",
+            "Value": "故障",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射左/右旋",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射左/右旋状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C接收线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C接收线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "C发射线/圆",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C发射线/圆状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "Ku发射水平/垂直",
+            "Value": "中间态",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku发射水平/垂直状态",
+            "Value": "正常",
+            "ReadOnly": true
+          },
+          {
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true
+          }
+        ],
+        "FaultList": [
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化1开关顺时针限位"
+          },
+          {
+            "Time": "2022-07-08 12:39:52",
+            "Value": "极化2位置检测故障"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AntNo": "ANT12",
+    "AntName": "12号天线",
     "Devices": [
       {
         "DevNo": "01",

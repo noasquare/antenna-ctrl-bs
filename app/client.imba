@@ -1,6 +1,8 @@
 import * as bootstrap from 'bootstrap' # 使用bootstrap作为前端ui组件
 # import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/css/bootstrap.min.css' # 使用
+import 'bootstrap-icons/font/bootstrap-icons.css'
+
 import './tianxian'
 import './ctrsider'
 import './antcard'
@@ -164,16 +166,14 @@ tag app
 							<div> '退出'
 						else 
 							<div> '登录'
-			<div.main>
+			<div.main[of:hidden]>
 				<div.menu>
 					<div.accordion id='menu'>
 						<div.accordion-item>
 							<h6.accordion-header id='menu01'>
-								<button[d:hflex p:5 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#cols01' aria-expanded='true' aria-control='cols01' @click=menuclickarrow route-to='/antall'>
-									<div[w:90%]> '阵地天线总览'
-									<div[w:10% ml:auto].triangle-right>
+								<button[p:5 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#cols01' aria-expanded='true' aria-controls='cols01' @click=menuclickarrow route-to='/antall'> '阵地天线总览'
 
-							<div.accordion-collapse.collapse.show id='cols01' aria-labelledby='menu01' data-bs-parent='#menu'> for item,index in devdata
+							<div[max-height:80 ofy:auto].accordion-collapse.collapse.show id='cols01' aria-labelledby='menu01' data-bs-parent='#menu'> for item,index in devdata
 								<button.accordion-body.menudroplink route-to="/txst/{item.AntNo}" @click=antdata(index)>
 									<div[fs:14px c:gray3 ml:5]> item.AntName
 
@@ -181,11 +181,11 @@ tag app
 					<button.menunodrop route-to='/devlog'> "日志"
 					<button.menunodrop route-to='/setting'> "设置"
 					# <button.menunodrop route-to='/test'> "test"
-					<i.bi.bi-alarm>
 
 				<tianxian$txjm[w:100%] route='/txst/:id' data=devdata ws=socket antindex=antindex islogin=isLogin> # 这里的index是为了区分是哪个天线的数据，但是如果这样，就会导致纯通过route不能获取最新的数据了。解决方案就是，点击要的index传进去，然后再component里面直接做，不转手。
-				<div[p:5 w:100% d:grid gtc:1fr 1fr 1fr g:5 a:baseline].antall route='/antall'> for item in devdata
-					<antcard rdata=item>
+				<div[p:5 w:100% max-height:100% d:grid gtc:1fr 1fr 1fr g:5 a:baseline ofy:auto].antall route='/antall'> 
+					for item in devdata
+						<antcard rdata=item>
 				<div[w:100% ta:center].antall route='/devall'>
 					<div[mt:3]> '阵地设备总览'
 					<devall$devall data=devdata>

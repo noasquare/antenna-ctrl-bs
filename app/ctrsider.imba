@@ -1,3 +1,6 @@
+let satlistno
+let satlistaz
+let satlistel
 tag ctrsider
 	css .sdtitle c:rgb(31,219,220) fw:bold p:10px bdb:solid 1px rgb(31,219,220)
 	css	.sdstatus d:hflex p:5px c:gray3 fs:14px
@@ -77,7 +80,7 @@ tag ctrsider
 					Params : {
 						"{item}" : itemvalue
 					}
-
+				
 				console.log data
 				ws.send(JSON.stringify(data))
 			else if itemvalue
@@ -148,6 +151,38 @@ tag ctrsider
 				console.log data
 				ws.send(JSON.stringify(data))
 
+	def sendpara_multi4 item,value1,value2,value3,value4
+		# todo = 这里要增加一个发指令前的用户权限判断-可以是个函数 应该是个bool函数 ：isadmin
+		# 1- 弹出一个用户名密码的窗口弹窗，输入值，不管对不对先发送给
+		if isadmin!
+			console.log typeof(item)
+			if typeof(item) !== 'object'
+				let data =
+					AntennaNo : ant
+					DevNo : data.DevNo
+					Cmd : item
+					Params : {
+						"{item}1" : value1
+						"{item}2" : value2
+						"{item}3" : value3
+						"{item}4" : value4
+					}
+				console.log data
+				ws.send(JSON.stringify(data))
+			else if value1 && value2 && value3 && value4
+				let data =
+					AntennaNo : ant
+					DevNo : data.DevNo
+					Cmd : item.StName
+					Params : {
+						"{item.StName}1" : value1
+						"{item.StName}2" : value2
+						"{item.StName}3" : value3
+						"{item.StName}4" : value4
+					}
+				console.log data
+				ws.send(JSON.stringify(data))
+
 	def sendCalpara item,val_xl,val_start,val_stop,val_inter
 		# todo = 这里要增加一个发指令前的用户权限判断-可以是个函数 应该是个bool函数 ：isadmin
 		# 1- 弹出一个用户名密码的窗口弹窗，输入值，不管对不对先发送给
@@ -199,30 +234,114 @@ tag ctrsider
 			isLNAlimits = no
 		else
 			isLNAlimits = yes
+
+		iscetc39 = (data.DriverClass == 'cetc39') ? yes : no # 39所老私服
+		iscetc54 = (data.DriverClass == 'cetc54') ? yes : no # 54所伺服
+		isServoAcu2010 = (data.DriverClass == 'ServoAcu2010') ? yes : no # 39所小型伺服
+
 	def listload url # 从数据库查询得到的信息
-		# table = querySelector('#servoplist tbody')
+		table = querySelector('#servoTracklist tbody')
 		window.fetch(url).then do(res)
 			res.json!
 			.then do(data)
 				# console.log data
-				renderTable(data)
+				renderTable(data,table)
+	def sbsent event
+		let array = event.currentTarget.innerText.split(/\r?\n/) # 采集获取的行内的所有数据。
+		satno = array[0]
+		# jh2 = array[3]
+		sendpara('satNo',satno)
+
+	def listloadsatbase url,thetb # 从数据库查询得到的所有卫星数据库
+		# console.log thetb
+		# table = querySelector("#{thetb} tbody")
+		window.fetch(url).then do(res)
+			res.json!
+			.then do(data)
+				# console.log data
+				renderSatbaseTable(data,thetb)
+	def listloadsatlist url,thetb # 从数据库查询得到的选取的卫星数据库
+		# console.log thetb
+		# table = querySelector("#{thetb} tbody")
+		window.fetch(url).then do(res)
+			res.json!
+			.then do(data)
+				# console.log data
+				renderSatlistTable(data,thetb)
 	
-	def renderTable tada
+	def renderTable tada,table
 		let result = ''
 		# console.log tabledata
+		# console.log tr[0]
 		tada.forEach do(c)
 			result += `<tr class="tbody">
-			<td> {c.time}
+			<td> {c.time} 
 			<td> {c.az}
 			<td> {c.el}
 			`
 		# console.log table
-		let table = querySelector('#servoTracklist tbody')
-		
+		# let table = querySelector('#servoTracklist tbody')
 		table.innerHTML = result if result
-
+		table.innerHTML = '数据为空' if result === ''
+		render!
 		let activeCol = querySelectorAll('#servoTracklist tbody tr')[0]
 		activeCol.classList.add('table-active')
+	def getlistno event
+		let array = event.currentTarget.innerText.split(/\r?\n/) # 采集获取的行内的所有数据。
+		satlistno = array[0]
+		satlistaz = array[2]
+		satlistel = array[3]
+		render!
+		# console.log satlistno
+		# jh2 = array[3]
+
+		# sendpara('satNo',satno)
+
+	def renderSatbaseTable tada,tb
+		let result = ''
+		# console.log tabledata
+		# console.log tr[0]
+		tada.forEach do(c)
+			result += `<tr class="tbody">
+			<td> {c.SatNo} 
+			<td> {c.SatName}
+			<td> {c.SatLon}
+			`
+		# console.log table
+		let table = querySelector("#{tb} tbody")
+
+		table.innerHTML = result if result
+		table.innerHTML = '数据为空' if result === ''
+		render!
+		let activeCol = querySelectorAll("#{tb} tbody tr")[0]
+		activeCol.classList.add('table-active')
+		document.querySelectorAll("#{tb} tbody tr").forEach do(r)
+			# console.log '增加行点击事件'
+			r.addEventListener('click',do(e)
+				sbsent(e))
+	
+	def renderSatlistTable tada,tb
+		let result = ''
+		# console.log tabledata
+		# console.log tr[0]
+		tada.forEach do(c)
+			result += `<tr class="tbody">
+			<td> {c.SatNo} 
+			<td> {c.SatName}
+			<td> {c.Az}
+			<td> {c.El}
+			`
+		# console.log table
+		let table = querySelector("#{tb} tbody")
+		table.innerHTML = result if result
+		table.innerHTML = '数据为空' if result === ''
+		render!
+		let activeCol = querySelectorAll("#{tb} tbody tr")[0]
+		activeCol.classList.add('table-active')
+		document.querySelectorAll("#{tb} tbody tr").forEach do(r)
+			# console.log '增加行点击事件'
+			r.addEventListener('click',do(e)
+				getlistno(e))
 
 	def listloadhis url # 从数据库查询得到的信息
 		# table = querySelector('#servoplist tbody')
@@ -246,6 +365,9 @@ tag ctrsider
 		
 		table.innerHTML = result if result
 
+		table.innerHTML = '数据为空' if result === ''
+		render!
+		
 		let activeCol = querySelectorAll('#servoTracklistHis tbody tr')[0]
 		activeCol.classList.add('table-active')
 
@@ -256,15 +378,18 @@ tag ctrsider
 		console.log test
 
 	def mount
+		# console.log 'mount哟哟'
 		listload('/tracklist') # 查询二行星历列表
+		let thetab = 'satbaselist'
+		let tblist = 'satlistinfo'
+		# let thetr = ['SatNo','SatName','SatLon']
+		listloadsatbase('/satbaselist',thetab) # 查询卫星经度原始数据库列表
+		listloadsatlist('/satlistinfo',tblist) # 查询卫星经度保存数据库列表
 		listloadhis('/tracklisthis') # 记忆跟踪列表查询
 
-		# console.log 'sider mount'
-		# $uname.value = ''
-		# $pass.value = ''
-
-
 	def render()
+		# console.log '刷新按钮'
+		# console.log querySelector('#satbase')
 		# console.log data.DevName
 		cmdbyDevice!
 		# console.log today
@@ -283,9 +408,8 @@ tag ctrsider
 				<div.accordion id='ctl'>
 					<div.accordion-item>
 						<h6.accordion-header id='headingOne'>
-							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-control='collapseOne'>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center ].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-control='collapseOne'>
 								<div[w:90%]> data.DevName+'参数控制' # 变量
-								<div[w:10% ml:auto].triangle-right>
 						<div.accordion-collapse.collapse.show id='collapseOne' aria-labelledby='headingOne' data-bs-parent='#ctl'>
 							<div[m:0 p:5px d:vflex ai:left max-height:60 ofy:auto].accordion-body> for ctritem,stindex in data.StatusList
 								if ctritem.ReadOnly == no && ctritem.StName !== '控制' && !ctritem.cmdSelect
@@ -302,20 +426,78 @@ tag ctrsider
 												else
 													<option> sel.option
 									
-					<div.accordion-item>
+					<div.accordion-item[]>
 						<h6.accordion-header id='headingTwo'>
-							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='true' aria-control='collapseTwo'>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='true' aria-control='collapseTwo'>
 								<div[w:90%]> '指令控制'
-								<div[w:10% ml:auto].triangle-right>
-						<div[max-height:80 ofy:auto].accordion-collapse.collapse.show id='collapseTwo' aria-labelledby='headingTwo' data-bs-parent='#ctl'>
+						<div[max-height:150 ofy:auto].accordion-collapse.collapse.show id='collapseTwo' aria-labelledby='headingTwo' data-bs-parent='#ctl'>
 							# ========伺服指令================================
+							<div[d:hflex] [d:none]=isServoAcu2010>
+								<div[d:vflex ja:center mt:2 w:50%] [d:none]=isServo>
+									<div[mb:2]>
+										<button[bgc:teal4 rd:full w:10 h:10 shadow:clear bd:none] @click=sendpara('manuservo_up',$manuspeed.value)> "上"
+									<div[d:hflex ja:center g:2]>
+										<button[bgc:teal4 rd:full w:10 h:10 shadow:clear bd:none] @click=sendpara('manuservo_cc',$manuspeed.value)> "逆"
+										<button[bgc:teal4 rd:full w:10 h:10 shadow:clear bd:none] @click=sendpara('manuservo_stop')> "停"
+										<button[bgc:teal4 rd:full w:10 h:10 shadow:clear bd:none] @click=sendpara('manuservo_c',$manuspeed.value)> "顺"
+									<div[mt:2]>
+										<button[bgc:teal4 rd:full w:10 h:10 shadow:clear bd:none] @click=sendpara('manuservo_down',$manuspeed.value)> "下"
+
+								<div[d:vflex g:3 mt:2 p:5 w:50%] [d:none]=isServo>
+									<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
+										<div[fs:14px c:gray3]> '手动速度：'
+										<input$manuspeed[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] type='number' value=0.1 step=0.01 max=1 min=0>
+									<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
+										<div[fs:14px c:gray3]> '驱动上电:'
+										<button[ml:auto].btn.btn-success.btn-sm @click=sendpara('EnableDriver',null)> "上电"
+									<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
+										<div[fs:14px c:gray3]> '驱动下电:'
+										<button[ml:auto].btn.btn-success.btn-sm @click=sendpara('DisableDriver',null)> "下电"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
-								<div[fs:14px c:gray3 ml:3]> '驱动上电:'
-								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('EnableDriver',null)> "上电"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
-								<div[fs:14px c:gray3 ml:3]> '驱动下电:'
-								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('DisableDriver',null)> "下电"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '卫星数据库:'
+								<button[ml:auto mr:2].btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#satbase"> "读取"
+								<button[mr:4].btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#satlist"> "编辑"
+							<div.modal.fade[$bs-modal-bg:gray4/90]#satbase tabindex='-1' aria-hidden='true'> 'test'
+								<div.modal-dialog>
+									<div.modal-content>
+										<div.modal-header>
+											<h5> '卫星经度数据库'
+											<button.btn-close data-bs-dismiss='modal' aria-lable='Close'>
+										<table[bd:solid 1px gray5 ta:center].table.table-hover.table-sm.table-dark#satbaselist>
+											<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
+												<tr>
+													<th scope="col"> '编号'
+													<th scope="col"> '名称'
+													<th scope="col"> '经度'
+											<tbody[d:block c:gray3 r:rgb(64,73,91) h:80 ofy:auto]>
+												<tr> <td colSpan="3"> <i> 'Loading...'
+							<div.modal.fade[$bs-modal-bg:gray4/90]#satlist tabindex='-1' aria-hidden='true'> 'test'
+								<div.modal-dialog>
+									<div.modal-content>
+										<div.modal-header>
+											<h5> '卫星列表-单击选中'
+											<button.btn-close data-bs-dismiss='modal' aria-lable='Close'>
+										<table[bd:solid 1px gray5 ta:center].table.table-hover.table-sm.table-dark#satlistinfo>
+											<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
+												<tr>
+													<th scope="col"> '编号'
+													<th scope="col"> '名称'
+													<th scope="col"> '方位'
+													<th scope="col"> '俯仰'
+											<tbody[d:block c:gray3 r:rgb(64,73,91) h:80 ofy:auto]>
+												<tr> <td colSpan="3"> <i> 'Loading...'
+										<div[p:1 d:hflex ja:center g:3]>
+											<span[ml:3]> '方位俯仰:'
+											<input$satlistaz[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistaz value=1234>
+											<input$satlistel[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistel value=1234>
+											<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara_multi('SetSatAZEL',satlistaz,satlistel)> '置位' 
+											<button.btn.btn-success.btn-sm[mr:3] @click=sendpara_multi3('UpdateSatAZEL',$satlistaz.value,$satlistel.value,satlistno)> '修改' 
+										<div[p:1 d:hflex ja:center g:3]>
+											<span[ml:3]> '删除编号：'
+											<input[h:7 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistno value=1234>
+											<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara('delsatalistno',satlistno)> '删除' 
+											<button.btn.btn-success.btn-sm[mr:3] @click=(mount!)> '刷新' 
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '方位收藏:'
 								<select$azshoucang[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
 									<option value='01'> '收藏'
@@ -325,64 +507,93 @@ tag ctrsider
 									<option value='05'> '拔锁'
 									<option value='06'> '拔锁停止'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Azshoucang',$azshoucang.value)> "确定"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc54||iscetc39  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '俯仰收藏:'
 								<select$elshoucang[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
 									<option value='01'> '收藏'
-									<option value='02'> '收藏停止'
-									<option value='03'> '插锁'
-									<option value='04'> '插锁停止'
-									<option value='05'> '拔锁'
-									<option value='06'> '拔锁停止'
+									<option value='02' > '收藏停止'
+									<option value='03'> '入锁'
+									<option value='04'> '入锁停止'
+									<option value='05'> '退锁'
+									<option value='06'> '退锁停止'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Elshoucang',$elshoucang.value)> "确定"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '俯仰收藏:'
+								<select$elshoucang1[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
+									<option value='0'> '自动收藏'
+									<option value='1'> '入锁'
+									<option value='2'> '退锁'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Elshoucang',$elshoucang1.value)> "确定"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54 [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '步进跟踪步距:'
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.001-1.000" @change=sendpara("SetTrackStep",this.value) type='number' step='0.001'>
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '跟踪门限:'
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.00~9.99V" @change=sendpara("SetTrackMinLevel",this.value) type='number' step='0.01'>
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '跟踪间隔:'
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0~999.99min" @change=sendpara("SetTrackInterval",this.value) type='number' step='0.01'>
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39  [d:none]=iscetc54  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '跟踪失锁门限:'
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.00~9.99V" @change=sendpara("SetTrackUnlockLevel",this.value) type='number' step='0.01'>
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '步进跟踪:'
+								<input$steptrack[h:7 fs:14px bgc:transparent c:gray4 w:40% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0~99999.999MHz" @change=sendpara("SetTrackUnlockLevel",this.value) type='number' step='0.01'  [d:none]=iscetc39>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('SetTrackUnlockLevel',$steptrack.value)> "跟踪"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo  [d:none]=iscetc39 [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '单脉冲跟踪:'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StepTrack','test')> "跟踪"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '预置卫星经度:'
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.00~200.00" @change=sendpara("SatLon",this.value) type='number' step='.01'>
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54 [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '自动搜索:'
 								<input$azrange[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="方位/0.00" type='number' step='.01'>
 								<input$elrange[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="俯仰/0.00" type='number' step='.01'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('Search',$azrange.value,$elrange.value)> "搜索"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '自动搜索:'
+								<input$azrange1[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="方位" type='number' step='.01'>
+								<input$azstep[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="AZ步进" type='number' step='.01'>
+								<input$elrange1[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="俯仰" type='number' step='.01'>
+								<input$elstep[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="EL步进" type='number' step='.01'>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi4('Search',$azrange1.value,$azstep.value,$elrange1.value,$elstep.value)> "搜索"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储卫星:'
-								<input$satid[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
-								<input$satlon[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度/0.00" type='number' step='.01'>
+								<input$satid[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
+								<input$satlon[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度-0.00" type='number' step='.01'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('StoreSat',$satid.value,$satlon.value)> "存储"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '删除卫星:'
-								<input$satdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
+								<input$satdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemoveSat',$satdel.value)> "删除"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
-								<div[fs:14px c:gray3 ml:3]> '存储当前位置:'
-								<input$satposStore[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
+								<div[fs:14px c:gray3 ml:3]> '存储位置:'
+								<input$satposStore[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StorePos',$satposStore.value)> "存储"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '删除位置:'
+								<input$posdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号" type='number' step='1'>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemovePos',$posdel.value)> "删除"
+							# 以下为39所小伺服定制
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '跟踪：'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('ServoAcu2010Track')> "跟踪"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54> # 这里的指令下发是针对伺服设备来定制的
+								<div[fs:14px c:gray3 ml:3]> '待机：'
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('ServoAcu2010Standby')> "待机"
 							# ========伺服指令================================
 						
 							# ========极化控制指令================================
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '查询卫星表:'
-								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" @change=sendpara("QuerySatelliteTable",this.value) type='number' step='1'>
+								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" @change=sendpara("QuerySatelliteTable",this.value) type='number' step='1'>
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '故障复位:'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Reset','test')> "复位"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '手控:'
-								<input$jhManId[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~6" type='number' step='1'>
+								<input$jhManId[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~6" type='number' step='1'>
 								<select$jhManDir[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
 									<option value='0'> '停止运动'
 									<option value='1'> '顺时针/左旋'
@@ -391,7 +602,7 @@ tag ctrsider
 
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对极化控制设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '预置位置:'
-								<input$posId[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~6" type='number' step='1'>
+								<input$posId[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~6" type='number' step='1'>
 								<input$posValue[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="位置/0.0" type='number' step='.1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('PresetPos',$posId.value,$posValue.value)> "预置"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对极化控制设备来定制的
@@ -401,12 +612,12 @@ tag ctrsider
 
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对极化控制设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储卫星:'
-								<input$jhSatNo[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/0~23" type='number' step='1'>
+								<input$jhSatNo[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号0~23" type='number' step='1'>
 								<input$jhSatLon[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度/0.0" type='number' step='.1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('StoreSat',$jhSatNo.value,$jhSatLon.value)> "存储"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isJh> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '删除卫星:'
-								<input$removesat[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="ID/1~24" type='number' step='1'>
+								<input$removesat[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemoveSat',$removesat.value)> "删除"
 							# ========极化控制指令================================
 
@@ -446,9 +657,8 @@ tag ctrsider
 						
 						
 						<h6.accordion-header id='heading3' [d:none]=isServo>
-							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapse3' aria-expanded='true' aria-control='collapse3'>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#collapse3' aria-expanded='true' aria-control='collapse3'>
 								<div[w:90%]> '程序跟踪'
-								<div[w:10% ml:auto].triangle-right>
 						<div[max-height:100 ofy:auto].accordion-collapse.collapse.show id='collapse3' aria-labelledby='heading3' data-bs-parent='#ctl' [d:none]=isServo>
 							<textarea$trackXL[w:90% h:14 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:2 3] placeholder='输入两行星历'>
 							<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
@@ -462,7 +672,7 @@ tag ctrsider
 								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
 							<div[b:1 l:1 p:5px 15px w:100% c:gray2] > 
 								<div[d:hflex a:center j:left g:3 pb:1]>
-									<div[fs:sm]> '星历计算结果:'
+									<div[fs:sm]> '历史数据:'
 								<table[bd:solid 1px gray5 ta:center].table.table-hover.table-sm.table-dark#servoTracklist>
 									<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
 										<tr>
@@ -473,9 +683,8 @@ tag ctrsider
 										<tr> <td colSpan="3"> <i> 'Loading...'
 								# <div[fs:14px c:gray3 ml:3]> '程序跟踪：'
 						<h6.accordion-header id='heading4' [d:none]=isServo>
-							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapse4' aria-expanded='true' aria-control='collapse4'>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#collapse4' aria-expanded='true' aria-control='collapse4'>
 								<div[w:90%]> '记忆跟踪'
-								<div[w:10% ml:auto].triangle-right>
 						<div[max-height:100 ofy:auto].accordion-collapse.collapse.show id='collapse4' aria-labelledby='heading4' data-bs-parent='#ctl' [d:none]=isServo>
 							<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
 								<input$startTime1[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='开始日期' defaultValue=today>
@@ -512,9 +721,8 @@ tag ctrsider
 					# 				<div[fs:14px ml:auto mr:5 c:rgb(31,219,220)]> item.Value
 					<div.accordion-item>
 						<h6.accordion-header id='headingFault'>
-							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordian-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseFault' aria-expanded='true' aria-control='collapseFault'>
+							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseFault' aria-expanded='true' aria-control='collapseFault'>
 								<div[w:90%]> '错误参数'
-								<div[w:10% ml:auto].triangle-right>
 						<div[max-height:40 ofy:auto].accordion-collapse.collapse.show id='collapseFault' aria-labelledby='headingFault' data-bs-parent='#ctl-status'> for item,index in data.FaultList
 							<div[m:0 p:5px d:hflex ai:left].accordion-body>
 								<div[fs:14px c:gray3 ml:3]> item.Time+':'
