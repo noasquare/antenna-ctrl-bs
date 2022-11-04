@@ -358,7 +358,7 @@ tag tianxian
 									<div[fs:12px ml:auto]> '离线' 
 							<button[d:flex ja:center w:100px h:30px pos:absolute t:-8 r:1rem bgc:red6 @hover:red7 c:#fff outline:none rd:5px cursor:pointer bd:none box-shadow:0 0 15px 5px red5 @hover:0 0 10px 2px red5].tpbtn type='button' data-bs-toggle='tooltip' data-bs-placement='top' title='关闭伺服电源' @click=shutdowncmd>
 								<img[scale:.7] src='./imgs/btn-stop.png'>
-								<span[fs:12px]> '紧急停车'
+								<span[fs:12px]> '伺服去电'
 						# <div[m:0 p:0 5 c:gray4]> '伺服卫星数据'
 				<div[w:30% bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid 1px rgb(12,100,100)]>
 					<ctrsider$txctrl data=data[antindex].Devices[ctrindex] ws=ws ant=route.params.id islogin=islogin>

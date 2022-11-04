@@ -9,8 +9,8 @@ export default class test
 		connectionLimit : 2
 		host : 'localhost'
 		user : 'root'
-		password : 'password'
-		database : 'txjl2'
+		password : 'root123456'
+		database : 'antctrweb'
 		multipleStatements : true # 非常关键的一条语句，让你可以多条query持续输出。
 
 	def connect
