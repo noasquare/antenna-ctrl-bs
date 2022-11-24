@@ -24,6 +24,7 @@ tag ctrsider
 	prop ant
 	prop islogin
 	prop islogined
+	prop isCctrl
 	def auth
 		console.log $uname.value
 		console.log $pass.value
@@ -238,6 +239,13 @@ tag ctrsider
 		iscetc39 = (data.DriverClass == 'cetc39') ? yes : no # 39所老私服
 		iscetc54 = (data.DriverClass == 'cetc54') ? yes : no # 54所伺服
 		isServoAcu2010 = (data.DriverClass == 'ServoAcu2010') ? yes : no # 39所小型伺服
+		isServoCetc39 = (data.DriverClass == 'ServoCetc39') ? yes : no # 39所新伺服
+
+		# 根据servo状态中有无极化角度来判断是否显示极化控制按钮
+		# for item in data.StatusList
+		# 	if item.StName == 'C极化角度'
+		# 		isCctrl = yes
+		# console.log isCctrl
 
 	def listload url # 从数据库查询得到的信息
 		table = querySelector('#servoTracklist tbody')
@@ -388,6 +396,7 @@ tag ctrsider
 		listloadhis('/tracklisthis') # 记忆跟踪列表查询
 
 	def render()
+		
 		# console.log '刷新按钮'
 		# console.log querySelector('#satbase')
 		# console.log data.DevName
@@ -432,6 +441,7 @@ tag ctrsider
 								<div[w:90%]> '指令控制'
 						<div[max-height:150 ofy:auto].accordion-collapse.collapse.show id='collapseTwo' aria-labelledby='headingTwo' data-bs-parent='#ctl'>
 							# ========伺服指令================================
+
 							<div[d:hflex] [d:none]=isServoAcu2010>
 								<div[d:vflex ja:center mt:2 w:50%] [d:none]=isServo>
 									<div[mb:2]>
@@ -453,7 +463,20 @@ tag ctrsider
 									<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
 										<div[fs:14px c:gray3]> '驱动下电:'
 										<button[ml:auto].btn.btn-success.btn-sm @click=sendpara('DisableDriver',null)> "下电"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							for item in data.StatusList
+								if item.StName == 'C极化角度'
+									<div[m:0 p:5px ja:center d:hflex]>
+										<div[fs:14px c:gray3 ml:3]> 'C极化控制：'
+										<button[ml:auto mr:4 ].btn.btn-success.btn-sm @click=sendpara('CjhCtrl_anticlock','')> "逆"
+										<button[mr:4].btn.btn-success.btn-sm @click=sendpara('CjhCtrl_stop','')> "停"
+										<button[mr:4].btn.btn-success.btn-sm @click=sendpara('CjhCtrl_clock','')> "顺"
+								if item.StName == 'Ku极化角度'
+									<div[m:0 p:5px d:hflex ja:center]>
+										<div[fs:14px c:gray3 ml:3]> 'Ku极化控制：'
+										<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('KujhCtrl_anticlock','')> "逆"
+										<button[mr:4].btn.btn-success.btn-sm @click=sendpara('KujhCtrl_stop','')> "停"
+										<button[mr:4].btn.btn-success.btn-sm @click=sendpara('KujhCtrl_clock','')> "顺"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoCetc39> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '卫星数据库:'
 								<button[ml:auto mr:2].btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#satbase"> "读取"
 								<button[mr:4].btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#satlist"> "编辑"
@@ -517,7 +540,7 @@ tag ctrsider
 									<option value='05'> '退锁'
 									<option value='06'> '退锁停止'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('Elshoucang',$elshoucang.value)> "确定"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010||isServoCetc39> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '俯仰收藏:'
 								<select$elshoucang1[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >
 									<option value='0'> '自动收藏'
@@ -538,9 +561,9 @@ tag ctrsider
 								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.00~9.99V" @change=sendpara("SetTrackUnlockLevel",this.value) type='number' step='0.01'>
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '步进跟踪:'
-								<input$steptrack[h:7 fs:14px bgc:transparent c:gray4 w:40% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0~99999.999MHz" @change=sendpara("SetTrackUnlockLevel",this.value) type='number' step='0.01'  [d:none]=iscetc39>
-								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('SetTrackUnlockLevel',$steptrack.value)> "跟踪"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo  [d:none]=iscetc39 [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+								<input$steptrack[h:7 fs:14px bgc:transparent c:gray4 w:40% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0~99999.999MHz" @change=sendpara("SetTrackUnlockLevel",this.value) type='number' step='0.01'  [d:none]=iscetc39||isServoCetc39>
+								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StepTrack',$steptrack.value)> "跟踪"
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo  [d:none]=iscetc39 [d:none]=isServoAcu2010||isServoCetc39> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '单脉冲跟踪:'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StepTrack','test')> "跟踪"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
@@ -551,7 +574,7 @@ tag ctrsider
 								<input$azrange[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="方位/0.00" type='number' step='.01'>
 								<input$elrange[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="俯仰/0.00" type='number' step='.01'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('Search',$azrange.value,$elrange.value)> "搜索"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010||isServoCetc39> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '自动搜索:'
 								<input$azrange1[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="方位" type='number' step='.01'>
 								<input$azstep[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="AZ步进" type='number' step='.01'>
@@ -571,15 +594,15 @@ tag ctrsider
 								<div[fs:14px c:gray3 ml:3]> '存储位置:'
 								<input$satposStore[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StorePos',$satposStore.value)> "存储"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoCetc39> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '删除位置:'
 								<input$posdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号" type='number' step='1'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemovePos',$posdel.value)> "删除"
 							# 以下为39所小伺服定制
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54||isServoCetc39> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '跟踪：'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('ServoAcu2010Track')> "跟踪"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54> # 这里的指令下发是针对伺服设备来定制的
+							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54||isServoCetc39> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '待机：'
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('ServoAcu2010Standby')> "待机"
 							# ========伺服指令================================

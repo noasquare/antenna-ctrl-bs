@@ -7,7 +7,7 @@
         "DevNo": "01",
         "DevName": "伺服器",
         "TrackStatus": "ypypyp...",
-        "DriverClass": "cetc54",
+        "DriverClass": "ServoCetc39",
         "StatusList": [
           {
             "StName": "方位角度",
@@ -27,6 +27,16 @@
           {
             "StName": "俯仰速度",
             "Value": "-0.005",
+            "ReadOnly": false
+          },
+          {
+            "StName": "C极化角度",
+            "Value": "-15.2",
+            "ReadOnly": false
+          },
+          {
+            "StName": "Ku极化角度",
+            "Value": "50.3",
             "ReadOnly": false
           },
           {
@@ -564,9 +574,13 @@
             "StName": "参考源",
             "Value": "外参考",
             "ReadOnly": false,
-            "cmdSelect":[
-              {"option":"内参考"},
-              {"option":"外参考"}
+            "cmdSelect": [
+              {
+                "option": "内参考"
+              },
+              {
+                "option": "外参考"
+              }
             ]
           },
           {
