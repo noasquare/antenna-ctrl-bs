@@ -6,947 +6,2236 @@
       {
         "DevNo": "01",
         "DevName": "伺服器",
-        "DriverClass": "ServoCetc39",
+        "DriverClass": "cetc39",
+        "TrackStatus": "未跟踪",
         "StatusList": [
           {
+            "cmdSelect": null,
             "StName": "方位角度",
-            "Value": "205.001",
-            "ReadOnly": false
+            "Value": "0.000",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "俯仰角度",
-            "Value": "1.659",
-            "ReadOnly": false
+            "Value": "0.000",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "方位速度",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "俯仰速度",
-            "Value": "-0.005",
-            "ReadOnly": false
-          },
-          {
+            "cmdSelect": null,
             "StName": "信号电平",
-            "Value": "0.98",
-            "ReadOnly": true
+            "Value": "0",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "工作模式",
-            "Value": "系统就绪",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "C极化角度",
+            "Value": "0",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "信号质量",
-            "Value": "未锁定",
-            "ReadOnly": true
+            "cmdSelect": [
+              {
+                "option": "线极化"
+              },
+              {
+                "option": "圆极化"
+              }
+            ],
+            "StName": "C极化方式",
+            "Value": "故障",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
+            "StName": "Ku极化角度",
+            "Value": "0",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
             "StName": "急停",
             "Value": "False",
-            "ReadOnly": true
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "自动搜索完成",
-            "Value": "False",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "入锁",
+            "Value": "未到位",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "正在自动搜索",
-            "Value": "False",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "退锁",
+            "Value": "未到位",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "方位插锁到位",
-            "Value": "True",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "收藏",
+            "Value": "未到位",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "方位拔锁到位",
-            "Value": "False",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "工作状态",
+            "Value": "未定义",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "俯仰插锁到位",
-            "Value": "True",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "跟踪状态",
+            "Value": "未跟踪",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "俯仰拔锁到位",
-            "Value": "False",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "跟踪方式",
+            "Value": "无",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "驱动上电",
-            "Value": "True",
-            "ReadOnly": true
-          },
-          {
+            "cmdSelect": null,
             "StName": "控制",
-            "Value": "本控",
-            "ReadOnly": true
+            "Value": "False",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "设备状态",
-            "Value": "Normal",
-            "ReadOnly": true
+            "Value": "Disconnected",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           }
         ],
         "FaultList": []
       },
       {
         "DevNo": "02",
-        "DevName": "极化控制器",
-        "DriverClass": "PolarCetc39",
-        "StatusList": [
-          {
-            "StName": "工作模式",
-            "Value": "无极化控制",
-            "ReadOnly": true
-          },
-          {
-            "StName": "控制",
-            "Value": "本控",
-            "ReadOnly": true
-          },
-          {
-            "StName": "C极化角",
-            "Value": "23.4",
-            "ReadOnly": false
-          },
-          {
-            "StName": "C极化角状态",
-            "Value": "顺限",
-            "ReadOnly": true
-          },
-          {
-            "StName": "Ku极化角",
-            "Value": "-94.5",
-            "ReadOnly": false
-          },
-          {
-            "StName": "Ku极化角状态",
-            "Value": "故障",
-            "ReadOnly": true
-          },
-          {
-            "StName": "C发射左/右旋",
-            "Value": "中间态",
-            "ReadOnly": false
-          },
-          {
-            "StName": "C发射左/右旋状态",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "C接收线/圆",
-            "Value": "中间态",
-            "ReadOnly": false
-          },
-          {
-            "StName": "C接收线/圆状态",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "C发射线/圆",
-            "Value": "中间态",
-            "ReadOnly": false
-          },
-          {
-            "StName": "C发射线/圆状态",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "Ku发射水平/垂直",
-            "Value": "中间态",
-            "ReadOnly": false
-          },
-          {
-            "StName": "Ku发射水平/垂直状态",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "设备状态",
-            "Value": "Normal",
-            "ReadOnly": true
-          }
-        ],
-        "FaultList": [
-          {
-            "Time": "2022-07-08 12:39:52",
-            "Value": "极化1开关顺时针限位"
-          },
-          {
-            "Time": "2022-07-08 12:39:52",
-            "Value": "极化2位置检测故障"
-          }
-        ]
-      },
-      {
-        "DevNo": "03",
         "DevName": "跟踪接收机",
         "DriverClass": "TracerDemod",
+        "TrackStatus": null,
         "StatusList": [
           {
+            "cmdSelect": null,
             "StName": "控制",
             "Value": "远控",
-            "ReadOnly": false
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "频率",
-            "Value": "1227.000",
-            "ReadOnly": false
+            "Value": "0950.000",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": [
+              {
+                "option": "正谱"
+              },
+              {
+                "option": "倒谱"
+              }
+            ],
             "StName": "倒谱设置",
             "Value": "正谱",
-            "ReadOnly": false
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": [
+              {
+                "option": "BPSK"
+              },
+              {
+                "option": "QPSK"
+              },
+              {
+                "option": "8PSK"
+              },
+              {
+                "option": "16QAM"
+              },
+              {
+                "option": "OQPSK"
+              },
+              {
+                "option": "CW"
+              }
+            ],
             "StName": "解调方式",
-            "Value": "1",
-            "ReadOnly": false
+            "Value": "CW",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "解调速率",
-            "Value": "02000.001",
-            "ReadOnly": false
+            "Value": "00032.000",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": [
+              {
+                "option": "1V～7V"
+              },
+              {
+                "option": "1V～9V"
+              }
+            ],
             "StName": "输出电压",
-            "Value": "1V〜9V",
-            "ReadOnly": false
+            "Value": "1V～7V",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "增益",
-            "Value": "30.0",
-            "ReadOnly": false
+            "Value": "00.0",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "输入信号状态",
             "Value": "告警",
-            "ReadOnly": true
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "解调状态",
-            "Value": "入锁",
-            "ReadOnly": true
+            "Value": "失锁",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "误码率",
-            "Value": "0.0e+0",
-            "ReadOnly": true
+            "Value": "2.4e+0",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "输入信号电平",
             "Value": "***.*",
-            "ReadOnly": true
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "频偏值",
-            "Value": "000.0",
-            "ReadOnly": true
+            "Value": "003.4",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "设备状态",
             "Value": "Normal",
-            "ReadOnly": true
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           }
         ],
         "FaultList": [
           {
-            "Time": "2022-07-08 12:39:52",
+            "Time": "2022-11-29 14:20:07",
             "Value": "输入告警"
           }
         ]
       },
       {
-        "DevNo": "04",
-        "DevName": "交换矩阵",
-        "DriverClass": "L32X32",
+        "DevNo": "03",
+        "DevName": "C/L下变频器",
+        "DriverClass": "C2LFreqDown2",
+        "TrackStatus": null,
         "StatusList": [
           {
+            "cmdSelect": null,
             "StName": "控制",
-            "Value": "远控",
-            "ReadOnly": false
+            "Value": "本控",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道1输入",
-            "Value": "05",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "通道1增益",
+            "Value": "15",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道2输入",
-            "Value": "03",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "通道2增益",
+            "Value": "15",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道3输入",
-            "Value": "03",
-            "ReadOnly": false
+            "cmdSelect": [
+              {
+                "option": "内参考"
+              },
+              {
+                "option": "外参考"
+              }
+            ],
+            "StName": "参考源",
+            "Value": "内参考",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道4输入",
-            "Value": "03",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "通道1输入功率",
+            "Value": "***.*",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道5输入",
-            "Value": "03",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "通道2输入功率",
+            "Value": "***.*",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道6输入",
-            "Value": "03",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "通道1输入功率状态",
+            "Value": "无信号",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道7输入",
-            "Value": "05",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "通道2输入功率状态",
+            "Value": "无信号",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道8输入",
-            "Value": "03",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "饱和电平",
+            "Value": "-10",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道9输入",
-            "Value": "05",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "增益下限",
+            "Value": "0",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道10输入",
-            "Value": "00",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "增益上限",
+            "Value": "15",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道11输入",
-            "Value": "00",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "本振1状态",
+            "Value": "正常",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道12输入",
-            "Value": "00",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "本振2状态",
+            "Value": "正常",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道13输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道14输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道15输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道16输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道17输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道18输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道19输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道20输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道21输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道22输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道23输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道24输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道25输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道26输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道27输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道28输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道29输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道30输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道31输入",
-            "Value": "00",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道32输入",
-            "Value": "05",
-            "ReadOnly": false
-          },
-          {
+            "cmdSelect": null,
             "StName": "设备状态",
             "Value": "Normal",
-            "ReadOnly": true
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          }
+        ],
+        "FaultList": []
+      },
+      {
+        "DevNo": "04",
+        "DevName": "X/L下变频器",
+        "DriverClass": "X2LFreqDown2",
+        "TrackStatus": null,
+        "StatusList": [
+          {
+            "cmdSelect": null,
+            "StName": "控制",
+            "Value": "远控",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道1增益",
+            "Value": "15",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道2增益",
+            "Value": "15",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": [
+              {
+                "option": "内参考"
+              },
+              {
+                "option": "外参考"
+              }
+            ],
+            "StName": "参考源",
+            "Value": "内参考",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道1输入功率",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道2输入功率",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道1输入功率状态",
+            "Value": "无信号",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道2输入功率状态",
+            "Value": "无信号",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "增益下限",
+            "Value": "0",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "增益上限",
+            "Value": "15",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "本振1状态",
+            "Value": "正常",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "本振2状态",
+            "Value": "正常",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           }
         ],
         "FaultList": []
       },
       {
         "DevNo": "05",
-        "DevName": "光端机",
-        "DriverClass": "CMOpticalTx4",
+        "DevName": "L频段有源双路1:4功分器",
+        "DriverClass": "L_1_4PowerDriver",
+        "TrackStatus": null,
         "StatusList": [
           {
+            "cmdSelect": null,
             "StName": "控制",
-            "Value": "远控",
-            "ReadOnly": false
+            "Value": "本控",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "通道1增益",
-            "Value": "5",
-            "ReadOnly": false
+            "Value": "00.0",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
             "StName": "通道2增益",
-            "Value": "5",
-            "ReadOnly": false
+            "Value": "00.0",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道3增益",
-            "Value": "5",
-            "ReadOnly": false
+            "cmdSelect": [
+              {
+                "option": "打开"
+              },
+              {
+                "option": "关闭"
+              }
+            ],
+            "StName": "通道1状态",
+            "Value": "关闭",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道4增益",
-            "Value": "5",
-            "ReadOnly": false
+            "cmdSelect": [
+              {
+                "option": "打开"
+              },
+              {
+                "option": "关闭"
+              }
+            ],
+            "StName": "通道2状态",
+            "Value": "关闭",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道1射频信号",
-            "Value": "告警",
-            "ReadOnly": true
+            "cmdSelect": [
+              {
+                "option": "打开"
+              },
+              {
+                "option": "关闭"
+              }
+            ],
+            "StName": "通道3状态",
+            "Value": "关闭",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道2射频信号",
-            "Value": "告警",
-            "ReadOnly": true
+            "cmdSelect": [
+              {
+                "option": "打开"
+              },
+              {
+                "option": "关闭"
+              }
+            ],
+            "StName": "通道4状态",
+            "Value": "关闭",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道3射频信号",
-            "Value": "告警",
-            "ReadOnly": true
+            "cmdSelect": [
+              {
+                "option": "打开"
+              },
+              {
+                "option": "关闭"
+              }
+            ],
+            "StName": "通道5状态",
+            "Value": "关闭",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道4射频信号",
-            "Value": "告警",
-            "ReadOnly": true
+            "cmdSelect": [
+              {
+                "option": "打开"
+              },
+              {
+                "option": "关闭"
+              }
+            ],
+            "StName": "通道6状态",
+            "Value": "关闭",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道1光发射模块",
-            "Value": "正常",
-            "ReadOnly": true
+            "cmdSelect": [
+              {
+                "option": "打开"
+              },
+              {
+                "option": "关闭"
+              }
+            ],
+            "StName": "通道7状态",
+            "Value": "关闭",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道2光发射模块",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道3光发射模块",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道4光发射模块",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "设备状态",
-            "Value": "Normal",
-            "ReadOnly": true
+            "cmdSelect": [
+              {
+                "option": "打开"
+              },
+              {
+                "option": "关闭"
+              }
+            ],
+            "StName": "通道8状态",
+            "Value": "关闭",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           }
         ],
-        "FaultList": [
-          {
-            "Time": "2022-07-08 12:39:52",
-            "Value": "通道一未检测到射频信号"
-          },
-          {
-            "Time": "2022-07-08 12:39:52",
-            "Value": "通道二未检测到射频信号"
-          },
-          {
-            "Time": "2022-07-08 12:39:52",
-            "Value": "通道三未检测到射频信号"
-          },
-          {
-            "Time": "2022-07-08 12:39:52",
-            "Value": "通道四未检测到射频信号"
-          }
-        ]
+        "FaultList": []
       },
       {
         "DevNo": "06",
-        "DevName": "C/L下变频器",
-        "DriverClass": "C2LFreqDown2",
+        "DevName": "32X32交换矩阵",
+        "DriverClass": "CML32X32",
+        "TrackStatus": null,
         "StatusList": [
           {
+            "cmdSelect": null,
             "StName": "控制",
             "Value": "远控",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道1增益",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道2增益",
-            "Value": "15",
-            "ReadOnly": false
-          },
-          {
-            "StName": "参考源",
-            "Value": "外参考",
             "ReadOnly": false,
-            "cmdSelect":[
-              {"option":"内参考"},
-              {"option":"外参考"}
-            ]
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道1输入功率",
+            "cmdSelect": null,
+            "StName": "通道1输入",
+            "Value": "004",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道2输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道3输入",
+            "Value": "000",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道4输入",
+            "Value": "005",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道5输入",
+            "Value": "001",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道6输入",
+            "Value": "031",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道7输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道8输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道9输入",
+            "Value": "008",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道10输入",
+            "Value": "005",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道11输入",
+            "Value": "011",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道12输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道13输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道14输入",
+            "Value": "002",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道15输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道16输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道17输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道18输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道19输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道20输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道21输入",
+            "Value": "001",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道22输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道23输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道24输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道25输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道26输入",
+            "Value": "031",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道27输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道28输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道29输入",
+            "Value": "020",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道30输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道31输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道32输入",
+            "Value": "013",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道1输入功率值",
             "Value": "N/A",
-            "ReadOnly": true
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道2输入功率",
+            "cmdSelect": null,
+            "StName": "通道1输出功率值",
             "Value": "N/A",
-            "ReadOnly": true
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道1输入功率状态",
-            "Value": "无信号",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "通道2输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道2输入功率状态",
-            "Value": "无信号",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "通道2输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "饱和电平",
-            "Value": "-10",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "通道3输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "增益下限",
-            "Value": "0",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "通道3输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "增益上限",
-            "Value": "15",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "通道4输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "本振1状态",
-            "Value": "正常",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "通道4输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "本振2状态",
-            "Value": "正常",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "通道5输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
+            "StName": "通道5输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道6输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道6输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道7输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道7输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道8输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道8输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道9输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道9输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道10输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道10输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道11输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道11输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道12输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道12输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道13输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道13输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道14输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道14输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道15输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道15输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道16输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道16输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道17输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道17输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道18输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道18输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道19输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道19输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道20输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道20输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道21输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道21输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道22输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道22输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道23输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道23输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道24输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道24输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道25输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道25输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道26输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道26输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道27输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道27输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道28输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道28输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道29输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道29输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道30输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道30输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道31输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道31输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道32输入功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道32输出功率值",
+            "Value": "N/A",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
             "StName": "设备状态",
             "Value": "Normal",
-            "ReadOnly": true
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           }
         ],
         "FaultList": []
       },
       {
         "DevNo": "07",
-        "DevName": "Ku/L下变频器",
-        "DriverClass": "Ku2LFreqDown2",
+        "DevName": "LNA供电",
+        "DriverClass": "JWLNAMON02",
+        "TrackStatus": null,
         "StatusList": [
           {
-            "StName": "控制",
-            "Value": "远控",
-            "ReadOnly": false
+            "cmdSelect": [
+              {
+                "option": "自动"
+              },
+              {
+                "option": "手动"
+              }
+            ],
+            "StName": "电源切换",
+            "Value": "自动",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道1增益",
+            "cmdSelect": [
+              {
+                "option": "PS1"
+              },
+              {
+                "option": "PS2"
+              }
+            ],
+            "StName": "1路电源",
+            "Value": "电源2",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": [
+              {
+                "option": "PS1"
+              },
+              {
+                "option": "PS2"
+              }
+            ],
+            "StName": "2路电源",
+            "Value": "电源2",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道1状态",
+            "Value": "正常",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道2状态",
+            "Value": "正常",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道3状态",
+            "Value": "正常",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道4状态",
+            "Value": "正常",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道5状态",
+            "Value": "正常",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道6状态",
+            "Value": "正常",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道1电流",
+            "Value": "077",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道2电流",
+            "Value": "077",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道3电流",
+            "Value": "077",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道4电流",
+            "Value": "077",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道5电流",
+            "Value": "077",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道6电流",
+            "Value": "077",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道1电流告警下限",
             "Value": "0",
-            "ReadOnly": false
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道2增益",
+            "cmdSelect": null,
+            "StName": "通道2电流告警下限",
             "Value": "0",
-            "ReadOnly": false
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道3增益",
+            "cmdSelect": null,
+            "StName": "通道3电流告警下限",
             "Value": "0",
-            "ReadOnly": false
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道4增益",
+            "cmdSelect": null,
+            "StName": "通道4电流告警下限",
             "Value": "0",
-            "ReadOnly": false
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "参考源",
-            "Value": "内参考",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道1输入功率",
-            "Value": "-23.0",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道2输入功率",
-            "Value": "-25.0",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道1输出功率",
-            "Value": "-57.0",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道2输出功率",
-            "Value": "-57.0",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道3输出功率",
-            "Value": "-57.0",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道4输出功率",
-            "Value": "-57.0",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道1输入功率状态",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道2输入功率状态",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "饱和电平",
-            "Value": "-10",
-            "ReadOnly": true
-          },
-          {
-            "StName": "增益下限",
+            "cmdSelect": null,
+            "StName": "通道5电流告警下限",
             "Value": "0",
-            "ReadOnly": true
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "增益上限",
-            "Value": "15",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "通道6电流告警下限",
+            "Value": "0",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道1本振1状态",
-            "Value": "正常",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "通道1电流告警上限",
+            "Value": "500",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道1本振2状态",
-            "Value": "正常",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "通道2电流告警上限",
+            "Value": "500",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道2本振1状态",
-            "Value": "正常",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "通道3电流告警上限",
+            "Value": "500",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道2本振2状态",
-            "Value": "正常",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "通道4电流告警上限",
+            "Value": "500",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
+            "cmdSelect": null,
+            "StName": "通道5电流告警上限",
+            "Value": "500",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "通道6电流告警上限",
+            "Value": "500",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
             "StName": "设备状态",
             "Value": "Normal",
-            "ReadOnly": true
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           }
         ],
         "FaultList": []
       },
       {
         "DevNo": "08",
-        "DevName": "LNA供电",
-        "DriverClass": "JWLNAPower",
+        "DevName": "光端机",
+        "DriverClass": "TH2152C01",
+        "TrackStatus": null,
         "StatusList": [
           {
-            "StName": "控制",
-            "Value": "远控",
-            "ReadOnly": true
+            "cmdSelect": null,
+            "StName": "模块1光功率",
+            "Value": "8.16",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "电源切换",
-            "Value": "手动",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "模块1射频功率",
+            "Value": "-57.94",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "1路电源",
-            "Value": "电源1",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "模块1衰减值",
+            "Value": "10",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 10.0,
+            "Step": 1.0
           },
           {
-            "StName": "2路电源",
-            "Value": "电源1",
-            "ReadOnly": false
+            "cmdSelect": null,
+            "StName": "模块1温度",
+            "Value": "13",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道1",
+            "cmdSelect": [
+              {
+                "option": "手动"
+              },
+              {
+                "option": "自动"
+              }
+            ],
+            "StName": "模块1保护关断模式",
+            "Value": "自动",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": [
+              {
+                "option": "打开"
+              },
+              {
+                "option": "关闭"
+              }
+            ],
+            "StName": "模块1保护关断状态",
             "Value": "打开",
-            "ReadOnly": false
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道2",
+            "cmdSelect": null,
+            "StName": "模块2光功率",
+            "Value": "7.62",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "模块2射频功率",
+            "Value": "-57.86",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "模块2衰减值",
+            "Value": "10",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 10.0,
+            "Step": 1.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "模块2温度",
+            "Value": "12",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": [
+              {
+                "option": "手动"
+              },
+              {
+                "option": "自动"
+              }
+            ],
+            "StName": "模块2保护关断模式",
+            "Value": "自动",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": [
+              {
+                "option": "打开"
+              },
+              {
+                "option": "关闭"
+              }
+            ],
+            "StName": "模块2保护关断状态",
             "Value": "打开",
-            "ReadOnly": false
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道3",
+            "cmdSelect": null,
+            "StName": "模块3光功率",
+            "Value": "5.3",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "模块3射频功率",
+            "Value": "-59.22",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "模块3衰减值",
+            "Value": "10",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 10.0,
+            "Step": 1.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "模块3温度",
+            "Value": "12",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": [
+              {
+                "option": "手动"
+              },
+              {
+                "option": "自动"
+              }
+            ],
+            "StName": "模块3保护关断模式",
+            "Value": "自动",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": [
+              {
+                "option": "打开"
+              },
+              {
+                "option": "关闭"
+              }
+            ],
+            "StName": "模块3保护关断状态",
             "Value": "打开",
-            "ReadOnly": false
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道4",
+            "cmdSelect": null,
+            "StName": "模块4光功率",
+            "Value": "7.85",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "模块4射频功率",
+            "Value": "-57.26",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "模块4衰减值",
+            "Value": "10",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 10.0,
+            "Step": 1.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "模块4温度",
+            "Value": "12",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": [
+              {
+                "option": "手动"
+              },
+              {
+                "option": "自动"
+              }
+            ],
+            "StName": "模块4保护关断模式",
+            "Value": "自动",
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
+          },
+          {
+            "cmdSelect": [
+              {
+                "option": "打开"
+              },
+              {
+                "option": "关闭"
+              }
+            ],
+            "StName": "模块4保护关断状态",
             "Value": "打开",
-            "ReadOnly": false
+            "ReadOnly": false,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           },
           {
-            "StName": "通道5",
-            "Value": "打开",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道6",
-            "Value": "打开",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道1状态",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道2状态",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道3状态",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道4状态",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道5状态",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道6状态",
-            "Value": "正常",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道1电流",
-            "Value": "000",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道2电流",
-            "Value": "000",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道3电流",
-            "Value": "000",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道4电流",
-            "Value": "000",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道5电流",
-            "Value": "000",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道6电流",
-            "Value": "000",
-            "ReadOnly": true
-          },
-          {
-            "StName": "通道1电流告警下限",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道2电流告警下限",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道3电流告警下限",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道4电流告警下限",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道5电流告警下限",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道6电流告警下限",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道1电流告警上限",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道2电流告警上限",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道3电流告警上限",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道4电流告警上限",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道5电流告警上限",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
-            "StName": "通道6电流告警上限",
-            "Value": "0",
-            "ReadOnly": false
-          },
-          {
+            "cmdSelect": null,
             "StName": "设备状态",
             "Value": "Normal",
-            "ReadOnly": true
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           }
         ],
-        "FaultList": []
-      },
-      {
-        "DevNo": "89",
-        "DevName": "空调控制器",
-        "DriverClass": "AirControl",
-        "StatusList": [
+        "FaultList": [
           {
-            "cmdSelect": null,
-            "StName": "温度",
-            "Value": "0",
-            "ReadOnly": true
+            "Time": "2022-11-29 14:20:07",
+            "Value": "模块0通信链路告警"
           },
           {
-            "cmdSelect": null,
-            "StName": "湿度",
-            "Value": "0",
-            "ReadOnly": true
+            "Time": "2022-11-29 14:20:07",
+            "Value": "模块1通信链路告警"
           },
           {
-            "cmdSelect": null,
-            "StName": "连接状态",
-            "Value": "Normal",
-            "ReadOnly": true
+            "Time": "2022-11-29 14:20:07",
+            "Value": "模块2通信链路告警"
+          },
+          {
+            "Time": "2022-11-29 14:20:07",
+            "Value": "模块3通信链路告警"
           }
-        ],
-        "FaultList": []
+        ]
       }
     ]
   }

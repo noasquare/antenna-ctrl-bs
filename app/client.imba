@@ -10,7 +10,7 @@ import './devall'
 import './devlog'
 # import './test'
 # import wsdata from './antenna.json'
-import wsdata from './状态.json'
+import wsdata from './状态1.json'
 global css html
 	ff:sans
 global css body bg:center url('./imgs/bg-antenna.jpg') m:0 p:0 c:gray3

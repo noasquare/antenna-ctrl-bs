@@ -235,6 +235,11 @@ tag ctrsider
 			isLNAlimits = no
 		else
 			isLNAlimits = yes
+		
+		if data.DriverClass == 'TH2152C01'
+			isOptical = no
+		else
+			isOptical = yes
 
 		iscetc39 = (data.DriverClass == 'cetc39') ? yes : no # 39所老私服
 		iscetc54 = (data.DriverClass == 'cetc54') ? yes : no # 54所伺服
@@ -424,7 +429,7 @@ tag ctrsider
 								if ctritem.ReadOnly == no && ctritem.StName !== '控制' && !ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
-										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder=ctritem.Value @change=sendpara(ctritem,this.value) type='number' step=(isServo ? '1' : '0.01') >
+										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder=ctritem.Value @change=sendpara(ctritem,this.value) type='number' min=ctritem.Min  max=ctritem.Max step=ctritem.Step >
 								if ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
@@ -649,6 +654,15 @@ tag ctrsider
 
 
 							# ========跟踪接收机指令================================
+							# ========跟踪接收机指令================================
+							# ======== 光端机机指令 ================================
+							<div[m:0 p:5px d:hflex ja:center mt:5] [d:none]=isOptical>
+								<div[d:grid gtc:1fr 1fr ja:center g:5]> for item,id in data.StatusList
+									if item.StName.slice(3,end) == '光功率'
+										<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('autoComp',Math.floor(id/6))> '模块'+(Math.floor(id/6)+1)+'-自动衰减补偿'
+
+									
+
 
 							# ========君威LNA电流上下限指令================================
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isLNAlimits> # 这里的指令下发是针对伺服设备来定制的
