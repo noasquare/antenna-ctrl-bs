@@ -197,6 +197,9 @@ tag tianxian
 
 	def devctr index # 查看点击拓扑视图中 设备之后的顺序。
 		ctrindex = index
+		# 这里增加一个点击时候清空sider控件中的input框的命令
+		$txctrl.clearinput! # 调用sider里面的一个方法来清空
+
 	def tablerow event
 		let array = event.currentTarget.innerText.split(/\r?\n/) # 采集获取的行内的所有数据。
 		preAz = array[2]
@@ -247,6 +250,7 @@ tag tianxian
 				antindex = index
 				mount!
 	def render()
+		# console.log 'render一哈'
 		tpbox = querySelector('#tpframe') # 获取拓扑图的画布的宽度
 		tpelement = querySelectorAll('.tuop-chart')
 		

@@ -215,7 +215,8 @@ tag ctrsider
 				else
 					$remote.checked = yes
 
-	def cmdbyDevice # 用来判断是针对某一个设备来制定的命令下发。可以针对不用的设备来触发。
+	def cmdbyDevice
+		# 用来判断是针对某一个设备来制定的命令下发。可以针对不用的设备来触发。
 		if data.DevName == '伺服器' # todo-后面部署时 应该把判断依据改成设备编号，保持一致性。
 			isServo = no
 		else 
@@ -389,6 +390,12 @@ tag ctrsider
 	def setFocus
 		test = document.getElementById('#userinput')
 		console.log test
+	def clearinput # 清除上一个设备残留的数值
+		# console.log 'input clear'
+		querySelectorAll('.status_cmd').forEach(do(item)
+			item.value = ''
+			)
+		
 
 	def mount
 		# console.log 'mount哟哟'
@@ -399,12 +406,10 @@ tag ctrsider
 		listloadsatbase('/satbaselist',thetab) # 查询卫星经度原始数据库列表
 		listloadsatlist('/satlistinfo',tblist) # 查询卫星经度保存数据库列表
 		listloadhis('/tracklisthis') # 记忆跟踪列表查询
+	
 
 	def render()
-		
-		# console.log '刷新按钮'
-		# console.log querySelector('#satbase')
-		# console.log data.DevName
+
 		cmdbyDevice!
 		# console.log today
 		remotestatus(data.StatusList) # 显示远控的状态
@@ -429,7 +434,7 @@ tag ctrsider
 								if ctritem.ReadOnly == no && ctritem.StName !== '控制' && !ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
-										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder=ctritem.Value @change=sendpara(ctritem,this.value) type='number' min=ctritem.Min  max=ctritem.Max step=ctritem.Step >
+										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto].status_cmd placeholder=ctritem.Value name="{ctritem.StName}-{stindex}" @change=sendpara(ctritem,this.value) type='number' min=ctritem.Min max=ctritem.Max step=ctritem.Step >
 								if ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量

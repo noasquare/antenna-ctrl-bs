@@ -105,7 +105,7 @@ tag app
 
 	def mount
 		# console.log 'mount 开始'
-		wsopen(wsAdds ??= "ws://192.168.1.102:9999")
+		wsopen(wsAdds ??= "ws://localhost:1880/antdata")
 		# console.log '来自mount' # mount里面的数据只加载一次。
 		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 		# console.log tooltipTriggerList.length
