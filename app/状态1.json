@@ -753,6 +753,15 @@
             "Min": 0.0,
             "Max": 0.0,
             "Step": 0.0
+          },
+          {
+            "cmdSelect": null,
+            "StName": "设备状态",
+            "Value": "Normal",
+            "ReadOnly": true,
+            "Min": 0.0,
+            "Max": 0.0,
+            "Step": 0.0
           }
         ],
         "FaultList": []
