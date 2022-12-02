@@ -1941,7 +1941,7 @@
       },
       {
         "DevNo": "08",
-        "DevName": "光端机",
+        "DevName": "光发射",
         "DriverClass": "TH2152C01",
         "TrackStatus": null,
         "StatusList": [
