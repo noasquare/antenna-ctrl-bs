@@ -664,9 +664,9 @@ tag ctrsider
 							<div[m:0 p:5px d:hflex ja:center mt:5] [d:none]=isOptical>
 								<div[d:grid gtc:1fr 1fr ja:center g:5]> for item,id in data.StatusList
 									if item.StName.slice(3,end) == '光功率' && data.DevName == '光发射'
-										<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('autoComp',Math.floor(id/6)+1)> '模块'+(Math.floor(id/6)+1)+'-自动衰减补偿'
+										<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('模块'+(Math.floor(id/6)+1)+'-自动衰减补偿',Math.floor(id/6)+1)> '模块'+(Math.floor(id/6)+1)+'-自动衰减补偿'
 									if item.StName.slice(3,end) == '光功率' && data.DevName == '光接收'
-										<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('autoComp',Math.floor(id/4)+1)> '模块'+(Math.floor(id/4)+1)+'-自动衰减补偿'
+										<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('模块'+(Math.floor(id/4)+1)+'-自动衰减补偿',Math.floor(id/4)+1)> '模块'+(Math.floor(id/4)+1)+'-自动衰减补偿'
 
 									
 

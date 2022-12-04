@@ -221,8 +221,6 @@ tag app
 					<h1> '欢迎使用天线精灵远控系统'
 					<div> '如果要进行设备操控，请您登录后进行操作'
 					<button[mt:10].btn.btn-success route-to='/login'> "登录"
-				# <div route='/test'>
-				# 	<test>
 
 
 imba.mount <app>
