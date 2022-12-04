@@ -1,9 +1,8 @@
 {
     "name": "imba-base-template",
     "scripts": {
-        "dev": "imba -wMS server.imba",
-        "build": "imba build server.imba",
-        "start": "pm2 start ecosystem.config.js"
+        "start": "imba -w server.imba",
+        "build": "imba build server.imba"
     },
     "dependencies": {
         "@popperjs/core": "^2.11.5",
