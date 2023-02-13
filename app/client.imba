@@ -32,6 +32,8 @@ tag app
 		.triangle-down w:0 h:0 bdt:10px solid gray3 bdl:5px solid transparent bdr:5px solid transparent
 	css .antall bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid 1px rgb(12,100,100)
 	# 有关header 的都放在以下
+	css table tr d:hgrid
+
 	css .header bg:rgba(11,41,49,.6) h:5% @!500:10% d:hflex ta:right shadow:inset 0px 0px 10px 5px rgb(12,100,100)
 		.logo w:40% d:flex ja:center
 		.setting w:30% ta:left
@@ -178,6 +180,7 @@ tag app
 									<div[fs:14px c:gray3 ml:5]> item.AntName
 
 					<button.menunodrop route-to='/devlog' route-to='/devall'> "阵地设备总览"
+					<button.menunodrop route-to='/devlog' route-to='/antstatus'> "阵地天线状态总览"
 					<button.menunodrop route-to='/devlog'> "日志"
 					<button.menunodrop route-to='/setting'> "设置"
 					# <button.menunodrop route-to='/test'> "test"
@@ -186,6 +189,33 @@ tag app
 				<div[p:5 w:100% max-height:100% d:grid gtc:1fr 1fr 1fr g:5 a:baseline ofy:auto].antall route='/antall'> 
 					for item in devdata
 						<antcard rdata=item>
+				<div[p:5 w:100%].antall route='/antstatus'>
+					<div> '天线状态列表'
+					<div[p:3 5 w:100%].devtable>
+						<table[ta:center].table#devtable>
+							<thead[bgc:teal7 c:black d:block]>
+								<tr>
+									<th scope="col"> '所属天线'
+									<th scope="col"> '天线编号'
+									<th scope="col"> '方位'
+									<th scope="col"> '俯仰'
+									<th scope="col"> '电平'
+									# <th scope="col"> '极化'
+							<tbody[d:block c:gray3 border-color:rgb(64,73,91) h:120 ofy:auto]> for item in devdata
+								<tr>
+									<td> item.AntName
+									<td> item.AntNo
+									for itemsts in item.Devices[0].StatusList
+										if itemsts.StName == '方位角度'
+											<td> itemsts.Value
+										if itemsts.StName == '俯仰角度'
+											<td> itemsts.Value
+										# if itemsts.StName == '极化角度'
+										# 	<td> itemsts.Value
+										if itemsts.StName == '信号电平'
+											<td> itemsts.Value
+
+					
 				<div[w:100% ta:center].antall route='/devall'>
 					<div[mt:3]> '阵地设备总览'
 					<devall$devall data=devdata>
