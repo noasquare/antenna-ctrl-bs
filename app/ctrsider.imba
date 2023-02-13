@@ -288,8 +288,9 @@ tag ctrsider
 		# console.log tabledata
 		# console.log tr[0]
 		tada.forEach do(c)
+			let dateObj = new Date(c.time)
 			result += `<tr class="tbody">
-			<td> {c.time} 
+			<td> {dateObj.toLocaleString()}
 			<td> {c.az}
 			<td> {c.el}
 			`
@@ -369,8 +370,9 @@ tag ctrsider
 		let result = ''
 		# console.log tabledata
 		tada.forEach do(c)
+			let dateObj = new Date(c.time)
 			result += `<tr class="tbody">
-			<td> {c.time}
+			<td> {dateObj.toLocaleString()}
 			<td> {c.az}
 			<td> {c.el}
 			`
