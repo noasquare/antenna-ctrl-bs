@@ -47,7 +47,7 @@ tag app
 	def changewsadd ip
 		wsopen(ip)
 		console.log wsAdds
-
+	prop sktSts = ''
 	prop antindex = 0
 	def antdata data
 		# console.log data
@@ -107,7 +107,7 @@ tag app
 
 	def mount
 		# console.log 'mount 开始'
-		wsopen(wsAdds ??= "ws://localhost:1880/antdata")
+		wsopen(wsAdds ??= "ws://localhost:1880/spectrumdata")
 		# console.log '来自mount' # mount里面的数据只加载一次。
 		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 		# console.log tooltipTriggerList.length
@@ -144,6 +144,22 @@ tag app
 			$txjm.$txctrl.islogined = $txjm.islogined = no
 		else
 			username = 'admin'
+		# print the websocket readystate
+		# console.log $socketstatus
+		if socket
+			if socket.readyState === WebSocket.OPEN
+				$socketstatus.innerHTML = '  -已连接'
+				console.log '连接上了啊'
+			if socket.readyState === WebSocket.CONNECTING
+				$socketstatus.innerHTML = '  -正在连接中'
+				console.log '连接中'
+			# determine websocket is closed or not
+			if socket.readyState === WebSocket.CLOSED
+				$socketstatus.innerHTML = '  -已关闭'
+
+			
+		# if socket.readyState === WebSocket.OPEN
+		# 	console.log "socket is open"
 		<self>
 			<div.header>
 				<button[d:hflex ai:center pl:5 bgc:transparent bd:none c:gray3].setting route-to='/setting'>
@@ -154,6 +170,7 @@ tag app
 					<img[scale:0.5] src='./imgs/logo.png'>
 					<span[c:#fff fs:18px]> "天线精灵控制软件" 
 						<sub> 'v1.0'
+					<span$socketstatus[c:gray3]>
 				<div[d:hflex ja:center].notify>
 					<button[bgc:transparent bd:none ml:auto].pos-relative.notify-msg route-to='/devall'>
 						<img[scale:.8] src='./imgs/alert.png'>

@@ -34,6 +34,7 @@ tag tianxian
 	css table tr d:hgrid
 	css	.table >>> .tbody d:hgrid bgc:clear @hover:teal6/50 cursor:pointer
 	css .mdlogin bgc:gray6/80 c:gray2 w:40% h:100 pos:absolute t:40% l:50% x:-50% y:-50% rd:xl o:0 tween:all 500ms ease visibility:hidden
+	css .table >>> .table-active c:gray3
 	squaresdata
 	prop data
 	prop islogin
@@ -230,14 +231,166 @@ tag tianxian
 	def anttpdata tpdata
 		return tpdata.antname === data[antindex].AntNo
 
+	def listloadsatlist url,thetb # 从数据库查询得到的选取的卫星数据库
+		# console.log data[antindex].Devices[ctrindex].polarAxisNum
+		# switch data[antindex].Devices[ctrindex].polarAxisNum
+		# 	when 2
+		# 		isjhshow3 = true
+		# 	when 3
+		# 		isjhshow4 = true
+		# console.log thetb
+		# table = querySelector("#{thetb} tbody")
+		window.fetch(url).then do(res)
+			res.json!
+			.then do(data)
+				# console.log data
+				renderSatlistTable(data,thetb)
+
+	def renderSatlistTable tada,tb
+		let result = ''
+		# console.log tabledata
+		# console.log tr[0]
+		tada.forEach do(c)
+			# console.log c.AntNo
+			if c.AntNo === data[antindex].AntNo
+				result += `<tr class="tbody">
+				<td> {c.SatNo} 
+				<td> {c.SatName}
+				<td> {c.Az}
+				<td> {c.El}
+				<td> {c.SatLon}
+				<td> {c.Polar1Pos}
+				<td> {c.Polar2Pos}
+				<td> {c.Polar3Pos}
+				<td> {c.Polar4Pos}
+				`
+		# console.log table
+		let table = querySelector("#{tb} tbody")
+		table.innerHTML = result if result
+		console.log table
+		table.innerHTML = '数据为空' if result === ''
+		render!
+		let activeCol = querySelectorAll("#{tb} tbody tr")[0]
+		activeCol.classList.add('table-active')
+		document.querySelectorAll("#{tb} tbody tr").forEach do(r)
+			# console.log '增加行点击事件'
+			r.addEventListener('click',do(e)
+				getlistno(e))
+
+	def getlistno event
+		let array = event.currentTarget.innerText.split(/\r?\n/) # 采集获取的行内的所有数据。
+		satlistno = array[0]
+		satlistaz = array[2]
+		satlistel = array[3]
+		render!
+
+	def sendpara_multi item,value1,value2
+		# todo = 这里要增加一个发指令前的用户权限判断-可以是个函数 应该是个bool函数 ：isadmin
+		# 1- 弹出一个用户名密码的窗口弹窗，输入值，不管对不对先发送给
+		if isadmin!
+			console.log typeof(item)
+			if typeof(item) !== 'object'
+				let data =
+					AntennaNo : route.params.id
+					DevNo : data[antindex].Devices[ctrindex].DevNo
+					Cmd : item
+					Params : {
+						"{item}1" : value1
+						"{item}2" : value2
+					}
+				console.log data
+				ws.send(JSON.stringify(data))
+			else if value1 && value2
+				let data =
+					AntennaNo : route.params.id
+					DevNo : data[antindex].Devices[ctrindex].DevNo
+					Cmd : item.StName
+					Params : {
+						"{item.StName}1" : value1
+						"{item.StName}2" : value2
+					}
+				console.log data
+				ws.send(JSON.stringify(data))
+
+	def sendpara_multi3 item,value1,value2,value3
+		# todo = 这里要增加一个发指令前的用户权限判断-可以是个函数 应该是个bool函数 ：isadmin
+		# 1- 弹出一个用户名密码的窗口弹窗，输入值，不管对不对先发送给
+		if isadmin!
+			console.log typeof(item)
+			if typeof(item) !== 'object'
+				let data =
+					AntennaNo : route.params.id
+					DevNo : data[antindex].Devices[ctrindex].DevNo
+					Cmd : item
+					Params : {
+						"{item}1" : value1
+						"{item}2" : value2
+						"{item}3" : value3
+					}
+				console.log data
+				ws.send(JSON.stringify(data))
+			else if value1 && value2 && value3
+				let data =
+					AntennaNo : route.params.id
+					DevNo : data[antindex].Devices[ctrindex].DevNo
+					Cmd : item.StName
+					Params : {
+						"{item.StName}1" : value1
+						"{item.StName}2" : value2
+						"{item.StName}3" : value3
+					}
+				console.log data
+				ws.send(JSON.stringify(data))
+
+
 	def mount
+		# let jsobj = 
+		
 		listload('/servoplist') # 查询伺服位置列表
 		slistload('/servoslist') # 查询伺服卫星列表
 		jhlistload('/jihualist')
+		let tblist = 'satlistinfoMain'
+		listloadsatlist('/satlistinfo',tblist) # 查询卫星经度保存数据库列表
+		
 		for item,i in data[antindex].Devices
 			tpxydata[i] = xydata
 		gettpdata!
-		# console.log '数据库mount 加载'
+		# console.log data[antindex].Devices[ctrindex].DevNo
+		# switch data[antindex].Devices[ctrindex].polarAxisNum
+		# 	when 1
+		# 		isjhshow2 = true
+		# 	when 2
+		# 		isjhshow3 = true
+		# 	when 3
+		# 		isjhshow4 = true
+		# console.log '数据库mount 加载
+	def sendpara item,itemvalue
+		# todo = 这里要增加一个发指令前的用户权限判断-可以是个函数 应该是个bool函数 ：isadmin
+		# 1- 弹出一个用户名密码的窗口弹窗，输入值，不管对不对先发送给
+		if isadmin!
+			console.log typeof(item)
+			if typeof(item) !== 'object'
+				let data =
+					AntennaNo : route.params.id
+					DevNo : data[antindex].Devices[ctrindex].DevNo
+					Cmd : item
+					Params : {
+						"{item}" : itemvalue
+					}
+				
+				console.log data
+				ws.send(JSON.stringify(data))
+			else if itemvalue
+				let data =
+					AntennaNo : route.params.id
+					DevNo : data[antindex].Devices[ctrindex].DevNo
+					Cmd : item.StName
+					Params : {
+						"{item.StName}" : itemvalue
+					}
+				console.log data
+				ws.send(JSON.stringify(data))
+
 
 	def tpcontent data
 		tpname = data.StatusList[0].StName
@@ -286,31 +439,50 @@ tag tianxian
 					<div.txbody>
 						<div.btitle>
 							<div[ta:center]> "{data[antindex].AntName}:设备拓扑图"
-						<div[pos:absolute b:1 l:1 p:5px 15px w:100] [visibility:hidden]=!isServo> 
+						<div[pos:absolute b:1 l:1 p:5px 15px w:100%] [visibility:hidden]=!isServo> 
 							<div[d:hflex a:center j:left g:5 pb:2]>
 								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
-								<div> '伺服位置数据'
-							<table[bd:solid 1px gray5 ta:center].table.table-hover#servoplist>
-								<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
-									<tr>
-										<th scope="col"> '序号'
-										<th scope="col"> '方位'
-										<th scope="col"> '俯仰'
-								<tbody[d:block c:gray3 r:rgb(64,73,91) h:35 ofy:auto]>
-									<tr> <td colSpan="3"> <i> 'Loading...'
-						<div[pos:absolute b:1 r:1 p:5px 15px w:100] [visibility:hidden]=!isServo> 
-							<div[d:hflex a:center j:left g:5 pb:2]>
-								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
-								<div> '伺服卫星数据'
-							<table[bd:solid 1px gray5 ta:center].table#servoslist>
-								<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
-									<tr>
-										<th scope="col"> '序号'
-										<th scope="col"> '经度'
-										<th scope="col"> '方位'
-										<th scope="col"> '俯仰'
-								<tbody[d:block c:gray4 border-color:rgb(64,73,91) h:35 ofy:auto]>
-									<tr> <td colSpan="4"> <i> 'Loading...'
+								<div> '伺服位置及卫星列表数据'
+							<div[d:hflex ai:center]>
+								<table[bd:solid 1px gray5 ta:center w:85%].table.table-hover#satlistinfoMain>
+									<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
+										<tr>
+											<th scope="col"> '编号'
+											<th scope="col"> '卫星名称'
+											<th scope="col"> '方位'
+											<th scope="col"> '俯仰'
+											<th scope="col"> '卫星经度'
+											<th scope="col"> '极化1'
+											<th scope="col" > '极化2'
+											<th scope="col" > '极化3'
+											<th scope="col" > '极化4'
+									<tbody[d:block c:gray3 r:rgb(64,73,91) h:35 ofy:auto]>
+										<tr> <td colSpan="5"> <i> 'Loading...'
+								<div>
+									<div[p:1 d:hflex ja:center g:3]>
+										<span[ml:3]> '方位俯仰:'
+										<input$satlistaz[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistaz value=1234>
+										<input$satlistel[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistel value=1234>
+										<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara_multi('SetSatAZEL',satlistaz,satlistel)> '置位' 
+										<button.btn.btn-success.btn-sm[mr:3] @click=sendpara_multi3('UpdateSatAZEL',$satlistaz.value,$satlistel.value,satlistno)> '修改' 
+									<div[p:1 d:hflex ja:center g:3]>
+										<span[ml:3]> '删除编号：'
+										<input[h:7 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistno value=1234>
+										<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara('delsatalistno',satlistno)> '删除' 
+										<button.btn.btn-success.btn-sm[mr:3] @click=(mount!)> '刷新' 
+						# <div[pos:absolute b:1 r:1 p:5px 15px w:100] [visibility:hidden]=!isServo> 
+						# 	<div[d:hflex a:center j:left g:5 pb:2]>
+						# 		<button.btn.btn-success.btn-sm @click=mount!> '刷新'
+						# 		<div> '伺服卫星数据'
+						# 	<table[bd:solid 1px gray5 ta:center].table#servoslist>
+						# 		<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
+						# 			<tr>
+						# 				<th scope="col"> '序号'
+						# 				<th scope="col"> '经度'
+						# 				<th scope="col"> '方位'
+						# 				<th scope="col"> '俯仰'
+						# 		<tbody[d:block c:gray4 border-color:rgb(64,73,91) h:35 ofy:auto]>
+						# 			<tr> <td colSpan="4"> <i> 'Loading...'
 						<div[pos:absolute b:1 l:1 p:5px 15px w:150] [visibility:hidden]=!isJh> 
 							<div[d:hflex a:center j:left g:5 pb:2]>
 								<button.btn.btn-success.btn-sm @click=mount!> '刷新'

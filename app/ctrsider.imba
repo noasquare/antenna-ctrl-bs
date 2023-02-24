@@ -20,7 +20,11 @@ tag ctrsider
 	prop data
 	showlogin = no # 是否显示登录框
 	# prop inputvalue
-	prop today = new Date().toISOString().substring(0,16)
+	# make a new date with east 8 timezone offset
+	prop today = new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString().substring(0,16)
+	prop tomorow = new Date(Date.now() + 32 * 60 * 60 * 1000).toISOString().substring(0,16)
+
+	# prop today = new Date().toISOString().substring(0,16) + 
 	prop ant
 	prop islogin
 	prop islogined
@@ -397,7 +401,6 @@ tag ctrsider
 		querySelectorAll('.status_cmd').forEach(do(item)
 			item.value = ''
 			)
-		
 
 	def mount
 		# console.log 'mount哟哟'
@@ -436,7 +439,9 @@ tag ctrsider
 								if ctritem.ReadOnly == no && ctritem.StName !== '控制' && !ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
-										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto].status_cmd placeholder=ctritem.Value name="{ctritem.StName}-{stindex}" @change=sendpara(ctritem,this.value) type='number' min=ctritem.Min max=ctritem.Max step=ctritem.Step >
+										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto].status_cmd placeholder=ctritem.Value name="{ctritem.StName}-{stindex}" type='number' min=ctritem.Min max=ctritem.Max step=ctritem.Step @change=sendpara(ctritem,this.value)>
+										
+										# <input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto].status_cmd placeholder=ctritem.Value name="{ctritem.StName}-{stindex}" @change=sendpara(ctritem,this.value) type='number' min=ctritem.Min max=ctritem.Max step=ctritem.Step @hotkey('enter')=sendpara(ctritem,this.value) >
 								if ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
@@ -593,15 +598,15 @@ tag ctrsider
 								<input$elrange1[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="俯仰" type='number' step='.01'>
 								<input$elstep[h:7 fs:14px bgc:transparent c:gray4 w:15% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="EL步进" type='number' step='.01'>
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi4('Search',$azrange1.value,$azstep.value,$elrange1.value,$elstep.value)> "搜索"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
-								<div[fs:14px c:gray3 ml:3]> '存储卫星:'
-								<input$satid[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
-								<input$satlon[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度-0.00" type='number' step='.01'>
-								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('StoreSat',$satid.value,$satlon.value)> "存储"
-							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
-								<div[fs:14px c:gray3 ml:3]> '删除卫星:'
-								<input$satdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
-								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemoveSat',$satdel.value)> "删除"
+							# <div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							# 	<div[fs:14px c:gray3 ml:3]> '存储卫星:'
+							# 	<input$satid[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
+							# 	<input$satlon[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="经度-0.00" type='number' step='.01'>
+							# 	<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara_multi('StoreSat',$satid.value,$satlon.value)> "存储"
+							# <div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
+							# 	<div[fs:14px c:gray3 ml:3]> '删除卫星:'
+							# 	<input$satdel[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
+							# 	<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('RemoveSat',$satdel.value)> "删除"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '存储位置:'
 								<input$satposStore[h:7 fs:14px bgc:transparent c:gray4 w:35% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="序号1~24" type='number' step='1'>
@@ -709,8 +714,9 @@ tag ctrsider
 							<textarea$trackXL[w:90% h:14 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:2 3] placeholder='输入两行星历'>
 							<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
 								<input$startTime[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='开始日期' defaultValue=today>
-								<input$stopTime[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='结束日期'>
-								<input$trackInterval[w:30% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number' placeholder='间隔' step='1' value='1'> <span> '秒/s'
+								<input$stopTime[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='结束日期' defaultValue=tomorow>
+								<input$trackInterval[w:15% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number' placeholder='间隔' step='1' value='1'>
+								<span[c:gray3]> '秒/s'
 							<div[d:hflex ja:center g:4]>
 								<button[].btn.btn-success.btn-sm @click=sendCalpara('TrackCal',$trackXL.value,$startTime.value,$stopTime.value,$trackInterval.value)> "计算"
 								<button[].btn.btn-success.btn-sm @click=sendpara('TrackStart',null)> "开始跟踪"
@@ -734,7 +740,7 @@ tag ctrsider
 						<div[max-height:100 ofy:auto].accordion-collapse.collapse.show id='collapse4' aria-labelledby='heading4' data-bs-parent='#ctl' [d:none]=isServo>
 							<div[m:0 p:5px d:hflex ja:center]> # 这里的指令下发是针对伺服设备来定制的
 								<input$startTime1[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='开始日期' defaultValue=today>
-								<input$stopTime1[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='结束日期'>
+								<input$stopTime1[w:33% h:7 fs:14px bgc:transparent c:gray4 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='datetime-local' placeholder='结束日期' defaultValue=tomorow>
 							<div[d:hflex ja:center g:4]>
 								<button[].btn.btn-success.btn-sm @click=sendpara_multi('TrackCalHis',$startTime1.value,$stopTime1.value)> "计算"
 								<button[].btn.btn-success.btn-sm @click=sendpara('TrackStartHis',null)> "开始跟踪"
