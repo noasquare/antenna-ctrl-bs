@@ -70,7 +70,7 @@ tag app
 			devdata = JSON.parse(e.data)
 			# 判断服务器发来的用户检查命令
 			if devdata.Cmd == 'Login'
-				console.log devdata.Params.Status
+				# console.log devdata.Params.Status
 				switch devdata.Params.Status
 					when 'Successful'
 						isLogin = yes
@@ -81,8 +81,8 @@ tag app
 						window.alert('请登录后操作')
 					else
 						throw 'nope'
-			console.log isLogin
-			console.log devdata
+			# console.log isLogin
+			# console.log devdata
 			imba.commit!
 	def alarmNo
 
@@ -149,10 +149,10 @@ tag app
 		if socket
 			if socket.readyState === WebSocket.OPEN
 				$socketstatus.innerHTML = '  -已连接'
-				console.log '连接上了啊'
+				# console.log '连接上了啊'
 			if socket.readyState === WebSocket.CONNECTING
 				$socketstatus.innerHTML = '  -正在连接中'
-				console.log '连接中'
+				# console.log '连接中'
 			# determine websocket is closed or not
 			if socket.readyState === WebSocket.CLOSED
 				$socketstatus.innerHTML = '  -已关闭'

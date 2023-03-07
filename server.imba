@@ -60,6 +60,13 @@ app.get '/savetuop' do(req,res)
 		# 绘图数据列表
 		console.log er if er
 		res.send(rows)
+
+app.get '/getsatlistlon' do(req,res)
+	mysql.connection.query 'SELECT * FROM sat_listlon ;' do(er,rows) 
+		# 查询第一个卫星经度值
+		console.log er if er
+		res.send(rows)
+
 	
 		
 
@@ -77,6 +84,16 @@ app.post('/savetuop',jasonParser) do(req,res)
 			console.log er if er
 			res.send(rows)
 			)
+
+app.post('/search',jasonParser) do(req,res)
+	# console.log req.body.data
+	let keyword = JSON.parse(req.body.data)
+	# console.log keyword
+	let sql = `SELECT * FROM sat_baseinfo WHERE SatName LIKE '%{keyword}%'`
+	mysql.connection.query(sql,do(er,rows)
+		console.log er if er
+		res.send(rows)
+		)
 
 # catch-all other route that returns our index.html
 app.get(/.*/) do(req,res)

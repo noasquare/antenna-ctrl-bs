@@ -1,6 +1,8 @@
 let satlistno
 let satlistaz
 let satlistel
+import axios from 'axios'
+
 tag ctrsider
 	css .sdtitle c:rgb(31,219,220) fw:bold p:10px bdb:solid 1px rgb(31,219,220)
 	css	.sdstatus d:hflex p:5px c:gray3 fs:14px
@@ -77,6 +79,7 @@ tag ctrsider
 		# 1- 弹出一个用户名密码的窗口弹窗，输入值，不管对不对先发送给
 		if isadmin!
 			console.log typeof(item)
+			console.log itemvalue
 			if typeof(item) !== 'object'
 				let data =
 					AntennaNo : ant
@@ -88,7 +91,7 @@ tag ctrsider
 				
 				console.log data
 				ws.send(JSON.stringify(data))
-			else if itemvalue
+			elif itemvalue
 				let data =
 					AntennaNo : ant
 					DevNo : data.DevNo
@@ -258,7 +261,7 @@ tag ctrsider
 		# console.log isCctrl
 
 	def listload url # 从数据库查询得到的信息
-		table = querySelector('#servoTracklist tbody')
+		let table = querySelector('#servoTracklist tbody')
 		window.fetch(url).then do(res)
 			res.json!
 			.then do(data)
@@ -279,8 +282,6 @@ tag ctrsider
 				# console.log data
 				renderSatbaseTable(data,thetb)
 	def listloadsatlist url,thetb # 从数据库查询得到的选取的卫星数据库
-		# console.log thetb
-		# table = querySelector("#{thetb} tbody")
 		window.fetch(url).then do(res)
 			res.json!
 			.then do(data)
@@ -344,11 +345,16 @@ tag ctrsider
 		# console.log tabledata
 		# console.log tr[0]
 		tada.forEach do(c)
-			result += `<tr class="tbody">
-			<td> {c.SatNo} 
-			<td> {c.SatName}
-			<td> {c.Az}
-			<td> {c.El}
+			if c.AntNo === ant
+				result += `<tr class="tbody">
+				<td> {c.SatNo} 
+				<td> {c.SatName}
+				<td> {c.Az}
+				<td> {c.El}
+				<td> {c.SatLon}
+				<td> {c.Polar1Pos}
+				<td> {c.Polar2Pos}
+
 			`
 		# console.log table
 		let table = querySelector("#{tb} tbody")
@@ -392,6 +398,13 @@ tag ctrsider
 		activeCol.classList.add('table-active')
 
 		# console.log querySelectorAll('#servoTracklist tbody tr')[0]
+	def searchsat data
+		console.log '搜索卫星' + data
+		let keywords= data.toLowerCase()
+		# console.log JSON.stringify(keywords)
+		axios.post('/search',data:JSON.stringify(keywords)).then do(res)
+			# console.log res.data
+			renderSatbaseTable(res.data,'satbaselist')
 
 	def setFocus
 		test = document.getElementById('#userinput')
@@ -433,19 +446,19 @@ tag ctrsider
 					<div.accordion-item>
 						<h6.accordion-header id='headingOne'>
 							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center ].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-control='collapseOne'>
-								<div[w:90%]> data.DevName+'参数控制' # 变量
+								<div[w:90%]> data.DevName+'参数控制-ctrl+enter发送命令' # 变量
 						<div.accordion-collapse.collapse.show id='collapseOne' aria-labelledby='headingOne' data-bs-parent='#ctl'>
 							<div[m:0 p:5px d:vflex ai:left max-height:60 ofy:auto].accordion-body> for ctritem,stindex in data.StatusList
 								if ctritem.ReadOnly == no && ctritem.StName !== '控制' && !ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
-										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto].status_cmd placeholder=ctritem.Value name="{ctritem.StName}-{stindex}" type='number' min=ctritem.Min max=ctritem.Max step=ctritem.Step @change=sendpara(ctritem,this.value)>
+										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto].status_cmd placeholder=ctritem.Value name="{ctritem.StName}-{stindex}" type='number' min=ctritem.Min max=ctritem.Max step=ctritem.Step @change=sendpara(ctritem,this.value) @hotkey('ctrl+enter').force=sendpara(ctritem,this.value)>
 										
 										# <input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto].status_cmd placeholder=ctritem.Value name="{ctritem.StName}-{stindex}" @change=sendpara(ctritem,this.value) type='number' min=ctritem.Min max=ctritem.Max step=ctritem.Step @hotkey('enter')=sendpara(ctritem,this.value) >
 								if ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
-										<select[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] @change=sendpara(ctritem,this.value) focus=>
+										<select[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] @change=sendpara(ctritem,this.value) @hotkey('ctrl+enter').force=sendpara(ctritem,this.value)>
 											for sel in ctritem.cmdSelect
 												if ctritem.Value === sel.option
 													<option selected> sel.option
@@ -502,6 +515,7 @@ tag ctrsider
 									<div.modal-content>
 										<div.modal-header>
 											<h5> '卫星经度数据库'
+											<input placeholder='search' type='text' @keydown=searchsat(this.value) @hotkey('shift+enter').force=searchsat(this.value)>
 											<button.btn-close data-bs-dismiss='modal' aria-lable='Close'>
 										<table[bd:solid 1px gray5 ta:center].table.table-hover.table-sm.table-dark#satbaselist>
 											<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
@@ -511,7 +525,7 @@ tag ctrsider
 													<th scope="col"> '经度'
 											<tbody[d:block c:gray3 r:rgb(64,73,91) h:80 ofy:auto]>
 												<tr> <td colSpan="3"> <i> 'Loading...'
-							<div.modal.fade[$bs-modal-bg:gray4/90]#satlist tabindex='-1' aria-hidden='true'> 'test'
+							<div.modal.fade[$bs-modal-bg:gray4/70]#satlist tabindex='-1' aria-hidden='true'> 'test'
 								<div.modal-dialog>
 									<div.modal-content>
 										<div.modal-header>
@@ -524,6 +538,9 @@ tag ctrsider
 													<th scope="col"> '名称'
 													<th scope="col"> '方位'
 													<th scope="col"> '俯仰'
+													<th scope="col"> '卫星经度'
+													<th scope="col"> '极化1'
+													<th scope="col"> '极化2'
 											<tbody[d:block c:gray3 r:rgb(64,73,91) h:80 ofy:auto]>
 												<tr> <td colSpan="3"> <i> 'Loading...'
 										<div[p:1 d:hflex ja:center g:3]>

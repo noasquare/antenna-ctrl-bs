@@ -227,6 +227,14 @@ tag tianxian
 				tpdata = squaresdata.filter do(item)
 					item.antname === antrouted
 				render!
+	def getsatlistlon url
+		axios.get(url)
+			.then do(res)
+				# console.log res.data
+				let satlistlons = res.data.filter do(item)
+					item.sat_no === antrouted
+				satlistlon = satlistlons[0].sat_lon
+				render!
 
 	def anttpdata tpdata
 		return tpdata.antname === data[antindex].AntNo
@@ -267,7 +275,7 @@ tag tianxian
 		# console.log table
 		let table = querySelector("#{tb} tbody")
 		table.innerHTML = result if result
-		console.log table
+		# console.log table
 		table.innerHTML = '数据为空' if result === ''
 		render!
 		let activeCol = querySelectorAll("#{tb} tbody tr")[0]
@@ -282,6 +290,11 @@ tag tianxian
 		satlistno = array[0]
 		satlistaz = array[2]
 		satlistel = array[3]
+		satlistlon = array[4]
+		satlistjh1 = array[5]
+		satlistjh2 = array[6]
+		satlistjh3 = array[7]
+		satlistjh4 = array[8]
 		render!
 
 	def sendpara_multi item,value1,value2
@@ -346,8 +359,9 @@ tag tianxian
 	def mount
 		# let jsobj = 
 		
-		listload('/servoplist') # 查询伺服位置列表
-		slistload('/servoslist') # 查询伺服卫星列表
+		# listload('/servoplist') # 查询伺服位置列表
+		# slistload('/servoslist') # 查询伺服卫星列表
+		getsatlistlon('/getsatlistlon') # 查询伺服卫星列表
 		jhlistload('/jihualist')
 		let tblist = 'satlistinfoMain'
 		listloadsatlist('/satlistinfo',tblist) # 查询卫星经度保存数据库列表
@@ -402,13 +416,54 @@ tag tianxian
 			if item.AntNo == params.id
 				antindex = index
 				mount!
+	def addnewdata
+		if isadmin!
+			let data = 
+				AntennaNo : route.params.id
+				cmd: 'addnewdata'
+				satname: $satname.value
+				sataz: $sataz.value
+				satel: $satel.value
+				satlon: $satlon.value
+				satjh1: $satjh1.value
+				satjh2: $satjh2.value
+				satjh3: $satjh3.value
+				satjh4: $satjh4.value
+			console.log data
+			ws.send(JSON.stringify(data))
+
+		
+	def sendpara_update
+		if isadmin!
+			let data = 
+				AntennaNo : route.params.id
+				cmd: 'addnewdata'
+				satno: $satlistno.value
+				sataz: $satlistaz.value
+				satel: $satlistel.value
+				satlon: $satlistlon.value
+				satjh1: $satlistjh1.value
+				satjh2: $satlistjh2.value
+				satjh3: $satlistjh3.value
+				satjh4: $satlistjh4.value
+			console.log data
+			ws.send(JSON.stringify(data))
+	def send_custom_satlon lon
+		if isadmin!
+			let data = 
+				AntennaNo : route.params.id
+				cmd: 'addsatlondata'
+				satlon: lon
+			console.log data
+			ws.send(JSON.stringify(data))
+
 	def render()
 		# console.log 'render一哈'
 		tpbox = querySelector('#tpframe') # 获取拓扑图的画布的宽度
 		tpelement = querySelectorAll('.tuop-chart')
 		
 		if tpelement.length > 0 && isdataload
-			tpelement.forEach do(item,i)
+			tpelement.forEach do(it$satnamei)
 				if tpdata[i]
 					let xydata = {
 						x:"{tpdata[i].x + (tpdata[i].width - item.clientWidth)/2}px"
@@ -441,7 +496,7 @@ tag tianxian
 							<div[ta:center]> "{data[antindex].AntName}:设备拓扑图"
 						<div[pos:absolute b:1 l:1 p:5px 15px w:100%] [visibility:hidden]=!isServo> 
 							<div[d:hflex a:center j:left g:5 pb:2]>
-								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
+								<button.btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#addsatnew"> '新增'
 								<div> '伺服位置及卫星列表数据'
 							<div[d:hflex ai:center]>
 								<table[bd:solid 1px gray5 ta:center w:85%].table.table-hover#satlistinfoMain>
@@ -464,12 +519,73 @@ tag tianxian
 										<input$satlistaz[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistaz value=1234>
 										<input$satlistel[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistel value=1234>
 										<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara_multi('SetSatAZEL',satlistaz,satlistel)> '置位' 
-										<button.btn.btn-success.btn-sm[mr:3] @click=sendpara_multi3('UpdateSatAZEL',$satlistaz.value,$satlistel.value,satlistno)> '修改' 
+										<button.btn.btn-success.btn-sm[mr:3] @click=sendpara_update> '修改' 
 									<div[p:1 d:hflex ja:center g:3]>
 										<span[ml:3]> '删除编号：'
-										<input[h:7 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistno value=1234>
+										<input$satlistno[h:7 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistno value=1234>
 										<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara('delsatalistno',satlistno)> '删除' 
 										<button.btn.btn-success.btn-sm[mr:3] @click=(mount!)> '刷新' 
+									<div[p:1 d:grid gtc:1fr 1fr 1fr ja:center g:3]>
+										<div[d:flex ja:center]>
+											<span[ml:3]> '卫星精度:'
+											<input$satlistlon[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number' bind=satlistlon>
+										<div[d:flex ja:center]>
+											<span[ml:3]> '极化1:'
+											<input$satlistjh1[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistjh1>
+
+										<div[d:flex ja:center]>
+											<span[ml:3]> '极化2:'
+											<input$satlistjh2[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistjh2>
+
+										<div[d:flex ja:center]>
+											<span[ml:3]> '极化3:'
+											<input$satlistjh3[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistjh3>
+
+										<div[d:flex ja:center]>
+											<span[ml:3]> '极化4:'
+											<input$satlistjh4[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistjh4>
+							<div.modal.fade[$bs-modal-bg:gray7/90]#addsatnew tabindex='-1' aria-hidden='true'> 'test'
+								<div.modal-dialog>
+									<div.modal-content>
+										<div.modal-header>
+											<h5.modal-title> '新增数据'
+											<button.btn-close data-bs-dismiss='modal' aria-lable='Close'>
+
+										<div.modal-content>
+											<div[p:1 d:grid gtc:1fr 1fr 1fr ja:center g:3]>
+												<div[d:flex ja:center]>
+													<span[ml:3]> '名称:'
+													<input$satname[h:7 w:15 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string'>
+												<div[d:flex ja:center]>
+													<span[ml:3]> '方位:'
+													<input$sataz[h:7 w:15 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number'>
+												<div[d:flex ja:center]>
+													<span[ml:3]> '俯仰:'
+													<input$satel[h:7 w:15 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number'>
+												<div[d:flex ja:center]>
+													<span[ml:3]> '卫星精度:'
+													<input$satlon[h:7 w:15 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number'>
+												<div[d:flex ja:center]>
+													<span[ml:3]> '极化1:'
+													<input$satjh1[h:7 w:15 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number'>
+
+												<div[d:flex ja:center]>
+													<span[ml:3]> '极化2:'
+													<input$satjh2[h:7 w:15 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number'>
+
+												<div[d:flex ja:center]>
+													<span[ml:3]> '极化3:'
+													<input$satjh3[h:7 w:15 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number'>
+
+												<div[d:flex ja:center]>
+													<span[ml:3]> '极化4:'
+													<input$satjh4[h:7 w:15 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number'>
+											<div[p:1 d:grid gtc:1fr 1fr ja:center g:3]>
+												<button.btn.btn-danger.btn-sm data-bs-dismiss='modal' aria-lable='Close'> '取消'
+												<button.btn.btn-success.btn-sm @click=addnewdata> '确认'
+
+
+
 						# <div[pos:absolute b:1 r:1 p:5px 15px w:100] [visibility:hidden]=!isServo> 
 						# 	<div[d:hflex a:center j:left g:5 pb:2]>
 						# 		<button.btn.btn-success.btn-sm @click=mount!> '刷新'
@@ -485,7 +601,7 @@ tag tianxian
 						# 			<tr> <td colSpan="4"> <i> 'Loading...'
 						<div[pos:absolute b:1 l:1 p:5px 15px w:150] [visibility:hidden]=!isJh> 
 							<div[d:hflex a:center j:left g:5 pb:2]>
-								<button.btn.btn-success.btn-sm @click=mount!> '刷新'
+								<button.btn.btn-success.btn-sm @click=addnewdata data-bs-toggle="modal" data-bs-target="#addsatnew"> '新增数据'
 								<div> '极化卫星及位置数据'
 							<table[bd:solid 1px gray5 ta:center].table#jihualist>
 								<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>
@@ -499,14 +615,16 @@ tag tianxian
 
 						<div.tuop>
 							<div[d:vflex a:center h:30%] [h:auto]=(data[antindex].Devices.length===1)>
-								<div[d:hflex w:70%]>
+								<div[d:hflex w:70% ja:center]>
 									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:40 ta:center mr:auto]> data[antindex].Devices[ctrindex].DevName
+									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:40 ta:center mr:auto]> '卫星经度：'
+										<input[h:7 w:12 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' placeholder='可修改' bind=satlistlon @change=send_custom_satlon(this.value)>
 									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:30 ta:center] [visibility:hidden]=!isServo> data[antindex].Devices[ctrindex].TrackStatus # 显示伺服器是否在跟踪状态。
 								<div[pos:relative p:2 w:70% c:gray3 bgc:teal8/40 bd:solid 1px teal4 rd:5px d:grid gtc:1fr 1fr 1fr ofy:auto]> for item,index in data[antindex].Devices[ctrindex].StatusList # 就tm多了一个操作，连通性就断掉了。
 									# if index < 5 # 这里控制显示的参数数量，5个重要信息。
 									<div[p:1 fs:small]> item.StName+ ':'
 										<div[d:inline fs:large c:teal4 fw:bold ff:monospace pl:2]> item.Value
-							<tpframe$tpframe[pos:absolute t:30% l:0 w:100% h:78%]#tpframe display=(!isadminClick) tpelement=tpbox squares=squaresdata antno=data[antindex].AntNo>
+							<tpframe$tpframe[pos:absolute t:100 l:0 w:100% h:45%]#tpframe display=(!isadminClick) tpelement=tpbox squares=squaresdata antno=data[antindex].AntNo>
 							<div[d:flex j:center pos:relative]>
 								<div[mr:auto p:2 pos:absolute t:-10 l:2] [d:none]=!islogin>
 									if isadminClick
@@ -541,13 +659,13 @@ tag tianxian
 								<div> '图例'
 								<div[d:hflex ai:center j:left]>
 									<div[w:5 h:5 bgc:{devcolor[0]} rd:3px]>
-									<div[fs:12px ml:auto]> '在线' 
+									<div[fs:12px ml:auto]> '在线'
 								<div[d:hflex ai:center j:left]>
 									<div[w:5 h:5 bgc:{devcolor[1]} rd:3px]>
-									<div[fs:12px ml:auto]> '告警' 
+									<div[fs:12px ml:auto]> '告警'
 								<div[d:hflex ai:center j:left]>
 									<div[w:5 h:5 bgc:{devcolor[2]} rd:3px]>
-									<div[fs:12px ml:auto]> '离线' 
+									<div[fs:12px ml:auto]> '离线'
 							<button[d:flex ja:center w:100px h:30px pos:absolute t:-8 r:1rem bgc:red6 @hover:red7 c:#fff outline:none rd:5px cursor:pointer bd:none box-shadow:0 0 15px 5px red5 @hover:0 0 10px 2px red5].tpbtn type='button' data-bs-toggle='tooltip' data-bs-placement='top' title='关闭伺服电源' @click=shutdowncmd>
 								<img[scale:.7] src='./imgs/btn-stop.png'>
 								<span[fs:12px]> '伺服去电'
