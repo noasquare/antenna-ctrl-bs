@@ -31,6 +31,7 @@ tag ctrsider
 	prop islogin
 	prop islogined
 	prop isCctrl
+	prop satsetflag=no
 	def auth
 		console.log $uname.value
 		console.log $pass.value
@@ -271,7 +272,10 @@ tag ctrsider
 		let array = event.currentTarget.innerText.split(/\r?\n/) # 采集获取的行内的所有数据。
 		satno = array[0]
 		# jh2 = array[3]
-		sendpara('satNo',satno)
+		if satsetflag == no
+			sendpara('satNo',satno)
+		else
+			sendpara('satSet',satno)
 
 	def listloadsatbase url,thetb # 从数据库查询得到的所有卫星数据库
 		# console.log thetb
@@ -508,14 +512,18 @@ tag ctrsider
 										<button[mr:4].btn.btn-success.btn-sm @click=sendpara('KujhCtrl_clock','')> "顺"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoCetc39> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '卫星数据库:'
-								<button[ml:auto mr:2].btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#satbase"> "读取"
+								<button[ml:auto mr:2].btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#satbase"> "操作"
 								<button[mr:4].btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#satlist"> "编辑"
+								# <button[mr:4].btn.btn-success.btn-sm data-bs-toggle="modal" data-bs-target="#satbase" @click=(satsetflag=!satsetflag)> "指定"
 							<div.modal.fade[$bs-modal-bg:gray4/90]#satbase tabindex='-1' aria-hidden='true'> 'test'
 								<div.modal-dialog>
 									<div.modal-content>
 										<div.modal-header>
-											<h5> '卫星经度数据库'
-											<input placeholder='search' type='text' @keydown=searchsat(this.value) @hotkey('shift+enter').force=searchsat(this.value)>
+											<h5> '经度数据库'
+											<input[fs:14px c:gray3 bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder='search' type='text' @keydown=searchsat(this.value) @hotkey('shift+enter').force=searchsat(this.value)>
+											<div.form-check.form-switch[ml:2]>
+												<input.form-check-input type="checkbox" role="switch" value=satsetflag id="flexSwitchCheckDefault" @change=(satsetflag=!satsetflag)>
+												<span> '指定开关' 
 											<button.btn-close data-bs-dismiss='modal' aria-lable='Close'>
 										<table[bd:solid 1px gray5 ta:center].table.table-hover.table-sm.table-dark#satbaselist>
 											<thead[bgc:rgb(54,73,91) c:gray3 border-color:rgb(64,73,91) d:block]>

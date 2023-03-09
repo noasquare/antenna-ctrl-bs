@@ -37,6 +37,7 @@ tag tianxian
 	css .table >>> .table-active c:gray3
 	squaresdata
 	prop data
+	prop jihua1
 	prop islogin
 	showlogin = no
 	prop islogined
@@ -357,6 +358,7 @@ tag tianxian
 
 
 	def mount
+
 		# let jsobj = 
 		
 		# listload('/servoplist') # 查询伺服位置列表
@@ -461,6 +463,7 @@ tag tianxian
 		# console.log 'render一哈'
 		tpbox = querySelector('#tpframe') # 获取拓扑图的画布的宽度
 		tpelement = querySelectorAll('.tuop-chart')
+		# console.log data[antindex].Devices[0].StatusList[0].params.Polar1Name
 		
 		if tpelement.length > 0 && isdataload
 			tpelement.forEach do(it$satnamei)
@@ -507,7 +510,7 @@ tag tianxian
 											<th scope="col"> '方位'
 											<th scope="col"> '俯仰'
 											<th scope="col"> '卫星经度'
-											<th scope="col"> '极化1'
+											<th scope="col"> jihua1
 											<th scope="col" > '极化2'
 											<th scope="col" > '极化3'
 											<th scope="col" > '极化4'
@@ -530,7 +533,7 @@ tag tianxian
 											<span[ml:3]> '卫星精度:'
 											<input$satlistlon[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number' bind=satlistlon>
 										<div[d:flex ja:center]>
-											<span[ml:3]> '极化1:'
+											<span[ml:3]> jihua1+':'
 											<input$satlistjh1[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistjh1>
 
 										<div[d:flex ja:center]>

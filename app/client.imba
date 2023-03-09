@@ -68,6 +68,8 @@ tag app
 		socket.addEventListener 'message' do(e)
 		# 进行进来的信号做初始值设定
 			devdata = JSON.parse(e.data)
+			# console.log devdata[0].Devices[0].StatusList[0].params.Polar1Name
+			jihua1 = devdata[0].Devices[0].StatusList[0].params.Polar1Name
 			# 判断服务器发来的用户检查命令
 			if devdata.Cmd == 'Login'
 				# console.log devdata.Params.Status
@@ -202,7 +204,7 @@ tag app
 					<button.menunodrop route-to='/setting'> "设置"
 					# <button.menunodrop route-to='/test'> "test"
 
-				<tianxian$txjm[w:100%] route='/txst/:id' data=devdata ws=socket antindex=antindex islogin=isLogin> # 这里的index是为了区分是哪个天线的数据，但是如果这样，就会导致纯通过route不能获取最新的数据了。解决方案就是，点击要的index传进去，然后再component里面直接做，不转手。
+				<tianxian$txjm[w:100%] route='/txst/:id' data=devdata ws=socket antindex=antindex islogin=isLogin jihua1=jihua1> # 这里的index是为了区分是哪个天线的数据，但是如果这样，就会导致纯通过route不能获取最新的数据了。解决方案就是，点击要的index传进去，然后再component里面直接做，不转手。
 				<div[p:5 w:100% max-height:100% d:grid gtc:1fr 1fr 1fr g:5 a:baseline ofy:auto].antall route='/antall'> 
 					for item in devdata
 						<antcard rdata=item>
