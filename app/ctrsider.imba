@@ -427,10 +427,12 @@ tag ctrsider
 	
 
 	def render()
-
+		# console.log document.querySelector('input:focus')
 		cmdbyDevice!
 		# console.log today
 		remotestatus(data.StatusList) # 显示远控的状态
+
+
 		<self> 
 			<div>
 				<div.sdtitle> "设备控制"
@@ -446,19 +448,21 @@ tag ctrsider
 					<div.accordion-item>
 						<h6.accordion-header id='headingOne'>
 							<button[d:hflex p:2 4 w:100% bgc:rgb(14,73,91) @hover:rgb(54,73,91) ta:left c:gray3 outline:none bd:none ai:center ].accordion-button type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-control='collapseOne'>
-								<div[w:90%]> data.DevName+'参数控制-ctrl+enter发送命令' # 变量
+								<div[w:90%]> data.DevName+'参数控制命令' # 变量
 						<div.accordion-collapse.collapse.show id='collapseOne' aria-labelledby='headingOne' data-bs-parent='#ctl'>
+							if self.querySelectorAll('input:focus').length > 0
+								<div @hotkey('ctrl+enter').force=sendpara(querySelector('input:focus').name,querySelector('input:focus').value)>
 							<div[m:0 p:5px d:vflex ai:left max-height:60 ofy:auto].accordion-body> for ctritem,stindex in data.StatusList
 								if ctritem.ReadOnly == no && ctritem.StName !== '控制' && !ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
-										<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto].status_cmd placeholder=ctritem.Value name="{ctritem.StName}-{stindex}" type='number' min=ctritem.Min max=ctritem.Max step=ctritem.Step @change=sendpara(ctritem,this.value) @hotkey('ctrl+enter').force=sendpara(ctritem,this.value)>
+										<input.statuscmd[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto].status_cmd placeholder=ctritem.Value name="{ctritem.StName}" type='number' min=ctritem.Min max=ctritem.Max step=ctritem.Step @change=sendpara(ctritem,this.value)>
 										
 										# <input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto].status_cmd placeholder=ctritem.Value name="{ctritem.StName}-{stindex}" @change=sendpara(ctritem,this.value) type='number' min=ctritem.Min max=ctritem.Max step=ctritem.Step @hotkey('enter')=sendpara(ctritem,this.value) >
 								if ctritem.cmdSelect
 									<div[d:hflex ai:center p:1 2]>
 										<div[fs:14px c:gray3 ml:3]>  ctritem.StName+':' # 变量
-										<select[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] @change=sendpara(ctritem,this.value) @hotkey('ctrl+enter').force=sendpara(ctritem,this.value)>
+										<select[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] @change=sendpara(ctritem,this.value) >
 											for sel in ctritem.cmdSelect
 												if ctritem.Value === sel.option
 													<option selected> sel.option
