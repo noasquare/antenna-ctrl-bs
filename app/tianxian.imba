@@ -38,6 +38,7 @@ tag tianxian
 	squaresdata
 	prop data
 	prop jihua1
+	prop jihua2
 	prop islogin
 	showlogin = no
 	prop islogined
@@ -48,6 +49,7 @@ tag tianxian
 	prop y
 	prop tpxydata = []
 	prop isdataload = no
+	prop jhsendflag = no
 	
 	def renderTable tada
 		let result = ''
@@ -435,21 +437,37 @@ tag tianxian
 			ws.send(JSON.stringify(data))
 
 		
-	def sendpara_update
+	def sendpara_update cmd
 		if isadmin!
-			let data = 
-				AntennaNo : route.params.id
-				cmd: 'addnewdata'
-				satno: $satlistno.value
-				sataz: $satlistaz.value
-				satel: $satlistel.value
-				satlon: $satlistlon.value
-				satjh1: $satlistjh1.value
-				satjh2: $satlistjh2.value
-				satjh3: $satlistjh3.value
-				satjh4: $satlistjh4.value
-			console.log data
-			ws.send(JSON.stringify(data))
+			if jhsendflag
+				let data = 
+					AntennaNo : route.params.id
+					cmd: cmd
+					satno: $satlistno.value
+					sataz: $satlistaz.value
+					satel: $satlistel.value
+					satlon: $satlistlon.value
+					satjh1: $satlistjh1.value
+					satjh2: $satlistjh2.value
+					satjh3: $satlistjh3.value
+					satjh4: $satlistjh4.value
+				console.log data
+				ws.send(JSON.stringify(data))
+			else
+				let data = 
+					AntennaNo : route.params.id
+					cmd: cmd
+					satno: $satlistno.value
+					sataz: $satlistaz.value
+					satel: $satlistel.value
+					satlon: $satlistlon.value
+					# satjh1: $satlistjh1.value
+					# satjh2: $satlistjh2.value
+					# satjh3: $satlistjh3.value
+					# satjh4: $satlistjh4.value
+				console.log data
+				ws.send(JSON.stringify(data))
+
 	def send_custom_satlon lon
 		if isadmin!
 			let data = 
@@ -511,18 +529,22 @@ tag tianxian
 											<th scope="col"> '俯仰'
 											<th scope="col"> '卫星经度'
 											<th scope="col"> jihua1
-											<th scope="col" > '极化2'
-											<th scope="col" > '极化3'
+											<th scope="col" > '极化方式'
+											<th scope="col" > jihua2
 											<th scope="col" > '极化4'
 									<tbody[d:block c:gray3 r:rgb(64,73,91) h:35 ofy:auto]>
 										<tr> <td colSpan="5"> <i> 'Loading...'
 								<div>
+									<div[d:flex]>
+										<div[ml:auto].form-check.form-switch>
+											<input.form-check-input type="checkbox" role="switch" value=jhsendflag id="flexSwitchCheckDefault" @change=(jhsendflag=!jhsendflag)>
+											<span> '极化置位开关'
 									<div[p:1 d:hflex ja:center g:3]>
 										<span[ml:3]> '方位俯仰:'
 										<input$satlistaz[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistaz value=1234>
 										<input$satlistel[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistel value=1234>
-										<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara_multi('SetSatAZEL',satlistaz,satlistel)> '置位' 
-										<button.btn.btn-success.btn-sm[mr:3] @click=sendpara_update> '修改' 
+										<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara_update('sat_cmd_set')> '置位' 
+										<button.btn.btn-success.btn-sm[mr:3] @click=sendpara_update('sat_cmd_update')> '修改' 
 									<div[p:1 d:hflex ja:center g:3]>
 										<span[ml:3]> '删除编号：'
 										<input$satlistno[h:7 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistno value=1234>
@@ -541,7 +563,7 @@ tag tianxian
 											<input$satlistjh2[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistjh2>
 
 										<div[d:flex ja:center]>
-											<span[ml:3]> '极化3:'
+											<span[ml:3]> jihua2+':'
 											<input$satlistjh3[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistjh3>
 
 										<div[d:flex ja:center]>

@@ -263,11 +263,10 @@ tag ctrsider
 
 	def listload url # 从数据库查询得到的信息
 		let table = querySelector('#servoTracklist tbody')
-		window.fetch(url).then do(res)
-			res.json!
-			.then do(data)
-				# console.log data
-				renderTable(data,table)
+		axios.post(url,data:JSON.stringify(ant)).then do(res)
+			console.log res.data
+			renderTable(res.data,table)
+
 	def sbsent event
 		let array = event.currentTarget.innerText.split(/\r?\n/) # 采集获取的行内的所有数据。
 		satno = array[0]
@@ -373,12 +372,9 @@ tag ctrsider
 				getlistno(e))
 
 	def listloadhis url # 从数据库查询得到的信息
-		# table = querySelector('#servoplist tbody')
-		window.fetch(url).then do(res)
-			res.json!
-			.then do(data)
-				# console.log data
-				renderTablehis(data)
+		axios.post(url,data:JSON.stringify(ant)).then do(res)
+			console.log res.data
+			renderTablehis(res.data)
 	
 	def renderTablehis tada
 		let result = ''
