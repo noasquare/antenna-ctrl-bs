@@ -1,6 +1,11 @@
 let satlistno
 let satlistaz
 let satlistel
+let satlistlon
+let satlistjh1
+let satlistjh2
+let satlistjh3
+let satlistjh4
 import axios from 'axios'
 
 tag ctrsider
@@ -28,6 +33,9 @@ tag ctrsider
 
 	# prop today = new Date().toISOString().substring(0,16) + 
 	prop ant
+	prop jihua1
+	prop jihua2
+	prop jhsendflag=no
 	prop islogin
 	prop islogined
 	prop isCctrl
@@ -64,6 +72,36 @@ tag ctrsider
 			showlogin = !showlogin
 			setFocus!
 			return no
+	def sendpara_update cmd
+		if isadmin!
+			if jhsendflag
+				let data = 
+					AntennaNo : ant
+					cmd: cmd
+					satno: $satlistno.value
+					sataz: $satlistaz.value
+					satel: $satlistel.value
+					satlon: $satlistlon.value
+					satjh1: $satlistjh1.value
+					satjh2: $satlistjh2.value
+					satjh3: $satlistjh3.value
+					satjh4: $satlistjh4.value
+				console.log data
+				ws.send(JSON.stringify(data))
+			else
+				let data = 
+					AntennaNo : ant
+					cmd: cmd
+					satno: $satlistno.value
+					sataz: $satlistaz.value
+					satel: $satlistel.value
+					satlon: $satlistlon.value
+					# satjh1: $satlistjh1.value
+					# satjh2: $satlistjh2.value
+					# satjh3: $satlistjh3.value
+					# satjh4: $satlistjh4.value
+				console.log data
+				ws.send(JSON.stringify(data))
 
 	def sendremote
 		let data = 
@@ -314,6 +352,11 @@ tag ctrsider
 		satlistno = array[0]
 		satlistaz = array[2]
 		satlistel = array[3]
+		satlistlon = array[4]
+		satlistjh1 = array[5]
+		satlistjh2 = array[6]
+		satlistjh3 = array[7]
+		satlistjh4 = array[8]
 		render!
 		# console.log satlistno
 		# jh2 = array[3]
@@ -357,6 +400,8 @@ tag ctrsider
 				<td> {c.SatLon}
 				<td> {c.Polar1Pos}
 				<td> {c.Polar2Pos}
+				<td> {c.Polar3Pos}
+				<td> {c.Polar4Pos}
 
 			`
 		# console.log table
@@ -533,7 +578,7 @@ tag ctrsider
 													<th scope="col"> '经度'
 											<tbody[d:block c:gray3 r:rgb(64,73,91) h:80 ofy:auto]>
 												<tr> <td colSpan="3"> <i> 'Loading...'
-							<div.modal.fade[$bs-modal-bg:gray4/70]#satlist tabindex='-1' aria-hidden='true'> 'test'
+							<div.modal.fade[$bs-modal-bg:gray6/90]#satlist tabindex='-1' aria-hidden='true'> 'test'
 								<div.modal-dialog>
 									<div.modal-content>
 										<div.modal-header>
@@ -547,21 +592,46 @@ tag ctrsider
 													<th scope="col"> '方位'
 													<th scope="col"> '俯仰'
 													<th scope="col"> '卫星经度'
-													<th scope="col"> '极化1'
-													<th scope="col"> '极化2'
+													<th scope="col"> jihua1
+													<th scope="col"> '极化1方式'
+													<th scope="col"> jihua2
+													<th scope="col"> '极化4'
 											<tbody[d:block c:gray3 r:rgb(64,73,91) h:80 ofy:auto]>
 												<tr> <td colSpan="3"> <i> 'Loading...'
+										<div[d:flex]>
+											<div[ml:auto].form-check.form-switch>
+												<input.form-check-input type="checkbox" role="switch" value=jhsendflag id="flexSwitchCheckDefault" @change=(jhsendflag=!jhsendflag)>
+												<span> '极化置位开关'
 										<div[p:1 d:hflex ja:center g:3]>
 											<span[ml:3]> '方位俯仰:'
 											<input$satlistaz[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistaz value=1234>
 											<input$satlistel[h:7 w:20% fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistel value=1234>
-											<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara_multi('SetSatAZEL',satlistaz,satlistel)> '置位' 
-											<button.btn.btn-success.btn-sm[mr:3] @click=sendpara_multi3('UpdateSatAZEL',$satlistaz.value,$satlistel.value,satlistno)> '修改' 
+											<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara_update('sat_set')> '置位' 
+											<button.btn.btn-success.btn-sm[mr:3] @click=sendpara_update('sat_update')> '修改' 
 										<div[p:1 d:hflex ja:center g:3]>
 											<span[ml:3]> '删除编号：'
-											<input[h:7 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistno value=1234>
+											<input$satlistno[h:7 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistno value=1234>
 											<button.btn.btn-success.btn-sm[ml:auto] @click=sendpara('delsatalistno',satlistno)> '删除' 
 											<button.btn.btn-success.btn-sm[mr:3] @click=(mount!)> '刷新' 
+										<div[p:1 d:grid gtc:1fr 1fr 1fr ja:center g:3]>
+											<div[d:flex ja:center]>
+												<span[ml:3]> '卫星精度:'
+												<input$satlistlon[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='number' bind=satlistlon>
+											<div[d:flex ja:center]>
+												<span[ml:3]> jihua1+':'
+												<input$satlistjh1[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistjh1>
+
+											<div[d:flex ja:center]>
+												<span[ml:3]> '极化2:'
+												<input$satlistjh2[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistjh2>
+
+											<div[d:flex ja:center]>
+												<span[ml:3]> jihua2+':'
+												<input$satlistjh3[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistjh3>
+
+											<div[d:flex ja:center]>
+												<span[ml:3]> '极化4:'
+												<input$satlistjh4[h:7 w:14 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' bind=satlistjh4>
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54  [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '方位收藏:'
 								<select$azshoucang[h:7 fs:14px bgc:transparent c:gray4 w:45% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] >

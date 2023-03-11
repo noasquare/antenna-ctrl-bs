@@ -472,6 +472,7 @@ tag tianxian
 		if isadmin!
 			let data = 
 				AntennaNo : route.params.id
+				DevNo: data[antindex].Devices[ctrindex].DevNo
 				cmd: 'addsatlondata'
 				satlon: lon
 			console.log data
@@ -696,7 +697,7 @@ tag tianxian
 								<span[fs:12px]> '伺服去电'
 						# <div[m:0 p:0 5 c:gray4]> '伺服卫星数据'
 				<div[w:30% bg:rgba(11,41,49,.6) shadow:inset 0px 0px 20px 5px rgb(12,100,100) bd:solid 1px rgb(12,100,100)]>
-					<ctrsider$txctrl data=data[antindex].Devices[ctrindex] ws=ws ant=route.params.id islogin=islogin>
+					<ctrsider$txctrl data=data[antindex].Devices[ctrindex] ws=ws ant=route.params.id islogin=islogin jihua1=jihua1 jihua2=jihua2>
 				<global @click.outside=(showlogin=no)>
 				<div[d:vflex ja:center g:5].mdlogin [o:1 visibility:visible]=showlogin>
 					<div>
