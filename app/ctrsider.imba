@@ -35,6 +35,7 @@ tag ctrsider
 	prop ant
 	prop jihua1
 	prop jihua2
+	prop satlonvalue
 	prop jhsendflag=no
 	prop islogin
 	prop islogined
@@ -114,6 +115,8 @@ tag ctrsider
 		console.log data
 		ws.send(JSON.stringify(data))
 	def sendpara item,itemvalue
+		if item === 'SatLon'
+			satlonvalue = itemvalue
 		# todo = 这里要增加一个发指令前的用户权限判断-可以是个函数 应该是个bool函数 ：isadmin
 		# 1- 弹出一个用户名密码的窗口弹窗，输入值，不管对不对先发送给
 		if isadmin!
@@ -680,7 +683,7 @@ tag ctrsider
 								<button[ml:auto mr:4].btn.btn-success.btn-sm @click=sendpara('StepTrack','test')> "跟踪"
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '预置卫星经度:'
-								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.00~200.00" @change=sendpara("SatLon",this.value) type='number' step='.01'>
+								<input[h:7 fs:14px bgc:transparent c:gray4 w:50% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="0.00~200.00" bind=satlonvalue name='SatLon' @change=sendpara("SatLon",this.value) type='number' step='.01'>
 							<div[m:0 p:5px d:hflex ja:center] [d:none]=isServo [d:none]=iscetc39||iscetc54 [d:none]=isServoAcu2010> # 这里的指令下发是针对伺服设备来定制的
 								<div[fs:14px c:gray3 ml:3]> '自动搜索:'
 								<input$azrange[h:7 fs:14px bgc:transparent c:gray4 w:25% bd:solid 1px rgb(31,219,220) rd:5px m:1 float:right ml:auto] placeholder="方位/0.00" type='number' step='.01'>

@@ -238,7 +238,8 @@ tag tianxian
 					item.sat_no === antrouted
 				satlistlon = satlistlons[0].sat_lon
 				render!
-
+	def checksatlon
+		satlistlon = $txctrl.satlonvalue
 	def anttpdata tpdata
 		return tpdata.antname === data[antindex].AntNo
 
@@ -479,6 +480,7 @@ tag tianxian
 			ws.send(JSON.stringify(data))
 
 	def render()
+		checksatlon!
 		# console.log 'render一哈'
 		tpbox = querySelector('#tpframe') # 获取拓扑图的画布的宽度
 		tpelement = querySelectorAll('.tuop-chart')
