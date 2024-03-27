@@ -642,45 +642,45 @@ tag tianxian
 									<tr> <td colSpan="4"> <i> 'Loading...'
 
 						<div.tuop>
-							<div[d:vflex a:center h:30%] [h:auto]=(data[antindex].Devices.length===1)>
-								<div[d:hflex w:70% ja:center]>
+							<div[d:vflex a:center h:auto]>
+								<div[d:hflex w:80% ja:center]>
 									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:40 ta:center mr:auto]> data[antindex].Devices[ctrindex].DevName
 									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:40 ta:center mr:auto]> '卫星经度：'
 										<input[h:7 w:12 fs:14px bgc:gray7/80 c:gray2 bd:solid 1px rgb(31,219,220) rd:5px m:1] type='string' placeholder='可修改' bind=satlistlon @change=send_custom_satlon(this.value)>
 									<div[fs:medium c:white bgc:teal6/60 p:0 2 rd:4 4 0 0 w:30 ta:center] [visibility:hidden]=!isServo> data[antindex].Devices[ctrindex].TrackStatus # 显示伺服器是否在跟踪状态。
-								<div[pos:relative p:2 w:70% c:gray3 bgc:teal8/40 bd:solid 1px teal4 rd:5px d:grid gtc:1fr 1fr 1fr ofy:auto]> for item,index in data[antindex].Devices[ctrindex].StatusList # 就tm多了一个操作，连通性就断掉了。
+								<div[pos:relative p:2 w:80% h:100 c:gray3 bgc:teal8/40 bd:solid 1px teal4 rd:5px d:grid gtc:1fr 1fr 1fr ofy:auto]> for item,index in data[antindex].Devices[ctrindex].StatusList # 就tm多了一个操作，连通性就断掉了。
 									# if index < 5 # 这里控制显示的参数数量，5个重要信息。
 									<div[p:1 fs:small]> item.StName+ ':'
 										<div[d:inline fs:large c:teal4 fw:bold ff:monospace pl:2]> item.Value
-							<tpframe$tpframe[pos:absolute t:100 l:0 w:100% h:45%]#tpframe display=(!isadminClick) tpelement=tpbox squares=squaresdata antno=data[antindex].AntNo>
-							<div[d:flex j:center pos:relative]>
-								<div[mr:auto p:2 pos:absolute t:-10 l:2] [d:none]=!islogin>
-									if isadminClick
-										<button.btn.btn-primary.btn-sm @click=(isadminClick = !isadminClick)> '关闭编辑'
-									else
-										<button.btn.btn-success.btn-sm @click=(isadminClick = !isadminClick)> '打开编辑'
-								<div[h:0 pos:absolute t:0 l:0]> for item,i in data[antindex].Devices
-									if item.StatusList[item.StatusList.length - 1].Value === 'Disconnected' && isdataload
-										<button[x:{tpxydata[i].x} y:{tpxydata[i].y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart  @click=devctr(i) > item.DevName
-											<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
-												if n < 5
-													<div[d:hflex ja:left a:center ml:3]>
-														<div[fs:12px mr:2]> tpitem.StName+':'
-														<div[c:teal4 fs:16px fw:bold]> tpitem.Value
-									if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length === 0 && isdataload
-										<button[x:{tpxydata[i].x} y:{tpxydata[i].y} bgc:{devcolor[0]} c:gray2 w:auto].tuop-chart  @click=devctr(i)> item.DevName
-											<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
-												if n < 5
-													<div[d:hflex ja:left a:center ml:3]>
-														<div[fs:12px mr:2]> tpitem.StName+':'
-														<div[c:teal4 fs:16px fw:bold]> tpitem.Value
-									if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length !== 0 && isdataload
-										<button[x:{tpxydata[i].x} y:{tpxydata[i].y} bgc:{devcolor[1]} c:gray2 w:auto].tuop-chart  @click=devctr(i)> item.DevName
-											<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
-												if n < 5
-													<div[d:hflex ja:left a:center ml:3]>
-														<div[fs:12px mr:2]> tpitem.StName+':'
-														<div[c:teal4 fs:16px fw:bold]> tpitem.Value
+							# <tpframe$tpframe[pos:absolute t:100 l:0 w:100% h:45%]#tpframe display=(!isadminClick) tpelement=tpbox squares=squaresdata antno=data[antindex].AntNo>
+							# <div[d:flex j:center pos:relative]>
+							# 	<div[mr:auto p:2 pos:absolute t:-10 l:2] [d:none]=!islogin>
+							# 		if isadminClick
+							# 			<button.btn.btn-primary.btn-sm @click=(isadminClick = !isadminClick)> '关闭编辑'
+							# 		else
+							# 			<button.btn.btn-success.btn-sm @click=(isadminClick = !isadminClick)> '打开编辑'
+							# 	<div[h:0 pos:absolute t:0 l:0]> for item,i in data[antindex].Devices
+							# 		if item.StatusList[item.StatusList.length - 1].Value === 'Disconnected' && isdataload
+							# 			<button[x:{tpxydata[i].x} y:{tpxydata[i].y} bgc:{devcolor[2]} c:gray2 w:auto].tuop-chart  @click=devctr(i) > item.DevName
+							# 				<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
+							# 					if n < 5
+							# 						<div[d:hflex ja:left a:center ml:3]>
+							# 							<div[fs:12px mr:2]> tpitem.StName+':'
+							# 							<div[c:teal4 fs:16px fw:bold]> tpitem.Value
+							# 		if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length === 0 && isdataload
+							# 			<button[x:{tpxydata[i].x} y:{tpxydata[i].y} bgc:{devcolor[0]} c:gray2 w:auto].tuop-chart  @click=devctr(i)> item.DevName
+							# 				<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
+							# 					if n < 5
+							# 						<div[d:hflex ja:left a:center ml:3]>
+							# 							<div[fs:12px mr:2]> tpitem.StName+':'
+							# 							<div[c:teal4 fs:16px fw:bold]> tpitem.Value
+							# 		if item.StatusList[item.StatusList.length - 1].Value === 'Normal' && item.FaultList.length !== 0 && isdataload
+							# 			<button[x:{tpxydata[i].x} y:{tpxydata[i].y} bgc:{devcolor[1]} c:gray2 w:auto].tuop-chart  @click=devctr(i)> item.DevName
+							# 				<div[d:grid gtc:1fr g:2px ta:left].tphover> for tpitem,n in item.StatusList
+							# 					if n < 5
+							# 						<div[d:hflex ja:left a:center ml:3]>
+							# 							<div[fs:12px mr:2]> tpitem.StName+':'
+							# 							<div[c:teal4 fs:16px fw:bold]> tpitem.Value
 
 								
 							<div[bd:solid 1px teal7 bgc:transparent p:3 m:3 d:vflex g:5px w:20 pos:absolute t:-30px l:0]>
