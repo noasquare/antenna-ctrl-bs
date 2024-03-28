@@ -1,4 +1,7 @@
 # Getting Started
+ what is front-end interactive look like:
+[![Video Title](http://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://youtu.be/K_0zQdVGGks?si=8VEh9eSvcGe8iRDS)
+
 
 ### `npm start`
 
